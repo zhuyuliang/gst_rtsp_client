@@ -638,6 +638,7 @@ rtsp_init(struct CustomData *data) {
 static void 
 rtsp_destroy (struct CustomData *data)
 {
+  if (data != NULL && data->isRun != STATUS_INIT) {
     gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_NULL);
     pthread_join (data->gst_thread, 0);
 
@@ -667,6 +668,7 @@ rtsp_destroy (struct CustomData *data)
     g_free (data);
 
     data = NULL;
+  }
 
 }
 

@@ -144,16 +144,6 @@ opencv2/imgproc.hpp
 opencv2/core/mat.hpp
 -
 
-/home/toybrick/Desktop/CProject/gst_rtsp/src/setup.cpp
-string.h
--
-map
--
-utility
--
-gst_rtsp_client.h
--
-
 /usr/include/glib-2.0/glib-object.h
 gobject/gbinding.h
 -

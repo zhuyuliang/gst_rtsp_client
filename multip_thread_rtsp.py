@@ -17,7 +17,7 @@ def func_rtspdisplay(index,url, usr, pwd):
     height = 1080
 
     # c_url = create_string_buffer(url.encode('utf-8'), len(url))
-    ret = rtspclient.createRtspClient(index,url)
+    # ret = rtspclient.createRtspClient(index,url)
     
     while(1) :
         ret1 = rtspclient.isConnect(index)
@@ -32,8 +32,9 @@ def func_rtspdisplay(index,url, usr, pwd):
             # cv2.imwrite('a' + str(index) +'.jpg',ret2.frame)
         elif (ret1 == 2):
             rtspclient.destoryRtspClient(index)
-            time.sleep(2)
+            #time.sleep(4)
             rtspclient.createRtspClient(index,url)
+            #time.sleep(10)
 
     print('# End of Thread %d' % (index))
 

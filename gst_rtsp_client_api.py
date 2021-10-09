@@ -1,7 +1,7 @@
 
 from ctypes import *
 import numpy as np
-import time
+# import time
 
 'imgframe data class'
 
