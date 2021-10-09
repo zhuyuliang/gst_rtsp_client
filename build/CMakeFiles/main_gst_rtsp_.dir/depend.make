@@ -186,8 +186,10 @@ CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-1.0/gst/gstutils.h
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-1.0/gst/gstvalue.h
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-1.0/gst/gstversion.h
+CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-1.0/gst/rtsp/gstrtsp-enumtypes.h
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-1.0/gst/rtsp/gstrtspdefs.h
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-1.0/gst/rtsp/gstrtspmessage.h
+CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-1.0/gst/rtsp/gstrtsptransport.h
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-1.0/gst/rtsp/rtsp-prelude.h
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-1.0/gst/sdp/gstmikey.h
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/include/gstreamer-1.0/gst/sdp/gstsdp.h

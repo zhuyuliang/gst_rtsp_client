@@ -1,7 +1,7 @@
 
 from ctypes import *
 import numpy as np
-# import time
+import time
 
 'imgframe data class'
 
@@ -22,6 +22,7 @@ class ImgFrameData:
 client = cdll.LoadLibrary("build/libRtspClientLib.so")
 
 def createRtspClient( id, url):
+    time.sleep(1)
     c_url = create_string_buffer(url.encode('utf-8'), len(url))
     return client.createRtspClient( id,c_url,len(url))
     # time.sleep(2)
@@ -31,6 +32,7 @@ def destoryRtspClientAll():
     return client.destoryRtspClientAll()
 
 def destoryRtspClient( id):
+    time.sleep(1)
     return client.destoryRtspClient(id)
 
 # def reconnectRtsp( id):

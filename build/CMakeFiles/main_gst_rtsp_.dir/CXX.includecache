@@ -127,6 +127,8 @@ gobject/gclosure.h
 -
 gst/rtsp/gstrtspmessage.h
 -
+gst/rtsp/gstrtsptransport.h
+-
 rga/rga.h
 -
 rga/RgaUtils.h
@@ -1680,6 +1682,12 @@ gst/gstcapsfeatures.h
 glib.h
 -
 
+/usr/include/gstreamer-1.0/gst/rtsp/gstrtsp-enumtypes.h
+gst/gst.h
+-
+gst/rtsp/rtsp-prelude.h
+-
+
 /usr/include/gstreamer-1.0/gst/rtsp/gstrtspdefs.h
 gst/gst.h
 -
@@ -1690,6 +1698,14 @@ gst/rtsp/rtsp-prelude.h
 gst/gst.h
 -
 gst/rtsp/gstrtspdefs.h
+-
+
+/usr/include/gstreamer-1.0/gst/rtsp/gstrtsptransport.h
+gst/gstconfig.h
+-
+gst/rtsp/gstrtspdefs.h
+-
+gst/rtsp/gstrtsp-enumtypes.h
 -
 
 /usr/include/gstreamer-1.0/gst/rtsp/rtsp-prelude.h

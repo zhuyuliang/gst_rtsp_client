@@ -29,6 +29,7 @@
 #include <gst/sdp/gstsdpmessage.h>
 #include <gobject/gclosure.h>
 #include <gst/rtsp/gstrtspmessage.h>
+#include <gst/rtsp/gstrtsptransport.h>
 
 // rga
 #include <rga/rga.h>
@@ -540,10 +541,10 @@ rtsp_init(struct CustomData *data) {
     g_print("rtsp_uri:%s\n",data->m_RtspUri);
     g_object_set(GST_OBJECT(data->rtspsrc), "location", data->m_RtspUri, NULL);
     g_object_set (GST_OBJECT (data->rtspsrc), "latency", 2000, NULL);
-    g_object_set (GST_OBJECT (data->rtspsrc), "timeout", 1000000, NULL);
-    g_object_set (GST_OBJECT (data->rtspsrc), "udp-reconnect", 1, NULL);
-    g_object_set (GST_OBJECT (data->rtspsrc), "retry", 1000, NULL);
-    g_object_set (GST_OBJECT (data->rtspsrc), "debug", 1, NULL);
+    // g_object_set (GST_OBJECT (data->rtspsrc), "timeout", 1000000, NULL);
+    // g_object_set (GST_OBJECT (data->rtspsrc), "udp-reconnect", 1, NULL);
+    // g_object_set (GST_OBJECT (data->rtspsrc), "retry", 1000, NULL);
+    // g_object_set (GST_OBJECT (data->rtspsrc), "debug", 1, NULL);
 
     /**
      * GstRTSPLowerTrans:
@@ -556,7 +557,7 @@ rtsp_init(struct CustomData *data) {
      *
      * The different transport methods.
      */
-    //g_object_set (GST_OBJECT (data->rtspsrc), "protocols", GST_RTSP_LOWER_TRANS_UDP, NULL);
+    // g_object_set (GST_OBJECT (data->rtspsrc), "protocols", GST_RTSP_LOWER_TRANS_HTTP, NULL);
     //"rtsp://<ip>:554/live/ch00_0"
 
     g_object_set (G_OBJECT (data->queue_appsink), "max-size-buffers", 1, NULL);
@@ -665,6 +666,10 @@ rtsp_destroy (struct CustomData *data)
     g_free (data->dst_resize_output_buf);
     g_free (data->m_RtspUri);
 
+    g_free (data);
+
+    data = NULL;
+  }else {
     g_free (data);
 
     data = NULL;
