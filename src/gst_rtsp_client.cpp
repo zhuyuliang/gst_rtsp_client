@@ -645,17 +645,17 @@ rtsp_destroy (struct CustomData *data)
 
     gst_bin_remove_many (GST_BIN(data->pipeline), data->rtspsrc, NULL);
     gst_bin_remove_many (GST_BIN(data->pipeline), data->decode, data->tee, NULL);
-    // gst_object_unref (data->rtspsrc);
-    // gst_object_unref (data->decode);
-    // gst_object_unref (data->tee);
+    gst_object_unref (data->rtspsrc);
+    gst_object_unref (data->decode);
+    gst_object_unref (data->tee);
     if (DISPLAY) {
       gst_bin_remove_many (GST_BIN(data->pipeline), data->queue_displaysink, data->displaysink, NULL);
-      // gst_object_unref (data->queue_displaysink);
-      // gst_object_unref (data->displaysink);
+      gst_object_unref (data->queue_displaysink);
+      gst_object_unref (data->displaysink);
     }
     gst_bin_remove_many (GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
-    // gst_object_unref (data->queue_appsink);
-    // gst_object_unref (data->appsink);
+    gst_object_unref (data->queue_appsink);
+    gst_object_unref (data->appsink);
 
     gst_object_unref (data->pipeline);
     g_main_loop_quit (data->loop);
@@ -866,7 +866,7 @@ RtspClient::read(int width, int height) {
   rga_buffer_t  dst_output;
   rga_buffer_t  dst_resize_output;
 
-  g_print("mppframe size : %d \n", map_info.size);
+  // g_print("mppframe size : %d \n", map_info.size);
 
   // // 1920*1080
   // // mpp 265 256 2304 | 264 16 1088
