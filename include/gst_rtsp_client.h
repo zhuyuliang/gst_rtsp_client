@@ -51,9 +51,6 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/core/mat.hpp>
 
-//arrayqueue
-// #include <arrayqueue.h>
-
 // gst log config
 //GST_DEBUG_CATEGORY_STATIC (rk_appsink_debug);
 //#define GST_CAT_DEFAULT rk_appsink_debug

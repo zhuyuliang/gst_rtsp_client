@@ -25,8 +25,6 @@ def createRtspClient( id, url):
     time.sleep(1)
     c_url = create_string_buffer(url.encode('utf-8'), len(url))
     return client.createRtspClient( id,c_url,len(url))
-    # time.sleep(2)
-    # return ret
 
 def destoryRtspClientAll():
     return client.destoryRtspClientAll()
