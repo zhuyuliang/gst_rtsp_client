@@ -82,8 +82,8 @@ set(link_libs curl pthread opencv_core opencv_highgui opencv_imgcodecs)
 # aux_source_directory(. DIR_SRCS)
 
 set(SRC_LIST ./test/c_test_main_rtsp.cpp 
-             ./src/gst_rtsp_client.cpp
-             ./include/arrayqueue.h)
+             ./src/gst_rtsp_client.cpp)
+#             ./include/arrayqueue.h)
 
 add_executable (main_gst_rtsp_ ${SRC_LIST})
 
