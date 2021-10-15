@@ -1,4 +1,0 @@
-/home/toybrick/Desktop/CProject/gst_rtsp/build/CMakeFiles/rebuild_cache.dir
-/home/toybrick/Desktop/CProject/gst_rtsp/build/CMakeFiles/edit_cache.dir
-/home/toybrick/Desktop/CProject/gst_rtsp/build/CMakeFiles/main_gst_rtsp_.dir
-/home/toybrick/Desktop/CProject/gst_rtsp/build/CMakeFiles/RtspClientLib.dir
