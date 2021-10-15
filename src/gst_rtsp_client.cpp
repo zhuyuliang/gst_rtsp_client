@@ -847,8 +847,8 @@ RtspClient::read(int width, int height) {
   /* TODO: use the DMABUF directly */
   gst_buffer_map (buf, &map_info, GST_MAP_READ);
 
-  // width = GST_VIDEO_INFO_WIDTH (&(this->m_data->info));
-  // height = GST_VIDEO_INFO_HEIGHT (&(this->m_data->info));
+  int source_width = GST_VIDEO_INFO_WIDTH (&(this->m_data->info));
+  int source_height = GST_VIDEO_INFO_HEIGHT (&(this->m_data->info));
 
   // /* output some information at the beginning (= when the first frame is handled) */
   // if (this->m_data->frame == 0) {
@@ -866,7 +866,7 @@ RtspClient::read(int width, int height) {
   rga_buffer_t  dst_output;
   rga_buffer_t  dst_resize_output;
 
-  // g_print("mppframe size : %d \n", map_info.size);
+  g_print("mppframe size : %d \n", map_info.size);
 
   // // 1920*1080
   // // mpp 265 256 2304 | 264 16 1088
@@ -933,70 +933,36 @@ RtspClient::read(int width, int height) {
     data.size = width*height*get_bpp_from_format(DST_FORMAT);
 
   } else
+  
+  // if (map_info.size == 7372800) {
+  //      // h264 2560 * 1440
+  //     src = wrapbuffer_virtualaddr((char *) map_info.data, 2560, 1440, SRC_FORMAT);
+  //     if (this->m_data->dst_buf == NULL){
+  //         this->m_data->dst_buf = (char*)malloc(2560*1440*get_bpp_from_format(DST_FORMAT));
+  //     }
+  //     dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, 2560, 1440, DST_FORMAT);
+  //     if (this->m_data->dst_output_buf == NULL){
+  //         this->m_data->dst_output_buf = (char*)malloc(2560*1440*get_bpp_from_format(DST_FORMAT));
+  //     }
+  //     dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 2560, 1440, DST_FORMAT);
+  //     if (this->m_data->dst_resize_output_buf == NULL){
+  //         this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+  //     }
+  //     dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
+  //     if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
+  //       printf("%s, %s\n", __FUNCTION__, imStrError());
+  //       return data;
+  //     }
 
-  // 1280 * 720
-  if (map_info.size == 1843200) {
+  //     imcvtcolor(src, dst, src.format, dst.format);
+  //     imresize(dst,dst_resize_output);
 
-    // g_print("out %d",(mppdata.data)[123]);
-          
-    // h264 h265 1280 * 720 == 1280 * 720
-    src = wrapbuffer_virtualaddr((char *) map_info.data, 1280, 720, SRC_FORMAT);
-    if (this->m_data->dst_buf == NULL){
-        this->m_data->dst_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
-    }
-    dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, 1280, 720, DST_FORMAT);
-    if (this->m_data->dst_output_buf == NULL){
-        this->m_data->dst_output_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 1280, 720, DST_FORMAT);
-    if (this->m_data->dst_resize_output_buf == NULL){
-        this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
-    if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
-      printf("%s, %s\n", __FUNCTION__, imStrError());
-      return data;
-    }
+  //     data.width = width;
+  //     data.height = height;
+  //     data.data = this->m_data->dst_resize_output_buf;
+  //     data.size = width*height*get_bpp_from_format(DST_FORMAT);
 
-    imcvtcolor(src, dst, src.format, dst.format);
-    imresize(dst,dst_resize_output);
-
-    data.width = width;
-    data.height = height;
-    data.data = this->m_data->dst_resize_output_buf;
-    data.size = width*height*get_bpp_from_format(DST_FORMAT);
-
-  } else 
-
-  if (map_info.size == 7372800) {
-       // h264 2560 * 1440
-      src = wrapbuffer_virtualaddr((char *) map_info.data, 2560, 1440, SRC_FORMAT);
-      if (this->m_data->dst_buf == NULL){
-          this->m_data->dst_buf = (char*)malloc(2560*1440*get_bpp_from_format(DST_FORMAT));
-      }
-      dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, 2560, 1440, DST_FORMAT);
-      if (this->m_data->dst_output_buf == NULL){
-          this->m_data->dst_output_buf = (char*)malloc(2560*1440*get_bpp_from_format(DST_FORMAT));
-      }
-      dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 2560, 1440, DST_FORMAT);
-      if (this->m_data->dst_resize_output_buf == NULL){
-          this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
-      }
-      dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
-      if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
-        printf("%s, %s\n", __FUNCTION__, imStrError());
-        return data;
-      }
-
-      imcvtcolor(src, dst, src.format, dst.format);
-      imresize(dst,dst_resize_output);
-
-      data.width = width;
-      data.height = height;
-      data.data = this->m_data->dst_resize_output_buf;
-      data.size = width*height*get_bpp_from_format(DST_FORMAT);
-
-  } else
+  // } else
 
   if (map_info.size == 8110080) {
        // h265 2560 * 1440 256 2816 1584
@@ -1030,9 +996,72 @@ RtspClient::read(int width, int height) {
     data.data = this->m_data->dst_resize_output_buf;
     data.size = width*height*get_bpp_from_format(DST_FORMAT);
     
+  } else
+
+  if (map_info.size == 737280) {
+    //h265 640*480 768 * 480
+    src = wrapbuffer_virtualaddr((char *) map_info.data, 768, 480, SRC_FORMAT);
+    if (this->m_data->dst_buf == NULL){
+        this->m_data->dst_buf = (char*)malloc(768*480*get_bpp_from_format(DST_FORMAT));
+    }
+    dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, 768, 480, DST_FORMAT);
+    if (this->m_data->dst_output_buf == NULL){
+        this->m_data->dst_output_buf = (char*)malloc(640*480*get_bpp_from_format(DST_FORMAT));
+    }
+    dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 640, 480, DST_FORMAT);
+    if (this->m_data->dst_resize_output_buf == NULL){
+        this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+    }
+    dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
+    if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
+      printf("%s, %s\n", __FUNCTION__, imStrError());
+      return data;
+    }
+    // g_print("1080 h264 imcvtcolor \n");
+    imcvtcolor(src, dst, src.format, dst.format);
+    im_rect src_rect = {0, 0, 640, 480};
+    //g_print("imcrop %d",src_rect.width);
+    imcrop(dst,dst_output,src_rect);
+
+    imresize(dst_output,dst_resize_output);
+
+    data.width = width;
+    data.height = height;
+    data.data = this->m_data->dst_resize_output_buf;
+    data.size = width*height*get_bpp_from_format(DST_FORMAT);
   }
 
-  //2k 
+  else {
+      // h265 h264
+      // supoort 1280*720 3840*2160
+            
+      src = wrapbuffer_virtualaddr((char *) map_info.data, source_width, source_height, SRC_FORMAT);
+      if (this->m_data->dst_buf == NULL){
+          this->m_data->dst_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
+      }
+      dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, source_width, source_height, DST_FORMAT);
+      if (this->m_data->dst_output_buf == NULL){
+          this->m_data->dst_output_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
+      }
+      dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, source_width, source_height, DST_FORMAT);
+      if (this->m_data->dst_resize_output_buf == NULL){
+          this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+      }
+      dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
+      if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
+        printf("%s, %s\n", __FUNCTION__, imStrError());
+        return data;
+      }
+
+      imcvtcolor(src, dst, src.format, dst.format);
+      imresize(dst,dst_resize_output);
+
+      data.width = width;
+      data.height = height;
+      data.data = this->m_data->dst_resize_output_buf;
+      data.size = width*height*get_bpp_from_format(DST_FORMAT);
+
+  }
 
   gst_buffer_unmap (buf, &map_info);
 
