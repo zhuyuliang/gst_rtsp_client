@@ -1,7 +1,7 @@
 # gstreamer_rtsp_client
 
 ## gst rtsp _ rk3399prod
-### rtspsrc decodebin(mppvideodec) tee queue appsink rga
+### rtspsrc->decodebin(mppvideodec)->tee->queue->appsink->rga
 
 #### 优点:
 * 1.多线程rtsp调用
