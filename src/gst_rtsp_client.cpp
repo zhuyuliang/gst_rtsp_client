@@ -866,7 +866,9 @@ RtspClient::read(int width, int height) {
   rga_buffer_t  dst_output;
   rga_buffer_t  dst_resize_output;
 
-  g_print("mppframe size : %d \n", map_info.size);
+  // g_print("mppframe size : %d \n", map_info.size);
+
+  // g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
 
   // // 1920*1080
   // // mpp 265 256 2304 | 264 16 1088
@@ -900,7 +902,9 @@ RtspClient::read(int width, int height) {
     data.data = this->m_data->dst_resize_output_buf;
     data.size = width*height*get_bpp_from_format(DST_FORMAT);
 
-  } else if (map_info.size == 4177920) {
+  } else 
+
+  if (map_info.size == 4177920) {
     // h264 16bit 1920 * 1080 == 1920 * 1088
     src = wrapbuffer_virtualaddr((char *) map_info.data, 1920, 1088, SRC_FORMAT);
     if (this->m_data->dst_buf == NULL){
@@ -933,36 +937,6 @@ RtspClient::read(int width, int height) {
     data.size = width*height*get_bpp_from_format(DST_FORMAT);
 
   } else
-  
-  // if (map_info.size == 7372800) {
-  //      // h264 2560 * 1440
-  //     src = wrapbuffer_virtualaddr((char *) map_info.data, 2560, 1440, SRC_FORMAT);
-  //     if (this->m_data->dst_buf == NULL){
-  //         this->m_data->dst_buf = (char*)malloc(2560*1440*get_bpp_from_format(DST_FORMAT));
-  //     }
-  //     dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, 2560, 1440, DST_FORMAT);
-  //     if (this->m_data->dst_output_buf == NULL){
-  //         this->m_data->dst_output_buf = (char*)malloc(2560*1440*get_bpp_from_format(DST_FORMAT));
-  //     }
-  //     dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 2560, 1440, DST_FORMAT);
-  //     if (this->m_data->dst_resize_output_buf == NULL){
-  //         this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
-  //     }
-  //     dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
-  //     if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
-  //       printf("%s, %s\n", __FUNCTION__, imStrError());
-  //       return data;
-  //     }
-
-  //     imcvtcolor(src, dst, src.format, dst.format);
-  //     imresize(dst,dst_resize_output);
-
-  //     data.width = width;
-  //     data.height = height;
-  //     data.data = this->m_data->dst_resize_output_buf;
-  //     data.size = width*height*get_bpp_from_format(DST_FORMAT);
-
-  // } else
 
   if (map_info.size == 8110080) {
        // h265 2560 * 1440 256 2816 1584
