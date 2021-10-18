@@ -13,5 +13,10 @@
     * 2560 * 1440
     * 3840 * 2160
 
+#### rockchip平台依赖环境
+* 1.[MPP](https://t.rock-chips.com/forum.php?mod=viewthread&tid=336&highlight=mpp)
+* 2.[RGA](https://t.rock-chips.com/forum.php?mod=viewthread&tid=333&highlight=rga)
+* 2.[MPP_GSTREAMER插件](https://github.com/rockchip-linux/gstreamer-rockchip)
+
 ## gst rtsp _ (deepstream)/tensorrt .. wait ..
 ### rtspsrc decodebin(Gst-nvvideo4linux2) tee queue Gst-nvvideoconvert appsink (GST-nvinfer Gst-nvtracker)
