@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/toybrick/Desktop/CProject/gst_rtsp/src/gst_rtsp_client.cpp" "/home/toybrick/Desktop/CProject/gst_rtsp/build/CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o"
-  "/home/toybrick/Desktop/CProject/gst_rtsp/test/c_test_main_rtsp.cpp" "/home/toybrick/Desktop/CProject/gst_rtsp/build/CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o"
+  "/home/toybrick/Develop/CProject/gst_rtsp/src/gst_rtsp_client.cpp" "/home/toybrick/Develop/CProject/gst_rtsp/build/CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o"
+  "/home/toybrick/Develop/CProject/gst_rtsp/test/c_test_main_rtsp.cpp" "/home/toybrick/Develop/CProject/gst_rtsp/build/CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -13,6 +13,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/includes"
   "/usr/include/gstreamer-1.0"
+  "/usr/lib/aarch64-linux-gnu/gstreamer-1.0"
   "/usr/lib/gstreamer-1.0"
   "/usr/include/glib-2.0"
   "/usr/lib/aarch64-linux-gnu/glib-2.0/include"
@@ -21,6 +22,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/local/include/opencv2"
   "/usr/local/lib/aarch64-linux-gnu"
   "../include"
+  "/home/toybrick/EdgeComputing/sq_main_/rtsp"
   "/usr/local/include"
   "/usr/local/include/opencv"
   )

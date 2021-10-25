@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/toybrick/Desktop/CProject/gst_rtsp
+CMAKE_SOURCE_DIR = /home/toybrick/Develop/CProject/gst_rtsp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/toybrick/Desktop/CProject/gst_rtsp/build
+CMAKE_BINARY_DIR = /home/toybrick/Develop/CProject/gst_rtsp/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/main_gst_rtsp_.dir/depend.make
@@ -59,29 +59,29 @@ include CMakeFiles/main_gst_rtsp_.dir/flags.make
 
 CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o: CMakeFiles/main_gst_rtsp_.dir/flags.make
 CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o: ../test/c_test_main_rtsp.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/toybrick/Desktop/CProject/gst_rtsp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o"
-	g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o -c /home/toybrick/Desktop/CProject/gst_rtsp/test/c_test_main_rtsp.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/toybrick/Develop/CProject/gst_rtsp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o"
+	g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o -c /home/toybrick/Develop/CProject/gst_rtsp/test/c_test_main_rtsp.cpp
 
 CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.i"
-	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/toybrick/Desktop/CProject/gst_rtsp/test/c_test_main_rtsp.cpp > CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.i
+	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/toybrick/Develop/CProject/gst_rtsp/test/c_test_main_rtsp.cpp > CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.i
 
 CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.s"
-	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/toybrick/Desktop/CProject/gst_rtsp/test/c_test_main_rtsp.cpp -o CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.s
+	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/toybrick/Develop/CProject/gst_rtsp/test/c_test_main_rtsp.cpp -o CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.s
 
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: CMakeFiles/main_gst_rtsp_.dir/flags.make
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: ../src/gst_rtsp_client.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/toybrick/Desktop/CProject/gst_rtsp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o"
-	g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o -c /home/toybrick/Desktop/CProject/gst_rtsp/src/gst_rtsp_client.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/toybrick/Develop/CProject/gst_rtsp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o"
+	g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o -c /home/toybrick/Develop/CProject/gst_rtsp/src/gst_rtsp_client.cpp
 
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.i"
-	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/toybrick/Desktop/CProject/gst_rtsp/src/gst_rtsp_client.cpp > CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.i
+	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/toybrick/Develop/CProject/gst_rtsp/src/gst_rtsp_client.cpp > CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.i
 
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.s"
-	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/toybrick/Desktop/CProject/gst_rtsp/src/gst_rtsp_client.cpp -o CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.s
+	g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/toybrick/Develop/CProject/gst_rtsp/src/gst_rtsp_client.cpp -o CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.s
 
 # Object files for target main_gst_rtsp_
 main_gst_rtsp__OBJECTS = \
@@ -110,14 +110,14 @@ main_gst_rtsp_: /usr/lib/aarch64-linux-gnu/libffi.so.6
 main_gst_rtsp_: /lib/aarch64-linux-gnu/libpcre.so.3
 main_gst_rtsp_: /usr/lib/aarch64-linux-gnu/librockchip_rga.so.0
 main_gst_rtsp_: /usr/local/lib/libopencv_imgproc.so.3.4
-main_gst_rtsp_: /usr/local/lib/aarch64-linux-gnu/librga.so.2
+main_gst_rtsp_: /home/toybrick/EdgeComputing/sq_main_/rtsp/librga.so
 main_gst_rtsp_: /usr/local/lib/libopencv_highgui.so.3.4.14
 main_gst_rtsp_: /usr/local/lib/libopencv_videoio.so.3.4.14
 main_gst_rtsp_: /usr/local/lib/libopencv_imgcodecs.so.3.4.14
 main_gst_rtsp_: /usr/local/lib/libopencv_imgproc.so.3.4.14
 main_gst_rtsp_: /usr/local/lib/libopencv_core.so.3.4.14
 main_gst_rtsp_: CMakeFiles/main_gst_rtsp_.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/toybrick/Desktop/CProject/gst_rtsp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable main_gst_rtsp_"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/toybrick/Develop/CProject/gst_rtsp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable main_gst_rtsp_"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main_gst_rtsp_.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -130,6 +130,6 @@ CMakeFiles/main_gst_rtsp_.dir/clean:
 .PHONY : CMakeFiles/main_gst_rtsp_.dir/clean
 
 CMakeFiles/main_gst_rtsp_.dir/depend:
-	cd /home/toybrick/Desktop/CProject/gst_rtsp/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/toybrick/Desktop/CProject/gst_rtsp /home/toybrick/Desktop/CProject/gst_rtsp /home/toybrick/Desktop/CProject/gst_rtsp/build /home/toybrick/Desktop/CProject/gst_rtsp/build /home/toybrick/Desktop/CProject/gst_rtsp/build/CMakeFiles/main_gst_rtsp_.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/toybrick/Develop/CProject/gst_rtsp/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/toybrick/Develop/CProject/gst_rtsp /home/toybrick/Develop/CProject/gst_rtsp /home/toybrick/Develop/CProject/gst_rtsp/build /home/toybrick/Develop/CProject/gst_rtsp/build /home/toybrick/Develop/CProject/gst_rtsp/build/CMakeFiles/main_gst_rtsp_.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/main_gst_rtsp_.dir/depend
 

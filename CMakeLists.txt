@@ -41,6 +41,7 @@ endif()
 include_directories(
         /usr/includes
         /usr/include/gstreamer-1.0
+        /usr/lib/aarch64-linux-gnu/gstreamer-1.0
         /usr/lib/gstreamer-1.0
         /usr/include/glib-2.0
         ${SYS_USR_LIB}/glib-2.0/include
@@ -49,7 +50,9 @@ include_directories(
         /usr/local/include/opencv2
         /usr/local/include
         /usr/local/lib/aarch64-linux-gnu
-        ${CMAKE_CURRENT_SOURCE_DIR}/include       
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        /home/toybrick/EdgeComputing/sq_main_/rtsp      
+         
 )
 link_libraries(
         # ${SYS_USR_LIB}/libgtk3-nocsd.so.0
@@ -69,7 +72,8 @@ link_libraries(
         ${SYS_LIB}/libpcre.so.3
         ${SYS_USR_LIB}/librockchip_rga.so.0
         /usr/local/lib/libopencv_imgproc.so.3.4
-        /usr/local/lib/aarch64-linux-gnu/librga.so.2
+        # /usr/local/lib/aarch64-linux-gnu/librga.so.2
+        /home/toybrick/EdgeComputing/sq_main_/rtsp/librga.so
 )
 
 # debug
