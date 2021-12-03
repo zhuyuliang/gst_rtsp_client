@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/toybrick/Develop/CProject/gst_rtsp/src/gst_rtsp_client.cpp" "/home/toybrick/Develop/CProject/gst_rtsp/build/CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o"
-  "/home/toybrick/Develop/CProject/gst_rtsp/test/c_test_main_rtsp.cpp" "/home/toybrick/Develop/CProject/gst_rtsp/build/CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o"
+  "/home/firefly/gst_rtsp_client/src/gst_rtsp_client.cpp" "/home/firefly/gst_rtsp_client/build/CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o"
+  "/home/firefly/gst_rtsp_client/test/c_test_main_rtsp.cpp" "/home/firefly/gst_rtsp_client/build/CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -20,11 +20,10 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/orc-0.4"
   "/usr/include/rockchip"
   "/usr/local/include/opencv2"
+  "/usr/local/include"
   "/usr/local/lib/aarch64-linux-gnu"
   "../include"
-  "/home/toybrick/EdgeComputing/sq_main_/rtsp"
-  "/usr/local/include"
-  "/usr/local/include/opencv"
+  "/usr/include/opencv"
   )
 
 # Targets to which this target links.

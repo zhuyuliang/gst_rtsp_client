@@ -10,7 +10,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/core/mat.hpp>
 
-#include <python3.7m/Python.h>
+// #include <python3.7m/Python.h>
 
 using namespace std;
 

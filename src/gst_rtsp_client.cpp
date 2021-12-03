@@ -832,17 +832,17 @@ RtspClient::read(int width, int height) {
   
   // ** 
 
-  // int ret;
-  // GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
-  // guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data->info));
+  int ret;
+  GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
+  guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data->info));
   // guint width, height;
   GstMapInfo map_info;
-  // gchar filename[128];
-  // GstVideoFormat pixfmt;
-  // const char *pixfmt_str;
+  gchar filename[128];
+  GstVideoFormat pixfmt;
+  const char *pixfmt_str;
 
-  // pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data->info));
-  // pixfmt_str = gst_video_format_to_string (pixfmt);
+  pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data->info));
+  pixfmt_str = gst_video_format_to_string (pixfmt);
 
   /* TODO: use the DMABUF directly */
   gst_buffer_map (buf, &map_info, GST_MAP_READ);
@@ -850,15 +850,15 @@ RtspClient::read(int width, int height) {
   int source_width = GST_VIDEO_INFO_WIDTH (&(this->m_data->info));
   int source_height = GST_VIDEO_INFO_HEIGHT (&(this->m_data->info));
 
-  // /* output some information at the beginning (= when the first frame is handled) */
-  // if (this->m_data->frame == 0) {
-  //   printf ("===================================\n");
-  //   printf ("GStreamer video stream information:\n");
-  //   printf ("  size: %u x %u pixel\n", source_width, source_height);
-  //   printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
-  //   printf ("  video meta found: %s\n", yesno (meta != NULL));
-  //   printf ("===================================\n");
-  // }
+  /* output some information at the beginning (= when the first frame is handled) */
+  if (this->m_data->frame == 0) {
+    printf ("===================================\n");
+    printf ("GStreamer video stream information:\n");
+    printf ("  size: %u x %u pixel\n", source_width, source_height);
+    printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
+    printf ("  video meta found: %s\n", yesno (meta != NULL));
+    printf ("===================================\n");
+  }
 
   // rga
   rga_buffer_t 	src;
@@ -866,13 +866,13 @@ RtspClient::read(int width, int height) {
   rga_buffer_t  dst_output;
   rga_buffer_t  dst_resize_output;
 
-  // g_print("mppframe size : %d \n", map_info.size);
+  g_print("mppframe size : %d \n", map_info.size);
 
   // g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
 
   // // 1920*1080
   // // mpp 265 256 2304 | 264 16 1088
-  if (map_info.size == 3732480){
+  if (map_info.size == 3732480 || map_info.size == 4976640 ) {
     // h265 256bit 1920 * 1080  == 2304 * 1080
     src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, 1080, SRC_FORMAT);
     if (this->m_data->dst_buf == NULL){
@@ -904,7 +904,7 @@ RtspClient::read(int width, int height) {
 
   } else 
 
-  if (map_info.size == 3133440) {
+  if (map_info.size == 3133440 || map_info.size == 4177920 ) {
     // h264 16bit 1920 * 1080 == 1920 * 1088
     src = wrapbuffer_virtualaddr((char *) map_info.data, 1920, 1088, SRC_FORMAT);
     if (this->m_data->dst_buf == NULL){
@@ -938,7 +938,7 @@ RtspClient::read(int width, int height) {
 
   } else
 
-  if (map_info.size == 6082560) {
+  if (map_info.size == 6082560 || map_info.size == 8110080) {
        // h265 2560 * 1440 256 2816 1584
     src = wrapbuffer_virtualaddr((char *) map_info.data, 2816, 1440, SRC_FORMAT);
     if (this->m_data->dst_buf == NULL){
