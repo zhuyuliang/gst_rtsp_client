@@ -30,6 +30,7 @@ def func_rtspdisplay(index,url, usr, pwd):
             # img = cv2.resize(img,(1920,1080,3))
             # img = cv2.UMat(height,width,cv2.CV_8UC3,img)
             cv2.imwrite('a' + str(index) +'.jpg',ret2.frame)
+            cv2.imwrite('a640' + str(index) +'.jpg',ret2.frame640)
         elif (ret1 == 2):
             rtspclient.destoryRtspClient(index)
             #time.sleep(4)

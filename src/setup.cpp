@@ -10,21 +10,21 @@ using namespace std;
 #define FAIL 0;
 #define SUCCESS 1;
 
-map<int,RtspClient*> Map; 
+map<int,RtspClient*> mMap; 
 map<int,RtspClient*> ::iterator it;
 
 extern "C" int
 createRtspClient (int id, const char * url,int urllen)
 {
     //&& id != nullptr && url != nullptr
-    if ( Map.find(id) == Map.end() )
+    if ( mMap.find(id) == mMap.end() )
     {
-      Map.insert(pair<int,RtspClient*>(id ,new RtspClient()));
-      if (Map.find(id)->second->enable(id, url, urllen)){
+      mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
+      if (mMap.find(id)->second->enable(id, url, urllen)){
           return SUCCESS;
       }else{
-          Map.find(id)->second->disable();
-          Map.erase(id);
+          mMap.find(id)->second->disable();
+          mMap.erase(id);
           return FAIL;
       }
     } else {
@@ -35,14 +35,14 @@ createRtspClient (int id, const char * url,int urllen)
 extern "C" int
 destoryRtspClientAll()
 {
-  for( it=Map.begin(); it!=Map.end(); it++){
+  for( it=mMap.begin(); it!=mMap.end(); it++){
     // cout<<it->first<<"    "<<it->second<<endl;
     it->second->disable();
   } 
-  Map.clear();
-  // if (Map.find(id) != NULL){
-  //   Map.find(id)->disable();
-  //   Map.erase(id)
+  mMap.clear();
+  // if (mMap.find(id) != NULL){
+  //   mMap.find(id)->disable();
+  //   mMap.erase(id)
   //   // rtspclient = NULL;
   // }
   return SUCCESS;
@@ -51,9 +51,9 @@ destoryRtspClientAll()
 extern "C" int
 destoryRtspClient(int id)
 {
-  if (Map.find(id) != Map.end()){
-    Map.find(id)->second->disable();
-    Map.erase(id);
+  if (mMap.find(id) != mMap.end()){
+    mMap.find(id)->second->disable();
+    mMap.erase(id);
     // rtspclient = NULL;
   }
   return SUCCESS;
@@ -62,8 +62,8 @@ destoryRtspClient(int id)
 // extern "C" int
 // reconnectRtsp(int id)
 // {
-//     if (Map.find(id) != Map.end()){
-//       Map.find(id)->second->reconnect();
+//     if (mMap.find(id) != mMap.end()){
+//       mMap.find(id)->second->reconnect();
 //       return SUCCESS;
 //     }else{
 //       return FAIL;
@@ -73,8 +73,8 @@ destoryRtspClient(int id)
 extern "C" int
 isConnect(int id)
 {
-  if (Map.find(id) != Map.end()){
-      int ret = Map.find(id)->second->isConnect();
+  if (mMap.find(id) != mMap.end()){
+      int ret = mMap.find(id)->second->isConnect();
       return ret;
   }else{
       return STATUS_DISCONNECT;
@@ -90,14 +90,15 @@ isConnect(int id)
 // };
 
 extern "C" int
-mread(int id, int width, int height, unsigned char * buf, int *len)
+mread(int id, int width, int height, unsigned char * buf, int *len, unsigned char * buf640, int *len640)
 {
   
-  if (Map.find(id) != Map.end()){
-    if (Map.find(id)->second->isConnect() == STATUS_CONNECTED)
+  if (mMap.find(id) != mMap.end()){
+    if (mMap.find(id)->second->isConnect() == STATUS_CONNECTED)
     {
-      FrameData framedata = Map.find(id)->second->read(width,height);
+      FrameData framedata = mMap.find(id)->second->read(width,height);
       memcpy( buf, framedata.data, framedata.size);
+      memcpy( buf640, framedata.data640, framedata.size640);
       return SUCCESS;
       // len = framedata.size;
       // g_print("len %d", len);

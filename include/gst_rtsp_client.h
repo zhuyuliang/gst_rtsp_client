@@ -87,6 +87,9 @@ struct FrameData {
     int width;
     int height;
     int isRun = STATUS_INIT;
+    // inference 640 scale
+    int size640;
+    char * data640;
 };
 
 // CustomData
@@ -120,6 +123,9 @@ struct CustomData {
     char * dst_buf;
     char * dst_output_buf;
     char * dst_resize_output_buf;
+
+    // inference resize 640
+    char * dst_resize_output_640_buf;
 };
 
 class RtspClient {

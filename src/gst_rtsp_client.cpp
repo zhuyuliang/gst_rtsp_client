@@ -806,11 +806,14 @@ int RtspClient::isConnect()
 struct FrameData
 RtspClient::read(int width, int height) {
 
+  FrameData data;
+
   if (this->m_data == NULL || this->m_data->isRun == STATUS_DISCONNECT){
-    return FrameData();
+    data.isRun = STATUS_DISCONNECT;
+    data.size = 0;
+    return data;
   }
 
-  FrameData data;
   data.isRun = this->m_data->isRun;
   data.size = 0;
   data.width = this->m_data->info.width;
@@ -865,8 +868,9 @@ RtspClient::read(int width, int height) {
   rga_buffer_t 	dst;
   rga_buffer_t  dst_output;
   rga_buffer_t  dst_resize_output;
+  rga_buffer_t  dst_640_resize_output;
 
-  g_print("mppframe size : %d \n", map_info.size);
+  // g_print("mppframe size : %d \n", map_info.size);
 
   // g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
 
@@ -889,18 +893,19 @@ RtspClient::read(int width, int height) {
     dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height,DST_FORMAT);
     if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
       printf("%s, %s\n", __FUNCTION__, imStrError());
-      return data;
-    }
-    // g_print("1080 h265 imcvtcolor \n");
-    imcvtcolor(src, dst, src.format, dst.format);
-    im_rect src_rect = {0, 0, 1920, 1080};
-    //g_print("imcrop %d",src_rect.width);
-    imcrop(dst,dst_output,src_rect);
+      // return data;
+    } else {
+      // g_print("1080 h265 imcvtcolor \n");
+      imcvtcolor(src, dst, src.format, dst.format);
+      im_rect src_rect = {0, 0, 1920, 1080};
+      //g_print("imcrop %d",src_rect.width);
+      imcrop(dst,dst_output,src_rect);
 
-    imresize(dst_output,dst_resize_output);
+      imresize(dst_output,dst_resize_output);
 
-    data.data = this->m_data->dst_resize_output_buf;
-    data.size = width*height*get_bpp_from_format(DST_FORMAT);
+      data.data = this->m_data->dst_resize_output_buf;
+      data.size = width*height*get_bpp_from_format(DST_FORMAT);
+   }
 
   } else 
 
@@ -921,20 +926,21 @@ RtspClient::read(int width, int height) {
     dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
     if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
       printf("%s, %s\n", __FUNCTION__, imStrError());
-      return data;
+      // return data;
+    } else {
+      // g_print("1080 h264 imcvtcolor \n");
+      imcvtcolor(src, dst, src.format, dst.format);
+      im_rect src_rect = {0, 0, 1920, 1080};
+      //g_print("imcrop %d",src_rect.width);
+      imcrop(dst,dst_output,src_rect);
+
+      imresize(dst_output,dst_resize_output);
+
+      data.width = width;
+      data.height = height;
+      data.data = this->m_data->dst_resize_output_buf;
+      data.size = width*height*get_bpp_from_format(DST_FORMAT);
     }
-    // g_print("1080 h264 imcvtcolor \n");
-    imcvtcolor(src, dst, src.format, dst.format);
-    im_rect src_rect = {0, 0, 1920, 1080};
-    //g_print("imcrop %d",src_rect.width);
-    imcrop(dst,dst_output,src_rect);
-
-    imresize(dst_output,dst_resize_output);
-
-    data.width = width;
-    data.height = height;
-    data.data = this->m_data->dst_resize_output_buf;
-    data.size = width*height*get_bpp_from_format(DST_FORMAT);
 
   } else
 
@@ -955,20 +961,21 @@ RtspClient::read(int width, int height) {
     dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
     if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
       printf("%s, %s\n", __FUNCTION__, imStrError());
-      return data;
+      // return data;
+    } else {
+      // g_print("1080 h264 imcvtcolor \n");
+      imcvtcolor(src, dst, src.format, dst.format);
+      im_rect src_rect = {0, 0, 2560, 1440};
+      //g_print("imcrop %d",src_rect.width);
+      imcrop(dst,dst_output,src_rect);
+
+      imresize(dst_output,dst_resize_output);
+
+      data.width = width;
+      data.height = height;
+      data.data = this->m_data->dst_resize_output_buf;
+      data.size = width*height*get_bpp_from_format(DST_FORMAT);
     }
-    // g_print("1080 h264 imcvtcolor \n");
-    imcvtcolor(src, dst, src.format, dst.format);
-    im_rect src_rect = {0, 0, 2560, 1440};
-    //g_print("imcrop %d",src_rect.width);
-    imcrop(dst,dst_output,src_rect);
-
-    imresize(dst_output,dst_resize_output);
-
-    data.width = width;
-    data.height = height;
-    data.data = this->m_data->dst_resize_output_buf;
-    data.size = width*height*get_bpp_from_format(DST_FORMAT);
     
   } else
 
@@ -989,22 +996,23 @@ RtspClient::read(int width, int height) {
     dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
     if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
       printf("%s, %s\n", __FUNCTION__, imStrError());
-      return data;
+      // return data;
+    } else {
+      // g_print("1080 h264 imcvtcolor \n");
+      imcvtcolor(src, dst, src.format, dst.format);
+      im_rect src_rect = {0, 0, 640, 480};
+      //g_print("imcrop %d",src_rect.width);
+      imcrop(dst,dst_output,src_rect);
+
+      imresize(dst_output,dst_resize_output);
+
+      data.width = width;
+      data.height = height;
+      data.data = this->m_data->dst_resize_output_buf;
+      data.size = width*height*get_bpp_from_format(DST_FORMAT);
     }
-    // g_print("1080 h264 imcvtcolor \n");
-    imcvtcolor(src, dst, src.format, dst.format);
-    im_rect src_rect = {0, 0, 640, 480};
-    //g_print("imcrop %d",src_rect.width);
-    imcrop(dst,dst_output,src_rect);
 
-    imresize(dst_output,dst_resize_output);
-
-    data.width = width;
-    data.height = height;
-    data.data = this->m_data->dst_resize_output_buf;
-    data.size = width*height*get_bpp_from_format(DST_FORMAT);
   }
-
   else {
       // h265 h264
       // supoort 1280*720 3840*2160
@@ -1024,23 +1032,36 @@ RtspClient::read(int width, int height) {
       dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
       if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
         printf("%s, %s\n", __FUNCTION__, imStrError());
-        return data;
+        // return data;
+      } else {
+
+        imcvtcolor(src, dst, src.format, dst.format);
+        imresize(dst,dst_resize_output);
+
+        data.width = width;
+        data.height = height;
+        data.data = this->m_data->dst_resize_output_buf;
+        data.size = width*height*get_bpp_from_format(DST_FORMAT);
+
       }
-
-      imcvtcolor(src, dst, src.format, dst.format);
-      imresize(dst,dst_resize_output);
-
-      data.width = width;
-      data.height = height;
-      data.data = this->m_data->dst_resize_output_buf;
-      data.size = width*height*get_bpp_from_format(DST_FORMAT);
 
   }
 
+  // scale 640 resize data
+  if (this->m_data->dst_resize_output_640_buf == NULL){
+      this->m_data->dst_resize_output_640_buf = (char*)malloc(640*640*get_bpp_from_format(DST_FORMAT));
+  }
+  dst_640_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_640_buf, 640, 640, DST_FORMAT);
+  if(src.width == 0 || dst.width == 0 || dst_640_resize_output.width == 0) {
+    printf("%s, %s\n", __FUNCTION__, imStrError());
+  }else{
+    imresize(dst,dst_640_resize_output,(640.0/width), (640.0/width));
+    data.data640 = this->m_data->dst_resize_output_640_buf;
+    data.size640 = 640*640*get_bpp_from_format(DST_FORMAT);
+  }
+
   gst_buffer_unmap (buf, &map_info);
-
   // ** 
-
   gst_sample_unref (samp);
 
   this->m_data->frame++; 
