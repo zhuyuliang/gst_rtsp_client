@@ -16,6 +16,9 @@ def func_rtspdisplay(index,url, usr, pwd):
     width = 1920
     height = 1080
 
+    resize_width = 0
+    resize_height = 0
+
     # c_url = create_string_buffer(url.encode('utf-8'), len(url))
     # ret = rtspclient.createRtspClient(index,url)
     
@@ -24,13 +27,23 @@ def func_rtspdisplay(index,url, usr, pwd):
         time.sleep(0.5)
         print("id %d ret = %d",index, ret1)
         if (ret1 == 1):
-            ret2 = rtspclient.mread(index,width,height)
-            print(ret2.status)
-            # print(type(img))
-            # img = cv2.resize(img,(1920,1080,3))
-            # img = cv2.UMat(height,width,cv2.CV_8UC3,img)
-            cv2.imwrite('a' + str(index) +'.jpg',ret2.frame)
-            cv2.imwrite('a640' + str(index) +'.jpg',ret2.frame640)
+            ret2 = rtspclient.mread(index,width,height,resize_width,resize_height)
+            if ret2.status == 1:
+                print(ret2.status)
+                print(type(ret2.frame))
+                print(ret2.frame.shape)
+                # print(type(img))
+                # img = cv2.resize(img,(1920,1080,3))
+                # img = cv2.UMat(height,width,cv2.CV_8UC3,img)
+                # img = cv2.UMat(height,width,cv2.CV_8UC3,ret2.frame)
+                # cv2.imshow("name", ret2.frame)
+                # cv2.waitKey(0)
+
+                time.sleep(3)
+                cv2.imwrite('a' + str(index) +'.jpg',ret2.frame)
+                # cv2.imwrite('a640' + str(index) +'.jpg',ret2.frame_resize)
+            else:
+                print("python disconnect")
         elif (ret1 == 2):
             rtspclient.destoryRtspClient(index)
             #time.sleep(4)

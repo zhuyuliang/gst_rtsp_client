@@ -84,7 +84,7 @@ int main()
             //     cout << "sucess enable \n";
             // } 
         }else if (client->isConnect() == STATUS_CONNECTED) {
-            FrameData framedata = client->read(1920,1080);
+            FrameData framedata = client->read(1920,1080,640,640);
             g_print("*");
             // cv::Mat img(480, 640 , CV_8UC3, framedata.data);
             // char buf1[32] = {0};
@@ -96,7 +96,7 @@ int main()
         }
 
         if (client1->isConnect() == STATUS_CONNECTED) {
-            FrameData framedata = client1->read(1920,1080);
+            FrameData framedata = client1->read(1920,1080,640,640);
             g_print("*");
             // cv::Mat img(480, 640 , CV_8UC3, framedata.data);
             // char buf1[32] = {0};

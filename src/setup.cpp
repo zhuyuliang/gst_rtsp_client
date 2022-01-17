@@ -90,16 +90,20 @@ isConnect(int id)
 // };
 
 extern "C" int
-mread(int id, int width, int height, unsigned char * buf, int *len, unsigned char * buf640, int *len640)
+mread(int id, int width, int height, int resize_width, int resize_height, unsigned char * buf, int *len, unsigned char * buf_resize, int *len_resize)
 {
   
   if (mMap.find(id) != mMap.end()){
     if (mMap.find(id)->second->isConnect() == STATUS_CONNECTED)
     {
-      FrameData framedata = mMap.find(id)->second->read(width,height);
-      memcpy( buf, framedata.data, framedata.size);
-      memcpy( buf640, framedata.data640, framedata.size640);
-      return SUCCESS;
+      FrameData framedata = mMap.find(id)->second->read(width, height, resize_width, resize_height);
+      if (framedata.size != 0) {
+        memcpy( buf, framedata.data, framedata.size);
+        if (resize_width > 0 and resize_height >0){
+          memcpy( buf_resize, framedata.data_resize, framedata.size_resize);
+        }
+        return SUCCESS;
+      }
       // len = framedata.size;
       // g_print("len %d", len);
       // g_print("size %d", framedata.size);

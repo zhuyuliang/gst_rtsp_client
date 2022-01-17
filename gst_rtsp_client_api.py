@@ -4,17 +4,15 @@ import numpy as np
 import time
 
 'imgframe data class'
-
 class ImgFrameData:
-    __slots__ = ['id', 'status', 'width', 'height', 'frame', 'frame640']
-    def __init__(self, id, status, width, height, frame, frame640):
+    __slots__ = ['id', 'status', 'width', 'height', 'frame', 'frame_resize']
+    def __init__(self, id, status, width, height, frame, frame_resize):
         self.id = id
         self.status = status 
         self.width = width
         self.height = height
         self.frame = frame
-        self.frame640 = frame640
-
+        self.frame_resize = frame_resize
 
 client = cdll.LoadLibrary("build/libRtspClientLib.so")
 
@@ -36,12 +34,18 @@ def destoryRtspClient( id):
 def isConnect( id):
     return client.isConnect(id)
 
-def mread(id, width, height):
+# resize_width , resize_height = 640, 640
+def mread(id, width, height, resize_width, resize_height):
     urllen = width * height * 3
     c_pbuf = create_string_buffer(''.encode('utf-8'),urllen)
-    urllen640 = 640 * 640 * 3
-    c_pbuf640 = create_string_buffer(''.encode('utf-8'),urllen640)
-    ret = client.mread(id,width,height,c_pbuf,urllen, c_pbuf640, urllen640)
-    img = np.frombuffer(string_at(c_pbuf,urllen), dtype=np.uint8).reshape(height,width,3)
-    img640 = np.frombuffer(string_at(c_pbuf640,urllen640), dtype=np.uint8).reshape(640,640,3)
-    return ImgFrameData(id,ret,width,height,img,img640)
+    urllen_resize ,c_pbuf_resize = None, None
+    if resize_width > 0 and resize_height > 0:
+        urllen_resize = resize_width * resize_height * 3
+        c_pbuf_resize = create_string_buffer(''.encode('utf-8'),urllen_resize)
+    ret = client.mread(id,width,height,resize_width,resize_height,c_pbuf,urllen, c_pbuf_resize, urllen_resize)
+    img, img_resize = None, None
+    if ret == 1:
+        img = np.frombuffer(string_at(c_pbuf,urllen), dtype=np.uint8).reshape(height,width,3)
+        if resize_width > 0 and resize_height > 0: 
+            img_resize = np.frombuffer(string_at(c_pbuf_resize,urllen_resize), dtype=np.uint8).reshape(resize_width,resize_height,3)
+    return ImgFrameData(id, ret, width, height, img, img_resize)

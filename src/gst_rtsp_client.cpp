@@ -804,7 +804,7 @@ int RtspClient::isConnect()
 // }
 
 struct FrameData
-RtspClient::read(int width, int height) {
+RtspClient::read(int width, int height,int resize_width, int resize_height) {
 
   FrameData data;
 
@@ -868,7 +868,8 @@ RtspClient::read(int width, int height) {
   rga_buffer_t 	dst;
   rga_buffer_t  dst_output;
   rga_buffer_t  dst_resize_output;
-  rga_buffer_t  dst_640_resize_output;
+  rga_buffer_t  dst_two_resize_output;
+  rga_buffer_t  dst_two_output;
 
   // g_print("mppframe size : %d \n", map_info.size);
 
@@ -1047,17 +1048,24 @@ RtspClient::read(int width, int height) {
 
   }
 
-  // scale 640 resize data
-  if (this->m_data->dst_resize_output_640_buf == NULL){
-      this->m_data->dst_resize_output_640_buf = (char*)malloc(640*640*get_bpp_from_format(DST_FORMAT));
-  }
-  dst_640_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_640_buf, 640, 640, DST_FORMAT);
-  if(src.width == 0 || dst.width == 0 || dst_640_resize_output.width == 0) {
-    printf("%s, %s\n", __FUNCTION__, imStrError());
-  }else{
-    imresize(dst,dst_640_resize_output,(640.0/width), (640.0/width));
-    data.data640 = this->m_data->dst_resize_output_640_buf;
-    data.size640 = 640*640*get_bpp_from_format(DST_FORMAT);
+  if (resize_width > 0 and resize_height > 0){
+    // scale 640 resize data
+    if (this->m_data->dst_resize_output_resize_buf == NULL){
+        this->m_data->dst_resize_output_resize_buf = (char*)malloc(resize_width*resize_height*get_bpp_from_format(DST_FORMAT));
+    }
+    if (this->m_data->dst_output_resize_buf == NULL){
+        this->m_data->dst_output_resize_buf = (char*)malloc(resize_width*resize_height*get_bpp_from_format(DST_FORMAT));
+    }
+    dst_two_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_resize_buf, resize_width, resize_height, DST_FORMAT);
+    dst_two_output = wrapbuffer_virtualaddr(this->m_data->dst_output_resize_buf, resize_width, resize_height, DST_FORMAT);
+    if(src.width == 0 || dst.width == 0 || dst_two_resize_output.width == 0) {
+      printf("%s, %s\n", __FUNCTION__, imStrError());
+    }else{
+      imresize(dst, dst_two_resize_output, (double(resize_width)/width), (double(resize_height)/width));
+      imtranslate(dst_two_resize_output, dst_two_output, 0, int((resize_height - (height * (double(resize_height)/width)))/2));
+      data.data_resize = this->m_data->dst_output_resize_buf;
+      data.size_resize = resize_width * resize_height * get_bpp_from_format(DST_FORMAT);
+    }
   }
 
   gst_buffer_unmap (buf, &map_info);
