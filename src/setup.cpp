@@ -17,17 +17,22 @@ extern "C" int
 createRtspClient (int id, const char * url,int urllen)
 {
     //&& id != nullptr && url != nullptr
+    g_print("setup createRtspClient %d \n",id);
     if ( mMap.find(id) == mMap.end() )
     {
       mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
       if (mMap.find(id)->second->enable(id, url, urllen)){
           return SUCCESS;
       }else{
-          mMap.find(id)->second->disable();
-          mMap.erase(id);
+          // mMap.find(id)->second->disable();
+          // delete mMap.find(id)->second;
+          // mMap.erase(id);
           return FAIL;
       }
     } else {
+      // mMap.find(id)->second->disable();
+      // delete mMap.find(id)->second;
+      // mMap.erase(id);
       return FAIL;
     }
 }
@@ -38,6 +43,7 @@ destoryRtspClientAll()
   for( it=mMap.begin(); it!=mMap.end(); it++){
     // cout<<it->first<<"    "<<it->second<<endl;
     it->second->disable();
+    delete it->second;
   } 
   mMap.clear();
   // if (mMap.find(id) != NULL){
@@ -53,6 +59,7 @@ destoryRtspClient(int id)
 {
   if (mMap.find(id) != mMap.end()){
     mMap.find(id)->second->disable();
+    delete mMap.find(id)->second;
     mMap.erase(id);
     // rtspclient = NULL;
   }
@@ -77,6 +84,7 @@ isConnect(int id)
       int ret = mMap.find(id)->second->isConnect();
       return ret;
   }else{
+      // g_print ("isConnect STATUS_DISCONNECT \n");
       return STATUS_DISCONNECT;
   }
 }
@@ -96,14 +104,16 @@ mread(int id, int width, int height, int resize_width, int resize_height, unsign
   if (mMap.find(id) != mMap.end()){
     if (mMap.find(id)->second->isConnect() == STATUS_CONNECTED)
     {
-      FrameData framedata = mMap.find(id)->second->read(width, height, resize_width, resize_height);
-      if (framedata.size != 0) {
-        memcpy( buf, framedata.data, framedata.size);
+      FrameData *framedata = mMap.find(id)->second->read(width, height, resize_width, resize_height);
+      if (framedata->size != 0) {
+        memcpy( buf, framedata->data, framedata->size);
         if (resize_width > 0 and resize_height >0){
-          memcpy( buf_resize, framedata.data_resize, framedata.size_resize);
+          memcpy( buf_resize, framedata->data_resize, framedata->size_resize);
         }
+        delete framedata;
         return SUCCESS;
       }
+      delete framedata;
       // len = framedata.size;
       // g_print("len %d", len);
       // g_print("size %d", framedata.size);

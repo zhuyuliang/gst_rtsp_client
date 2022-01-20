@@ -2,6 +2,9 @@
 from ctypes import *
 import numpy as np
 import time
+import threading
+
+lock = threading.Lock()
 
 'imgframe data class'
 class ImgFrameData:
@@ -17,23 +20,33 @@ class ImgFrameData:
 client = cdll.LoadLibrary("build/libRtspClientLib.so")
 
 def createRtspClient( id, url):
+    lock.acquire()
     time.sleep(1)
     c_url = create_string_buffer(url.encode('utf-8'), len(url))
-    return client.createRtspClient( id,c_url,len(url))
+    print("createRtspClient id = %d",id)
+    isSuccess = client.createRtspClient( id,c_url,len(url))
+    lock.release()
+    return isSuccess
 
 def destoryRtspClientAll():
-    return client.destoryRtspClientAll()
+    lock.acquire()
+    isSuccess = client.destoryRtspClientAll()
+    lock.release()
+    return isSuccess
 
-def destoryRtspClient( id):
+def destoryRtspClient(id):
+    lock.acquire()
     time.sleep(1)
-    return client.destoryRtspClient(id)
-
+    isSuccess = client.destoryRtspClient(id)
+    lock.release()
+    return isSuccess
+    
 # def reconnectRtsp( id):
 #     return client.reconnectRtsp(id)
 
 def isConnect( id):
     return client.isConnect(id)
-
+     
 # resize_width , resize_height = 640, 640
 def mread(id, width, height, resize_width, resize_height):
     urllen = width * height * 3
@@ -48,4 +61,6 @@ def mread(id, width, height, resize_width, resize_height):
         img = np.frombuffer(string_at(c_pbuf,urllen), dtype=np.uint8).reshape(height,width,3)
         if resize_width > 0 and resize_height > 0: 
             img_resize = np.frombuffer(string_at(c_pbuf_resize,urllen_resize), dtype=np.uint8).reshape(resize_width,resize_height,3)
+    del urllen, c_pbuf
+    del urllen_resize, c_pbuf_resize
     return ImgFrameData(id, ret, width, height, img, img_resize)

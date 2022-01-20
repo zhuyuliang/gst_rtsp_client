@@ -107,27 +107,26 @@ pad_probe (GstPad * pad, GstPadProbeInfo * info, gpointer user_data)
 // uridecodebin -> src link tee -> sink 
 static void 
 on_src_tee_added(GstElement *element, GstPad *pad, gpointer data) {
-    GstPad *sinkpad;
+    // GstPad *sinkpad;
     struct CustomData *decoder = (struct CustomData *)data;
 
     /* We can now link this pad with the rtsp-decoder sink pad */
     g_print("Dynamic pad created, linking source/demuxer\n");
-    sinkpad = gst_element_get_static_pad(decoder->tee, "sink");
-    gst_pad_link(pad, sinkpad);
-    gst_object_unref(sinkpad);
+    decoder->tee_sinkpad = gst_element_get_static_pad(decoder->tee, "sink");
+    gst_pad_link(pad, decoder->tee_sinkpad);
+    // gst_object_unref(sinkpad);
 }
 
 static void 
 on_src_decodebin_added(GstElement *element, GstPad *pad, gpointer data) {
-    GstPad *sinkpad;
     struct CustomData *decoder = (struct CustomData *)data;
     
     // decoder->isRun = STATUS_CONNECTED;
     /* We can now link this pad with the rtsp-decoder sink pad */
     g_print("Dynamic pad created, linking source/decodeon_src_decodebin_added\n");
-    sinkpad = gst_element_get_static_pad(decoder->decode, "sink");
-    gst_pad_link(pad, sinkpad);
-    gst_object_unref(sinkpad);
+    decoder->decode_sinkpad = gst_element_get_static_pad(decoder->decode, "sink");
+    gst_pad_link(pad, decoder->decode_sinkpad);
+    // gst_object_unref(sinkpad);
 }
 
 // appsink query
@@ -152,11 +151,15 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
   struct CustomData *dec = (struct CustomData *) user_data;
   
   //param not use
-  (void) bus;
+  // (void) bus;
 
-  //g_print ( "piple call_bus message %d \n",msg->type);
+  // g_print ( "piple call_bus message m_Id %s %d \n", gst_message_type_get_name(GST_MESSAGE_TYPE (msg)),dec->m_Id);
+  
 
   switch (GST_MESSAGE_TYPE (msg)) {
+    case GST_MESSAGE_UNKNOWN: {
+      g_print ( "piple call_bus message GST_MESSAGE_UNKNOWN %d \n",dec->m_Id);
+    }
     case GST_MESSAGE_STATE_CHANGED:{
       gchar *dotfilename;
       GstState old_gst_state, cur_gst_state, pending_gst_state;
@@ -182,6 +185,9 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
           );
       GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS (GST_BIN (dec->pipeline),
           GST_DEBUG_GRAPH_SHOW_ALL, dotfilename);
+
+      // g_print ( "piple call_bus message GST_MESSAGE_STATE_CHANGED %d \n",dec->m_Id);
+
       g_free (dotfilename);
 
       break;
@@ -203,13 +209,13 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
     }
     case GST_MESSAGE_EOS:
       g_print("bus eos \n");
-      g_main_loop_quit (dec->loop);
+      // g_main_loop_quit (dec->loop);
       dec->isRun = STATUS_DISCONNECT;
       break;
     case GST_MESSAGE_INFO:
     case GST_MESSAGE_WARNING:
     case GST_MESSAGE_ERROR:{
-      g_print ( "piple call_bus message \n");
+      g_print ( "piple call_bus message %d \n",dec->m_Id);
       GError *error = NULL;
       gchar *debug_info = NULL;
       gchar const *prefix = "";
@@ -241,8 +247,8 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
             GST_DEBUG_GRAPH_SHOW_ALL, "error");
       }
       // TODO: stop mainloop in case of an error
-      g_main_loop_quit(dec->loop);
-      g_print("bus disconnect \n");
+      // g_main_loop_quit(dec->loop);
+      g_print("bus disconnect %d \n",dec->m_Id);
       dec->isRun = STATUS_DISCONNECT;
 
       break;
@@ -481,12 +487,12 @@ video_frame_loop (void *arg)
 static struct CustomData *
 rtsp_init(struct CustomData *data) {
 
-    GstBus *bus;
-    GstPad *apppad;
-    GstPad *queue1_video_pad;
-    GstPad *queue2_video_pad;
-    GstPad *tee1_video_pad;
-    GstPad *tee2_video_pad;
+    // GstBus *bus;
+    // GstPad *apppad;
+    // GstPad *queue1_video_pad;
+    // GstPad *queue2_video_pad;
+    // GstPad *tee1_video_pad;
+    // GstPad *tee2_video_pad;
 
     /* Build Pipeline */
     data->pipeline = gst_pipeline_new(std::to_string(data->m_Id).c_str());
@@ -522,10 +528,10 @@ rtsp_init(struct CustomData *data) {
     * decoder that produce special strides and offsets from having to
     * copy the buffers.
     */
-    apppad = gst_element_get_static_pad (data->appsink, "sink");
-    gst_pad_add_probe (apppad, GST_PAD_PROBE_TYPE_QUERY_DOWNSTREAM,
+    data->apppad = gst_element_get_static_pad (data->appsink, "sink");
+    gst_pad_add_probe (data->apppad, GST_PAD_PROBE_TYPE_QUERY_DOWNSTREAM,
         appsink_query_cb, NULL, NULL);
-    gst_object_unref (apppad);
+    // gst_object_unref (data->apppad);
 
     gst_base_sink_set_max_lateness (GST_BASE_SINK (data->appsink), 70 * GST_MSECOND);
     gst_base_sink_set_qos_enabled (GST_BASE_SINK (data->appsink), TRUE);
@@ -585,33 +591,33 @@ rtsp_init(struct CustomData *data) {
     }
 
     if (DISPLAY) {
-        queue1_video_pad = gst_element_get_static_pad ( data->queue_displaysink, "sink");
-        tee1_video_pad = gst_element_get_request_pad ( data->tee, "src_%u");
-        if (gst_pad_link ( tee1_video_pad, queue1_video_pad) != GST_PAD_LINK_OK) {
+        data->queue1_video_pad = gst_element_get_static_pad ( data->queue_displaysink, "sink");
+        data->tee1_video_pad = gst_element_get_request_pad ( data->tee, "src_%u");
+        if (gst_pad_link ( data->tee1_video_pad, data->queue1_video_pad) != GST_PAD_LINK_OK) {
             g_printerr ("tee link queue error. \n");
             gst_object_unref (data->pipeline);
             return NULL;
         }
-        gst_object_unref (queue1_video_pad);
-        gst_object_unref (tee1_video_pad);
+        // gst_object_unref (queue1_video_pad);
+        // gst_object_unref (tee1_video_pad);
     }
     //tee -> queue1 -> queue2
-    queue2_video_pad = gst_element_get_static_pad ( data->queue_appsink, "sink");
-    tee2_video_pad = gst_element_get_request_pad ( data->tee, "src_%u");
-    if (gst_pad_link ( tee2_video_pad, queue2_video_pad) != GST_PAD_LINK_OK) {
+    data->queue2_video_pad = gst_element_get_static_pad ( data->queue_appsink, "sink");
+    data->tee2_video_pad = gst_element_get_request_pad ( data->tee, "src_%u");
+    if (gst_pad_link ( data->tee2_video_pad, data->queue2_video_pad) != GST_PAD_LINK_OK) {
         g_printerr ("tee link queue error. \n");
         gst_object_unref (data->pipeline);
         return NULL;
     }
-    gst_object_unref (queue2_video_pad);
-    gst_object_unref (tee2_video_pad);
+    // gst_object_unref (queue2_video_pad);
+    // gst_object_unref (tee2_video_pad);
 
     g_signal_connect(data->rtspsrc, "pad-added", G_CALLBACK( on_src_decodebin_added), data);
     g_signal_connect(data->decode, "pad-added", G_CALLBACK( on_src_tee_added), data);
     
-    bus = gst_pipeline_get_bus( GST_PIPELINE (data->pipeline));
-    gst_bus_add_watch (bus, bus_watch_cb, data);
-    gst_object_unref ( GST_OBJECT (bus));
+    data->bus = gst_pipeline_get_bus( GST_PIPELINE (data->pipeline));
+    gst_bus_add_watch (data->bus, bus_watch_cb, data);
+    // gst_object_unref ( GST_OBJECT (bus));
 
     // bus = gst_element_get_bus( GST_ELEMENT (data->appsink));
     // gst_bus_add_watch (bus, (GstBusFunc) bus_uridecodebin_cb, data);
@@ -626,7 +632,7 @@ rtsp_init(struct CustomData *data) {
     // start playing
     g_print ("start playing \n");
     gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_PLAYING);
-    
+
     if (data->m_RtspCallBack != NULL){
       //g_main_loop_run (main_loop);
       pthread_create (&data->gst_thread, NULL, video_frame_loop, data);
@@ -637,42 +643,117 @@ rtsp_init(struct CustomData *data) {
 
 // destroy
 static void 
-rtsp_destroy (struct CustomData *data)
+rtsp_destroy (pthread_t m_thread, struct CustomData *data)
 {
-  if (data != NULL && data->isRun != STATUS_INIT) {
+  if (data != NULL) {
+    // g_print ("start gst_bus_remove_watch \n");
+    gst_bus_remove_watch(data->bus);
+    gst_object_unref(data->bus);
+
+    gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_PAUSED);
     gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_NULL);
-    pthread_join (data->gst_thread, 0);
+    // if (DISPLAY) {
+    //   gst_bin_remove_many (GST_BIN(data->pipeline), data->queue_displaysink, data->displaysink, NULL);
+    //   gst_object_unref (data->queue_displaysink);
+    //   gst_object_unref (data->displaysink);
+    // }
+    
+    // g_print ("start gst_pad_unlink \n");
+    gst_pad_unlink(data->tee2_video_pad, data->queue2_video_pad);
+    gst_element_remove_pad(GST_ELEMENT(data->tee),data->tee2_video_pad);
+    gst_element_remove_pad(GST_ELEMENT(data->queue_appsink),data->queue2_video_pad);
 
-    gst_bin_remove_many (GST_BIN(data->pipeline), data->rtspsrc, NULL);
-    gst_bin_remove_many (GST_BIN(data->pipeline), data->decode, data->tee, NULL);
-    gst_object_unref (data->rtspsrc);
-    gst_object_unref (data->decode);
-    gst_object_unref (data->tee);
-    if (DISPLAY) {
-      gst_bin_remove_many (GST_BIN(data->pipeline), data->queue_displaysink, data->displaysink, NULL);
-      gst_object_unref (data->queue_displaysink);
-      gst_object_unref (data->displaysink);
+    // g_print ("start gst_element_unlink \n");
+    gst_element_unlink(data->appsink,data->queue_appsink);
+    gst_element_unlink(data->queue_appsink,data->tee);
+    gst_element_unlink(data->tee,data->decode);
+    gst_element_unlink(data->decode,data->rtspsrc);
+
+    // g_print ("start gst_object_unref1 \n");
+    if (data->tee_sinkpad != NULL){
+      gst_element_remove_pad(GST_ELEMENT(data->tee),data->tee_sinkpad);
+      gst_object_unref(data->tee_sinkpad);
     }
-    gst_bin_remove_many (GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
-    gst_object_unref (data->queue_appsink);
-    gst_object_unref (data->appsink);
+    if (data->decode_sinkpad != NULL){
+      gst_element_remove_pad(GST_ELEMENT(data->decode),data->decode_sinkpad);
+      gst_object_unref(data->decode_sinkpad);
+    }
+    
+    gst_object_unref(data->apppad);
+    gst_object_unref(data->queue2_video_pad);
+    gst_object_unref(data->tee2_video_pad);
 
+    // g_print ("start gst_bin_remove_many \n");
+    gst_bin_remove_many(GST_BIN(data->pipeline), data->rtspsrc, data->decode, data->tee, NULL);
+    gst_bin_remove_many(GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
+    // g_print ("start gst_object_unref3 \n");
     gst_object_unref (data->pipeline);
+
+    // g_print ("start gst_object_unref2 \n");
+    // gst_object_unref (data->appsink);
+    // gst_object_unref (data->queue_appsink);
+    // gst_object_unref (data->tee);
+    // gst_object_unref (data->decode);
+    // gst_object_unref (data->rtspsrc);
+
+    // g_print ("start g_main_loop_quit \n");
     g_main_loop_quit (data->loop);
     g_main_loop_unref (data->loop);
 
+    pthread_join (data->gst_thread, 0);
+    pthread_detach (data->gst_thread);
+
+    pthread_join (m_thread, 0);
+    pthread_detach (m_thread);
+
+    // g_print ("start == NULL \n");
+    data->loop = NULL;
+    data->pipeline = NULL;
+    data->rtspsrc = NULL;
+    data->decode = NULL;
+    data->tee = NULL;
+    data->queue_appsink = NULL;
+    data->queue_displaysink = NULL;
+    data->appsink = NULL;
+    data->displaysink = NULL;
+
+    data->tee_sinkpad = NULL;
+    data->decode_sinkpad = NULL;
+    data->bus = NULL;
+    data->apppad = NULL;
+    data->queue2_video_pad = NULL;
+    data->tee2_video_pad = NULL;
+
+    // data->frame = NULL;
+    // data->format = NULL;
+    // data->gst_thread = NULL;
+    // data->info = NULL;
+    // data->m_Id = NULL;
+    // data->m_RtspCallBack = NULL;
+    // data->isRun = NULL;
+
+    // g_print ("start g_free \n");
     g_free (data->dst_buf);
     g_free (data->dst_output_buf);
     g_free (data->dst_resize_output_buf);
     g_free (data->m_RtspUri);
 
-    g_free (data);
+    g_free (data->dst_output_resize_buf);
+    g_free (data->dst_resize_output_resize_buf);
 
-    data = NULL;
-  }else {
-    g_free (data);
+    // delete loop;
+    // delete pipeline;
+    // delete rtspsrc;
+    // delete decode;
+    // delete tee;
+    // delete queue_appsink;
+    // delete queue_displaysink;
+    // delete appsink;
+    // delete displaysink; 
+    // g_print ("start pthread_quite \n");
 
-    data = NULL;
+    g_free (data);
+    
   }
 
 }
@@ -695,7 +776,7 @@ static void* connectrtsp(void *arg) {
   //GST_DEBUG_CATEGORY_INIT (rk_appsink_debug, "rk_appsink", 2, "App sink");
   g_print("mId %d mRtspUri %s \n", data->m_Id, data->m_RtspUri);
 
-  data = rtsp_init (data);
+  rtsp_init (data);
 
   if (data != NULL) {
     data->isRun = STATUS_CONNECTING;
@@ -706,8 +787,9 @@ static void* connectrtsp(void *arg) {
   }
 
   // rtsp_destroy(data);
+  // g_main_loop_unref(data->loop);
 
-  // g_print("init done");
+  g_print("init done");
   data->isRun = STATUS_DISCONNECT;
 
   return 0;
@@ -717,8 +799,8 @@ static void* connectrtsp(void *arg) {
 bool
 RtspClient::enable(int id, const char * url, int urllen, FRtspCallBack frtspcallback) {
 
-  if (m_data == NULL or m_data->isRun == STATUS_DISCONNECT) {
-      m_data = g_new0 (struct CustomData, 1);
+  if (this->m_data == NULL) {
+      this->m_data = g_new0 (struct CustomData, 1);
       this->m_data->m_Id = id;
       this->m_data->url_size = urllen;
       this->m_data->m_RtspUri = (char *)malloc(urllen);
@@ -742,8 +824,8 @@ RtspClient::enable(int id, const char * url, int urllen, FRtspCallBack frtspcall
 bool
 RtspClient::enable(int id, const char * url, int urllen) {
 
-  if (m_data == NULL || m_data->isRun == STATUS_DISCONNECT) {
-      m_data = g_new0 (struct CustomData, 1);
+  if (this->m_data == NULL) {
+      this->m_data = g_new0 (struct CustomData, 1);
       this->m_data->m_Id = id;
       this->m_data->url_size = urllen;
       this->m_data->m_RtspUri = (char *)malloc(urllen);
@@ -766,15 +848,16 @@ RtspClient::enable(int id, const char * url, int urllen) {
 void 
 RtspClient::disable() {
 
-    rtsp_destroy(this->m_data);
-    pthread_join (this->m_thread, 0);
+    g_print("RtspClient start ~disable!\n");
+    rtsp_destroy(this->m_thread, this->m_data);
+    g_print("RtspClient end ~disable!\n");
 
 }
 
 int RtspClient::isConnect() 
 {
   if (this->m_data == NULL){
-    return STATUS_INIT;
+    return STATUS_DISCONNECT;
   }
   return this->m_data->isRun;
 }
@@ -803,21 +886,21 @@ int RtspClient::isConnect()
 
 // }
 
-struct FrameData
+struct FrameData *
 RtspClient::read(int width, int height,int resize_width, int resize_height) {
 
-  FrameData data;
+  FrameData * data = new FrameData();
 
   if (this->m_data == NULL || this->m_data->isRun == STATUS_DISCONNECT){
-    data.isRun = STATUS_DISCONNECT;
-    data.size = 0;
+    data->isRun = STATUS_DISCONNECT;
+    data->size = 0;
     return data;
   }
 
-  data.isRun = this->m_data->isRun;
-  data.size = 0;
-  data.width = this->m_data->info.width;
-  data.height = this->m_data->info.height;
+  data->isRun = this->m_data->isRun;
+  data->size = 0;
+  data->width = this->m_data->info.width;
+  data->height = this->m_data->info.height;
 
   GstSample *samp;
   GstBuffer *buf;
@@ -835,17 +918,17 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
   
   // ** 
 
-  int ret;
-  GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
-  guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data->info));
+  // int ret;
+  // GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
+  // guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data->info));
   // guint width, height;
   GstMapInfo map_info;
-  gchar filename[128];
-  GstVideoFormat pixfmt;
-  const char *pixfmt_str;
+  // gchar filename[128];
+  // GstVideoFormat pixfmt;
+  // const char *pixfmt_str;
 
-  pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data->info));
-  pixfmt_str = gst_video_format_to_string (pixfmt);
+  // pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data->info));
+  // pixfmt_str = gst_video_format_to_string (pixfmt);
 
   /* TODO: use the DMABUF directly */
   gst_buffer_map (buf, &map_info, GST_MAP_READ);
@@ -854,14 +937,14 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
   int source_height = GST_VIDEO_INFO_HEIGHT (&(this->m_data->info));
 
   /* output some information at the beginning (= when the first frame is handled) */
-  if (this->m_data->frame == 0) {
-    printf ("===================================\n");
-    printf ("GStreamer video stream information:\n");
-    printf ("  size: %u x %u pixel\n", source_width, source_height);
-    printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
-    printf ("  video meta found: %s\n", yesno (meta != NULL));
-    printf ("===================================\n");
-  }
+  // if (this->m_data->frame == 0) {
+  //   printf ("===================================\n");
+  //   printf ("GStreamer video stream information:\n");
+  //   printf ("  size: %u x %u pixel\n", source_width, source_height);
+  //   printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
+  //   printf ("  video meta found: %s\n", yesno (meta != NULL));
+  //   printf ("===================================\n");
+  // }
 
   // rga
   rga_buffer_t 	src;
@@ -904,8 +987,8 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
 
       imresize(dst_output,dst_resize_output);
 
-      data.data = this->m_data->dst_resize_output_buf;
-      data.size = width*height*get_bpp_from_format(DST_FORMAT);
+      data->data = this->m_data->dst_resize_output_buf;
+      data->size = width*height*get_bpp_from_format(DST_FORMAT);
    }
 
   } else 
@@ -937,10 +1020,10 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
 
       imresize(dst_output,dst_resize_output);
 
-      data.width = width;
-      data.height = height;
-      data.data = this->m_data->dst_resize_output_buf;
-      data.size = width*height*get_bpp_from_format(DST_FORMAT);
+      data->width = width;
+      data->height = height;
+      data->data = this->m_data->dst_resize_output_buf;
+      data->size = width*height*get_bpp_from_format(DST_FORMAT);
     }
 
   } else
@@ -972,10 +1055,10 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
 
       imresize(dst_output,dst_resize_output);
 
-      data.width = width;
-      data.height = height;
-      data.data = this->m_data->dst_resize_output_buf;
-      data.size = width*height*get_bpp_from_format(DST_FORMAT);
+      data->width = width;
+      data->height = height;
+      data->data = this->m_data->dst_resize_output_buf;
+      data->size = width*height*get_bpp_from_format(DST_FORMAT);
     }
     
   } else
@@ -1007,10 +1090,10 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
 
       imresize(dst_output,dst_resize_output);
 
-      data.width = width;
-      data.height = height;
-      data.data = this->m_data->dst_resize_output_buf;
-      data.size = width*height*get_bpp_from_format(DST_FORMAT);
+      data->width = width;
+      data->height = height;
+      data->data = this->m_data->dst_resize_output_buf;
+      data->size = width*height*get_bpp_from_format(DST_FORMAT);
     }
 
   }
@@ -1039,10 +1122,10 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
         imcvtcolor(src, dst, src.format, dst.format);
         imresize(dst,dst_resize_output);
 
-        data.width = width;
-        data.height = height;
-        data.data = this->m_data->dst_resize_output_buf;
-        data.size = width*height*get_bpp_from_format(DST_FORMAT);
+        data->width = width;
+        data->height = height;
+        data->data = this->m_data->dst_resize_output_buf;
+        data->size = width*height*get_bpp_from_format(DST_FORMAT);
 
       }
 
@@ -1063,8 +1146,8 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
     }else{
       imresize(dst, dst_two_resize_output, (double(resize_width)/width), (double(resize_height)/width));
       imtranslate(dst_two_resize_output, dst_two_output, 0, int((resize_height - (height * (double(resize_height)/width)))/2));
-      data.data_resize = this->m_data->dst_output_resize_buf;
-      data.size_resize = resize_width * resize_height * get_bpp_from_format(DST_FORMAT);
+      data->data_resize = this->m_data->dst_output_resize_buf;
+      data->size_resize = resize_width * resize_height * get_bpp_from_format(DST_FORMAT);
     }
   }
 
