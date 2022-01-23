@@ -24,12 +24,11 @@ def func_rtspdisplay(index,url, usr, pwd):
     
     while(1) :
         ret1 = rtspclient.isConnect(index)
-        time.sleep(0.5)
         print("id %d ret = %d",index, ret1)
         if (ret1 == 1):
-            ret2 = rtspclient.mread(index,width,height,resize_width,resize_height)
-            if ret2.status == 1:
-                print(ret2.status)
+            status, img, img_resize = rtspclient.mread(index,width,height,resize_width,resize_height)
+            if status == 1:
+                # print(status)
                 # print(type(ret2.frame))
                 # print(ret2.frame.shape)
                 # print(type(img))
@@ -39,7 +38,7 @@ def func_rtspdisplay(index,url, usr, pwd):
                 # cv2.imshow("name", ret2.frame)
                 # cv2.waitKey(0)
 
-                time.sleep(0.5)
+                time.sleep(0.1)
                 # cv2.imwrite('a' + str(index) +'.jpg',ret2.frame)
                 # cv2.imwrite('a640' + str(index) +'.jpg',ret2.frame_resize)
             else:
@@ -68,18 +67,18 @@ if __name__ == '__main__':
     t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:shangqu2020@192.168.2.30/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
     t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:shangqu2020@192.168.2.30/cam/realmonitor?channel=1&subtype=0', "admin", "shangqu2020"))
     t4 = threading.Thread(target=func_rtspdisplay, args = (5, "rtsp://admin:shangqu2020@192.168.2.64/Streaming/Channels/1", "admin", "shangqu2020"))
-    t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:shangqu2020@192.168.2.64/Streaming/Channels/1", "admin", "shangqu2020"))
+    # t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:shangqu2020@192.168.2.64/Streaming/Channels/1", "admin", "shangqu2020"))
 
     t0.start()
     t1.start()
     t2.start()
     t3.start()
     t4.start()
-    t5.start()
+    # t5.start()
 
     t0.join()
     t1.join()
     t2.join()
     t3.join()
     t4.join()
-    t5.join()
+    # t5.join()

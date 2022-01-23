@@ -112,9 +112,9 @@ on_src_tee_added(GstElement *element, GstPad *pad, gpointer data) {
 
     /* We can now link this pad with the rtsp-decoder sink pad */
     g_print("Dynamic pad created, linking source/demuxer\n");
-    decoder->tee_sinkpad = gst_element_get_static_pad(decoder->tee, "sink");
-    gst_pad_link(pad, decoder->tee_sinkpad);
-    // gst_object_unref(sinkpad);
+    GstPad * tee_sinkpad = gst_element_get_static_pad(decoder->tee, "sink");
+    gst_pad_link(pad, tee_sinkpad);
+    gst_object_unref(tee_sinkpad);
 }
 
 static void 
@@ -124,9 +124,9 @@ on_src_decodebin_added(GstElement *element, GstPad *pad, gpointer data) {
     // decoder->isRun = STATUS_CONNECTED;
     /* We can now link this pad with the rtsp-decoder sink pad */
     g_print("Dynamic pad created, linking source/decodeon_src_decodebin_added\n");
-    decoder->decode_sinkpad = gst_element_get_static_pad(decoder->decode, "sink");
-    gst_pad_link(pad, decoder->decode_sinkpad);
-    // gst_object_unref(sinkpad);
+    GstPad * decode_sinkpad = gst_element_get_static_pad(decoder->decode, "sink");
+    gst_pad_link(pad, decode_sinkpad);
+    gst_object_unref(decode_sinkpad);
 }
 
 // appsink query
@@ -498,7 +498,7 @@ rtsp_init(struct CustomData *data) {
     data->pipeline = gst_pipeline_new(std::to_string(data->m_Id).c_str());
 
     data->rtspsrc = gst_element_factory_make ( "rtspsrc", "rtspsrc0");
-    data->decode  = gst_element_factory_make ( "decodebin", "decodebin0");
+    data->decode  = gst_element_factory_make ( "decodebin3", "decodebin0");
     //data->mppdec = gst_element_factory_make ( "mppvideodec", "mppvideodec0");
     data->tee    = gst_element_factory_make ( "tee", "tee0");
 
@@ -528,10 +528,10 @@ rtsp_init(struct CustomData *data) {
     * decoder that produce special strides and offsets from having to
     * copy the buffers.
     */
-    data->apppad = gst_element_get_static_pad (data->appsink, "sink");
-    gst_pad_add_probe (data->apppad, GST_PAD_PROBE_TYPE_QUERY_DOWNSTREAM,
+    GstPad * apppad = gst_element_get_static_pad (data->appsink, "sink");
+    gst_pad_add_probe (apppad, GST_PAD_PROBE_TYPE_QUERY_DOWNSTREAM,
         appsink_query_cb, NULL, NULL);
-    // gst_object_unref (data->apppad);
+    gst_object_unref (apppad);
 
     gst_base_sink_set_max_lateness (GST_BASE_SINK (data->appsink), 70 * GST_MSECOND);
     gst_base_sink_set_qos_enabled (GST_BASE_SINK (data->appsink), TRUE);
@@ -591,26 +591,26 @@ rtsp_init(struct CustomData *data) {
     }
 
     if (DISPLAY) {
-        data->queue1_video_pad = gst_element_get_static_pad ( data->queue_displaysink, "sink");
-        data->tee1_video_pad = gst_element_get_request_pad ( data->tee, "src_%u");
-        if (gst_pad_link ( data->tee1_video_pad, data->queue1_video_pad) != GST_PAD_LINK_OK) {
+        GstPad * queue1_video_pad = gst_element_get_static_pad ( data->queue_displaysink, "sink");
+        GstPad * tee1_video_pad = gst_element_get_request_pad ( data->tee, "src_%u");
+        if (gst_pad_link ( tee1_video_pad, queue1_video_pad) != GST_PAD_LINK_OK) {
             g_printerr ("tee link queue error. \n");
             gst_object_unref (data->pipeline);
             return NULL;
         }
-        // gst_object_unref (queue1_video_pad);
-        // gst_object_unref (tee1_video_pad);
+        gst_object_unref (queue1_video_pad);
+        gst_object_unref (tee1_video_pad);
     }
     //tee -> queue1 -> queue2
-    data->queue2_video_pad = gst_element_get_static_pad ( data->queue_appsink, "sink");
-    data->tee2_video_pad = gst_element_get_request_pad ( data->tee, "src_%u");
-    if (gst_pad_link ( data->tee2_video_pad, data->queue2_video_pad) != GST_PAD_LINK_OK) {
+    GstPad * queue2_video_pad = gst_element_get_static_pad ( data->queue_appsink, "sink");
+    GstPad * tee2_video_pad = gst_element_get_request_pad ( data->tee, "src_%u");
+    if (gst_pad_link ( tee2_video_pad, queue2_video_pad) != GST_PAD_LINK_OK) {
         g_printerr ("tee link queue error. \n");
         gst_object_unref (data->pipeline);
         return NULL;
     }
-    // gst_object_unref (queue2_video_pad);
-    // gst_object_unref (tee2_video_pad);
+    gst_object_unref (queue2_video_pad);
+    gst_object_unref (tee2_video_pad);
 
     g_signal_connect(data->rtspsrc, "pad-added", G_CALLBACK( on_src_decodebin_added), data);
     g_signal_connect(data->decode, "pad-added", G_CALLBACK( on_src_tee_added), data);
@@ -659,33 +659,19 @@ rtsp_destroy (pthread_t m_thread, struct CustomData *data)
     // }
     
     // g_print ("start gst_pad_unlink \n");
-    gst_pad_unlink(data->tee2_video_pad, data->queue2_video_pad);
-    gst_element_remove_pad(GST_ELEMENT(data->tee),data->tee2_video_pad);
-    gst_element_remove_pad(GST_ELEMENT(data->queue_appsink),data->queue2_video_pad);
-
-    // g_print ("start gst_element_unlink \n");
-    gst_element_unlink(data->appsink,data->queue_appsink);
-    gst_element_unlink(data->queue_appsink,data->tee);
-    gst_element_unlink(data->tee,data->decode);
-    gst_element_unlink(data->decode,data->rtspsrc);
-
-    // g_print ("start gst_object_unref1 \n");
-    if (data->tee_sinkpad != NULL){
-      gst_element_remove_pad(GST_ELEMENT(data->tee),data->tee_sinkpad);
-      gst_object_unref(data->tee_sinkpad);
-    }
-    if (data->decode_sinkpad != NULL){
-      gst_element_remove_pad(GST_ELEMENT(data->decode),data->decode_sinkpad);
-      gst_object_unref(data->decode_sinkpad);
-    }
-    
-    gst_object_unref(data->apppad);
-    gst_object_unref(data->queue2_video_pad);
-    gst_object_unref(data->tee2_video_pad);
+    // gst_pad_unlink(data->tee2_video_pad, data->queue2_video_pad);
+    // gst_element_remove_pad(GST_ELEMENT(data->tee),data->tee2_video_pad);
+    // gst_element_remove_pad(GST_ELEMENT(data->queue_appsink),data->queue2_video_pad);
 
     // g_print ("start gst_bin_remove_many \n");
+    gst_element_unlink_many(data->appsink,data->queue_appsink,data->tee,data->decode,data->rtspsrc);
+    // gst_element_unlink_many(data->queue_appsink,data->tee);
+    // gst_element_unlink_many(data->tee,data->decode);
+    // gst_element_unlink_many(data->decode,data->rtspsrc);
+
     gst_bin_remove_many(GST_BIN(data->pipeline), data->rtspsrc, data->decode, data->tee, NULL);
     gst_bin_remove_many(GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
+
     // g_print ("start gst_object_unref3 \n");
     gst_object_unref (data->pipeline);
 
@@ -717,12 +703,10 @@ rtsp_destroy (pthread_t m_thread, struct CustomData *data)
     data->appsink = NULL;
     data->displaysink = NULL;
 
-    data->tee_sinkpad = NULL;
-    data->decode_sinkpad = NULL;
     data->bus = NULL;
-    data->apppad = NULL;
-    data->queue2_video_pad = NULL;
-    data->tee2_video_pad = NULL;
+    // data->apppad = NULL;
+    // data->queue2_video_pad = NULL;
+    // data->tee2_video_pad = NULL;
 
     // data->frame = NULL;
     // data->format = NULL;
@@ -733,13 +717,13 @@ rtsp_destroy (pthread_t m_thread, struct CustomData *data)
     // data->isRun = NULL;
 
     // g_print ("start g_free \n");
-    g_free (data->dst_buf);
-    g_free (data->dst_output_buf);
-    g_free (data->dst_resize_output_buf);
-    g_free (data->m_RtspUri);
+    delete (data->dst_buf);
+    delete (data->dst_output_buf);
+    delete (data->dst_resize_output_buf);
+    delete (data->m_RtspUri);
 
-    g_free (data->dst_output_resize_buf);
-    g_free (data->dst_resize_output_resize_buf);
+    delete (data->dst_output_resize_buf);
+    delete (data->dst_resize_output_resize_buf);
 
     // delete loop;
     // delete pipeline;
@@ -752,7 +736,7 @@ rtsp_destroy (pthread_t m_thread, struct CustomData *data)
     // delete displaysink; 
     // g_print ("start pthread_quite \n");
 
-    g_free (data);
+    delete (data);
     
   }
 

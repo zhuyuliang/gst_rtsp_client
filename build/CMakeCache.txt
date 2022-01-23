@@ -213,7 +213,7 @@ CURL_LIBRARY_RELEASE:FILEPATH=/usr/lib/aarch64-linux-gnu/libcurl.so
 OpenCV_DIR:PATH=/usr/local/share/OpenCV
 
 //Dependencies for the target
-RtspClientLib_LIB_DEPENDS:STATIC=general;/usr/lib/aarch64-linux-gnu/libgstreamer-1.0.so.0;general;/usr/lib/aarch64-linux-gnu/libgobject-2.0.so.0;general;/usr/lib/aarch64-linux-gnu/libglib-2.0.so.0;general;/usr/lib/aarch64-linux-gnu/libgstbase-1.0.so.0;general;/usr/lib/aarch64-linux-gnu/libgstvideo-1.0.so.0;general;/usr/lib/aarch64-linux-gnu/libgstapp-1.0.so.0;general;/lib/aarch64-linux-gnu/libc.so.6;general;/lib/aarch64-linux-gnu/libdl.so.2;general;/lib/aarch64-linux-gnu/libpthread.so.0;general;/usr/lib/aarch64-linux-gnu/libgmodule-2.0.so.0;general;/lib/aarch64-linux-gnu/libm.so.6;general;/usr/lib/aarch64-linux-gnu/libffi.so.6;general;/lib/aarch64-linux-gnu/libpcre.so.3;general;/usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.3.2;general;/usr/lib/aarch64-linux-gnu/librga.so;
+RtspClientLib_LIB_DEPENDS:STATIC=general;/usr/lib/aarch64-linux-gnu/libgstreamer-1.0.so.0;general;/usr/lib/aarch64-linux-gnu/libgobject-2.0.so.0;general;/usr/lib/aarch64-linux-gnu/libglib-2.0.so.0;general;/usr/lib/aarch64-linux-gnu/libgstbase-1.0.so.0;general;/usr/lib/aarch64-linux-gnu/libgstvideo-1.0.so.0;general;/usr/lib/aarch64-linux-gnu/libgstapp-1.0.so.0;general;/lib/aarch64-linux-gnu/libc.so.6;general;/lib/aarch64-linux-gnu/libdl.so.2;general;/lib/aarch64-linux-gnu/libpthread.so.0;general;/usr/lib/aarch64-linux-gnu/libgmodule-2.0.so.0;general;/lib/aarch64-linux-gnu/libm.so.6;general;/usr/lib/aarch64-linux-gnu/libffi.so.6;general;/lib/aarch64-linux-gnu/libpcre.so.3;general;/usr/lib/aarch64-linux-gnu/librga.so;
 
 //Value Computed by CMake
 vscode_cmakegstreamer_learn_BINARY_DIR:STATIC=/home/toybrick/Dev/gst_rtsp_client/build

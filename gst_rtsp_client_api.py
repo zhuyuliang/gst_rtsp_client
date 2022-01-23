@@ -6,16 +6,16 @@ import threading
 
 lock = threading.Lock()
 
-'imgframe data class'
-class ImgFrameData:
-    __slots__ = ['id', 'status', 'width', 'height', 'frame', 'frame_resize']
-    def __init__(self, id, status, width, height, frame, frame_resize):
-        self.id = id
-        self.status = status 
-        self.width = width
-        self.height = height
-        self.frame = frame
-        self.frame_resize = frame_resize
+# 'imgframe data class'
+# class ImgFrameData:
+#     __slots__ = ['id', 'status', 'width', 'height', 'frame', 'frame_resize']
+#     def __init__(self, id, status, width, height, frame, frame_resize):
+#         self.id = id
+#         self.status = status 
+#         self.width = width
+#         self.height = height
+#         self.frame = frame
+#         self.frame_resize = frame_resize
 
 client = cdll.LoadLibrary("build/libRtspClientLib.so")
 
@@ -63,4 +63,5 @@ def mread(id, width, height, resize_width, resize_height):
             img_resize = np.frombuffer(string_at(c_pbuf_resize,urllen_resize), dtype=np.uint8).reshape(resize_width,resize_height,3)
     del urllen, c_pbuf
     del urllen_resize, c_pbuf_resize
-    return ImgFrameData(id, ret, width, height, img, img_resize)
+    del id, width, height, resize_width, resize_height
+    return ret, img, img_resize

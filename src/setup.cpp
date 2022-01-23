@@ -1,6 +1,6 @@
 
 #include <string.h>
-#include <map>
+#include <unordered_map>
 #include <utility>
 
 #include <gst_rtsp_client.h>
@@ -10,8 +10,8 @@ using namespace std;
 #define FAIL 0;
 #define SUCCESS 1;
 
-map<int,RtspClient*> mMap; 
-map<int,RtspClient*> ::iterator it;
+unordered_map<int,RtspClient*> mMap; 
+unordered_map<int,RtspClient*> ::iterator it;
 
 extern "C" int
 createRtspClient (int id, const char * url,int urllen)

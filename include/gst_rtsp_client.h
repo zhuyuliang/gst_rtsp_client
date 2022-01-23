@@ -104,16 +104,7 @@ struct CustomData {
     GstElement *appsink;
     GstElement *displaysink;
 
-    GstPad *decode_sinkpad;
-    GstPad *tee_sinkpad;
-
     GstBus *bus;
-    GstPad *apppad;
-    GstPad *queue1_video_pad;
-    GstPad *queue2_video_pad;
-    GstPad *tee1_video_pad;
-    GstPad *tee2_video_pad;
-
     pthread_t gst_thread;
 
     gint format;

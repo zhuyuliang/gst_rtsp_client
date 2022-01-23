@@ -71,7 +71,7 @@ link_libraries(
         ${SYS_LIB}/libpcre.so.3
 	# ${SYS_USR_LIB}/librockchip_rga.so.0
 	# /usr/local/lib/libopencv_imgproc.so.3.4
-	/usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.3.2
+	# /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.3.2
         /usr/lib/aarch64-linux-gnu/librga.so
 	#/home/firefly/linux-rga/build/librga.so
 )
