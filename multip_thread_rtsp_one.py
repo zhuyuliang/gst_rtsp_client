@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.6
+from concurrent.futures import thread
 import os
 import time
 import threading
@@ -67,7 +68,7 @@ if __name__ == '__main__':
     # t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:shangqu2020@192.168.2.30/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
     # t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:shangqu2020@192.168.2.30/cam/realmonitor?channel=1&subtype=0', "admin", "shangqu2020"))
     # t4 = threading.Thread(target=func_rtspdisplay, args = (5, "rtsp://admin:shangqu2020@192.168.2.64/Streaming/Channels/1", "admin", "shangqu2020"))
-    t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:shangqu2020@192.168.2.33/Streaming/Channels/1", "admin", "shangqu2020"))
+    t5 = Process(target=func_rtspdisplay, args = (6, "rtsp://admin:shangqu2020@192.168.2.33/Streaming/Channels/1", "admin", "shangqu2020"))
 
     # t0.start()
     # t1.start()

@@ -59,7 +59,7 @@ link_libraries(
         ${SYS_USR_LIB}/libgobject-2.0.so.0
         ${SYS_USR_LIB}/libglib-2.0.so.0
         ${SYS_USR_LIB}/libgstbase-1.0.so.0
-	${SYS_USR_LIB}/libgstvideo-1.0.so.0
+	    ${SYS_USR_LIB}/libgstvideo-1.0.so.0
         ${SYS_USR_LIB}/libgstapp-1.0.so.0
         ${SYS_LIB}/libc.so.6
 	# /usr/lib/ld-linux-aarch64.so.1
@@ -86,8 +86,8 @@ set(link_libs curl pthread opencv_core opencv_highgui opencv_imgcodecs)
 # aux_source_directory(. DIR_SRCS)
 
 set(SRC_LIST ./test/c_test_main_rtsp.cpp 
-             ./src/gst_rtsp_client.cpp)
-#             ./include/arrayqueue.h)
+            ./src/gst_rtsp_client.cpp)
+            # ./include/arrayqueue.h)
 
 add_executable (main_gst_rtsp_ ${SRC_LIST})
 

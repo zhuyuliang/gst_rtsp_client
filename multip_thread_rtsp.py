@@ -4,14 +4,12 @@ import time
 import threading
 import cv2
 import numpy as np
-
-from multiprocessing import Lock, Process, Condition, Queue
-
 import gst_rtsp_client_api as rtspclient
 
 # from ctypes import *
 
 def func_rtspdisplay(index,url, usr, pwd):
+
 
     width = 1920
     height = 1080
@@ -19,16 +17,13 @@ def func_rtspdisplay(index,url, usr, pwd):
     resize_width = 0
     resize_height = 0
 
-    # c_url = create_string_buffer(url.encode('utf-8'), len(url))
-    # ret = rtspclient.createRtspClient(index,url)
-    
     while(1) :
         ret1 = rtspclient.isConnect(index)
         print("id %d ret = %d",index, ret1)
+        time.sleep(0.1)
         if (ret1 == 1):
             status, img, img_resize = rtspclient.mread(index,width,height,resize_width,resize_height)
             if status == 1:
-                # print(status)
                 # print(type(ret2.frame))
                 # print(ret2.frame.shape)
                 # print(type(img))
@@ -37,8 +32,8 @@ def func_rtspdisplay(index,url, usr, pwd):
                 # img = cv2.UMat(height,width,cv2.CV_8UC3,ret2.frame)
                 # cv2.imshow("name", ret2.frame)
                 # cv2.waitKey(0)
-
-                time.sleep(0.1)
+                pass
+                # time.sleep(0.1)
                 # cv2.imwrite('a' + str(index) +'.jpg',ret2.frame)
                 # cv2.imwrite('a640' + str(index) +'.jpg',ret2.frame_resize)
             else:

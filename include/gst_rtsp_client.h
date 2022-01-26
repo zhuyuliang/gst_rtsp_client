@@ -103,8 +103,6 @@ struct CustomData {
     GstElement *queue_displaysink;
     GstElement *appsink;
     GstElement *displaysink;
-
-    GstBus *bus;
     pthread_t gst_thread;
 
     gint format;
@@ -112,8 +110,7 @@ struct CustomData {
 
     unsigned frame;
 
-    char * m_RtspUri;
-    int url_size = 0;
+    const char * m_RtspUri;
     int m_Id = 0; 
     FRtspCallBack m_RtspCallBack;
     int isRun = STATUS_INIT;
@@ -136,8 +133,8 @@ public:
     RtspClient();
     ~RtspClient();
     
-    bool enable(int id, const char * url, int urllen);
-    bool enable(int id, const char * url, int urllen, FRtspCallBack callBack);
+    bool enable(int id, char * url);
+    bool enable(int id, char * url, FRtspCallBack callBack);
     void disable();
     // int reconnect();
     int isConnect();

@@ -14,14 +14,14 @@ unordered_map<int,RtspClient*> mMap;
 unordered_map<int,RtspClient*> ::iterator it;
 
 extern "C" int
-createRtspClient (int id, const char * url,int urllen)
+createRtspClient (int id, char * url)
 {
     //&& id != nullptr && url != nullptr
     g_print("setup createRtspClient %d \n",id);
     if ( mMap.find(id) == mMap.end() )
     {
       mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
-      if (mMap.find(id)->second->enable(id, url, urllen)){
+      if (mMap.find(id)->second->enable(id, url)){
           return SUCCESS;
       }else{
           // mMap.find(id)->second->disable();

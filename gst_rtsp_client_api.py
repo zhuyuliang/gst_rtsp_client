@@ -1,30 +1,17 @@
-
 from ctypes import *
 import numpy as np
 import time
-import threading
+import multiprocessing
 
-lock = threading.Lock()
-
-# 'imgframe data class'
-# class ImgFrameData:
-#     __slots__ = ['id', 'status', 'width', 'height', 'frame', 'frame_resize']
-#     def __init__(self, id, status, width, height, frame, frame_resize):
-#         self.id = id
-#         self.status = status 
-#         self.width = width
-#         self.height = height
-#         self.frame = frame
-#         self.frame_resize = frame_resize
+lock = multiprocessing.Lock()
 
 client = cdll.LoadLibrary("build/libRtspClientLib.so")
 
 def createRtspClient( id, url):
     lock.acquire()
     time.sleep(1)
-    c_url = create_string_buffer(url.encode('utf-8'), len(url))
-    print("createRtspClient id = %d",id)
-    isSuccess = client.createRtspClient( id,c_url,len(url))
+    print("createRtspClient id = %d %s",id, url)
+    isSuccess = client.createRtspClient( id,url.encode())
     lock.release()
     return isSuccess
 
@@ -41,9 +28,6 @@ def destoryRtspClient(id):
     lock.release()
     return isSuccess
     
-# def reconnectRtsp( id):
-#     return client.reconnectRtsp(id)
-
 def isConnect( id):
     return client.isConnect(id)
      

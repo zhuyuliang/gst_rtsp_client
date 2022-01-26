@@ -15,7 +15,7 @@
 using namespace std;
 
 #define PNAME   1
-#define RTSPCAM "rtsp://admin:shangqu2020@192.168.2.30:554/cam/realmonitor?channel=1&subtype=0"
+#define RTSPCAM 'rtsp://admin:shangqu2020@192.168.2.30:554/cam/realmonitor?channel=1&subtype=0'
 
 void callback()
 {   
@@ -43,13 +43,13 @@ int main()
 {
     
     RtspClient *client = new RtspClient();
-
     RtspClient *client1 = new RtspClient();
 
     //client->deleteInstance();
 
     // bool isSuccess = client->enable(PNAME,RTSPCAM,&callback);
-    bool isSuccess = client->enable(PNAME,RTSPCAM,sizeof(RTSPCAM));
+    char* url = (char*)"rtsp://admin:shangqu2020@192.168.2.30:554/cam/realmonitor?channel=1&subtype=0";
+    bool isSuccess = client->enable(PNAME,url);
 
     if (isSuccess) 
     {
@@ -57,7 +57,7 @@ int main()
     }
 
     // bool isSuccess = client->enable(PNAME,RTSPCAM,&callback);
-    bool isSuccess1 = client1->enable(0,RTSPCAM,sizeof(RTSPCAM));
+    bool isSuccess1 = client1->enable(0,url);
 
     if (isSuccess1) 
     {
@@ -81,7 +81,7 @@ int main()
 
             // if (isSuccess) 
             // {
-            //     cout << "sucess enable \n";
+                cout << "sucess enable \n";
             // } 
         }else if (client->isConnect() == STATUS_CONNECTED) {
             FrameData *  framedata = client->read(1920,1080,640,640);
