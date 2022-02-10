@@ -59,10 +59,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/toybrick/Dev/gst_rtsp_client
+CMAKE_SOURCE_DIR = /home/toybrick/Dev/temp/gst_rtsp_client_test
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/toybrick/Dev/gst_rtsp_client/build
+CMAKE_BINARY_DIR = /home/toybrick/Dev/temp/gst_rtsp_client_test/build
 
 #=============================================================================
 # Target rules for target CMakeFiles/main_gst_rtsp_.dir
@@ -71,7 +71,7 @@ CMAKE_BINARY_DIR = /home/toybrick/Dev/gst_rtsp_client/build
 CMakeFiles/main_gst_rtsp_.dir/all:
 	$(MAKE) -f CMakeFiles/main_gst_rtsp_.dir/build.make CMakeFiles/main_gst_rtsp_.dir/depend
 	$(MAKE) -f CMakeFiles/main_gst_rtsp_.dir/build.make CMakeFiles/main_gst_rtsp_.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles --progress-num=4,5,6 "Built target main_gst_rtsp_"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles --progress-num=4,5,6 "Built target main_gst_rtsp_"
 .PHONY : CMakeFiles/main_gst_rtsp_.dir/all
 
 # Include target in all.
@@ -81,9 +81,9 @@ all: CMakeFiles/main_gst_rtsp_.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/main_gst_rtsp_.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/main_gst_rtsp_.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles 0
 .PHONY : CMakeFiles/main_gst_rtsp_.dir/rule
 
 # Convenience name for target.
@@ -108,7 +108,7 @@ clean: CMakeFiles/main_gst_rtsp_.dir/clean
 CMakeFiles/RtspClientLib.dir/all:
 	$(MAKE) -f CMakeFiles/RtspClientLib.dir/build.make CMakeFiles/RtspClientLib.dir/depend
 	$(MAKE) -f CMakeFiles/RtspClientLib.dir/build.make CMakeFiles/RtspClientLib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles --progress-num=1,2,3 "Built target RtspClientLib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles --progress-num=1,2,3 "Built target RtspClientLib"
 .PHONY : CMakeFiles/RtspClientLib.dir/all
 
 # Include target in all.
@@ -118,9 +118,9 @@ all: CMakeFiles/RtspClientLib.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/RtspClientLib.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/RtspClientLib.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles 0
 .PHONY : CMakeFiles/RtspClientLib.dir/rule
 
 # Convenience name for target.

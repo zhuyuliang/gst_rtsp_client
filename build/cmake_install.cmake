@@ -1,4 +1,4 @@
-# Install script for directory: /home/toybrick/Dev/gst_rtsp_client
+# Install script for directory: /home/toybrick/Dev/temp/gst_rtsp_client_test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/toybrick/Dev/gst_rtsp_client/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/toybrick/Dev/temp/gst_rtsp_client_test/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

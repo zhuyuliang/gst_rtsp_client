@@ -1,41 +1,32 @@
 from ctypes import *
 import numpy as np
 import time
-import multiprocessing
-
-lock = multiprocessing.Lock()
 
 client = cdll.LoadLibrary("build/libRtspClientLib.so")
 
 def createRtspClient( id, url):
-    lock.acquire()
     time.sleep(1)
     print("createRtspClient id = %d %s",id, url)
     isSuccess = client.createRtspClient( id,url.encode())
-    lock.release()
     return isSuccess
 
 def destoryRtspClientAll():
-    lock.acquire()
     isSuccess = client.destoryRtspClientAll()
-    lock.release()
     return isSuccess
 
 def destoryRtspClient(id):
-    lock.acquire()
     time.sleep(1)
     isSuccess = client.destoryRtspClient(id)
-    lock.release()
     return isSuccess
     
 def isConnect( id):
     return client.isConnect(id)
-     
+    
 # resize_width , resize_height = 640, 640
 def mread(id, width, height, resize_width, resize_height):
     urllen = width * height * 3
     c_pbuf = create_string_buffer(''.encode('utf-8'),urllen)
-    urllen_resize ,c_pbuf_resize = None, None
+    urllen_resize, c_pbuf_resize = None, None
     if resize_width > 0 and resize_height > 0:
         urllen_resize = resize_width * resize_height * 3
         c_pbuf_resize = create_string_buffer(''.encode('utf-8'),urllen_resize)
@@ -47,5 +38,7 @@ def mread(id, width, height, resize_width, resize_height):
             img_resize = np.frombuffer(string_at(c_pbuf_resize,urllen_resize), dtype=np.uint8).reshape(resize_width,resize_height,3)
     del urllen, c_pbuf
     del urllen_resize, c_pbuf_resize
+    c_pbuf = None
+    c_pbuf_resize = None
     del id, width, height, resize_width, resize_height
     return ret, img, img_resize

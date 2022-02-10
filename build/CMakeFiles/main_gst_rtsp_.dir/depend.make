@@ -374,6 +374,7 @@ CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/local/include/rga/
 CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o: /usr/local/include/rga/rga.h
 
 CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o: ../include/gst_rtsp_client.h
+CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o: ../src/setup.cpp
 CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o: ../test/c_test_main_rtsp.cpp
 CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o: /usr/include/glib-2.0/glib-object.h
 CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o: /usr/include/glib-2.0/glib.h

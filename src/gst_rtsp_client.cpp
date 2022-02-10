@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <string.h>
+
 // gst
 #include <gst/gst.h>
 #include <gst/gstmemory.h>
@@ -292,151 +294,151 @@ buffer_to_file (struct CustomData *dec, GstBuffer * buf)
     printf ("===================================\n");
   }
 
-  if (dec->m_RtspCallBack != NULL)
-  {
-    g_print( "*");
-    // int resize_w = 1920, resize_h = 1080;
-    // static int frame_size = 0;
-    // unsigned char *frame_rgb = NULL;
-    // frame_size = resize_w * resize_h * 3;
-    // frame_rgb = (unsigned char *)malloc(frame_size);
-    // //cv::Mat img(resize_h , resize_w , CV_8UC3, frame_rgb);
-    // if (!frame_rgb)
-    //   return 0;
+  // if (dec->m_RtspCallBack != NULL)
+  // {
+  //   g_print( "*");
+  //   // int resize_w = 1920, resize_h = 1080;
+  //   // static int frame_size = 0;
+  //   // unsigned char *frame_rgb = NULL;
+  //   // frame_size = resize_w * resize_h * 3;
+  //   // frame_rgb = (unsigned char *)malloc(frame_size);
+  //   // //cv::Mat img(resize_h , resize_w , CV_8UC3, frame_rgb);
+  //   // if (!frame_rgb)
+  //   //   return 0;
       
-    // mRga->ops->setDstBufferPtr(mRga, frame_rgb);
+  //   // mRga->ops->setDstBufferPtr(mRga, frame_rgb);
 
-    // // g_print( "*Rga \n");
-    // // //memcpy((char *) map_info.data, srcBuffer, BUFFER_SIZE);
-    // mRga->ops->setSrcBufferPtr(mRga, (char *) map_info.data);
-    // // mRga->ops->setDstBufferPtr(mRga, dstBuffer);
-    // rga_buffer_t 	src;
-    // rga_buffer_t 	dst;
-    // rga_buffer_t  dst_output;
+  //   // // g_print( "*Rga \n");
+  //   // // //memcpy((char *) map_info.data, srcBuffer, BUFFER_SIZE);
+  //   // mRga->ops->setSrcBufferPtr(mRga, (char *) map_info.data);
+  //   // // mRga->ops->setDstBufferPtr(mRga, dstBuffer);
+  //   // rga_buffer_t 	src;
+  //   // rga_buffer_t 	dst;
+  //   // rga_buffer_t  dst_output;
 
-    // // mpp 265 256 2304 | 264 16 1088
+  //   // // mpp 265 256 2304 | 264 16 1088
 
-    // if (map_info.size == 4976640){
-    //   // g_print("h265");
-    //   src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, SRC_HEIGHT, SRC_FORMAT);
-    //   dst = wrapbuffer_virtualaddr(srcBuffer_265, 2304, DST_HEIGHT, DST_FORMAT);
-    // } else {
-    //   src = wrapbuffer_virtualaddr((char *) map_info.data, SRC_WIDTH, 1088, SRC_FORMAT);
-    //   dst = wrapbuffer_virtualaddr(srcBuffer_264, DST_WIDTH, 1088, DST_FORMAT);
-    // }
-    // // dst = wrapbuffer_virtualaddr(srcBuffer_264, DST_WIDTH, DST_WIDTH, DST_FORMAT);
-    // dst_output = wrapbuffer_virtualaddr(dstBuffer, DST_WIDTH, DST_HEIGHT, DST_FORMAT);
+  //   // if (map_info.size == 4976640){
+  //   //   // g_print("h265");
+  //   //   src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, SRC_HEIGHT, SRC_FORMAT);
+  //   //   dst = wrapbuffer_virtualaddr(srcBuffer_265, 2304, DST_HEIGHT, DST_FORMAT);
+  //   // } else {
+  //   //   src = wrapbuffer_virtualaddr((char *) map_info.data, SRC_WIDTH, 1088, SRC_FORMAT);
+  //   //   dst = wrapbuffer_virtualaddr(srcBuffer_264, DST_WIDTH, 1088, DST_FORMAT);
+  //   // }
+  //   // // dst = wrapbuffer_virtualaddr(srcBuffer_264, DST_WIDTH, DST_WIDTH, DST_FORMAT);
+  //   // dst_output = wrapbuffer_virtualaddr(dstBuffer, DST_WIDTH, DST_HEIGHT, DST_FORMAT);
 
-    // if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
-    //   printf("%s, %s\n", __FUNCTION__, imStrError());
-    //   return;
-    // }
+  //   // if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
+  //   //   printf("%s, %s\n", __FUNCTION__, imStrError());
+  //   //   return;
+  //   // }
 
-    // // g_print("imcvtcolor");
+  //   // // g_print("imcvtcolor");
 
-    // // ret = mRga->ops->go(mRga);
-    // imcvtcolor(src, dst, src.format, dst.format);
+  //   // // ret = mRga->ops->go(mRga);
+  //   // imcvtcolor(src, dst, src.format, dst.format);
 
-    // im_rect src_rect = {0, 0, DST_WIDTH, DST_HEIGHT};
-    // //g_print("imcrop %d",src_rect.width);
-    // imcrop(dst,dst_output,src_rect);
+  //   // im_rect src_rect = {0, 0, DST_WIDTH, DST_HEIGHT};
+  //   // //g_print("imcrop %d",src_rect.width);
+  //   // imcrop(dst,dst_output,src_rect);
 
-    // cv::Mat img(DST_HEIGHT, DST_WIDTH , CV_8UC3, dstBuffer);
-    // char buf1[32] = {0};
-    // snprintf(buf1, sizeof(buf1), "%u",dec->frame);
-    // std::string str = buf1;
-    // std::string name = str + "test.jpg";
+  //   // cv::Mat img(DST_HEIGHT, DST_WIDTH , CV_8UC3, dstBuffer);
+  //   // char buf1[32] = {0};
+  //   // snprintf(buf1, sizeof(buf1), "%u",dec->frame);
+  //   // std::string str = buf1;
+  //   // std::string name = str + "test.jpg";
     
-    // cv::imwrite( name, img);
-    // cv::waitKey(10);
+  //   // cv::imwrite( name, img);
+  //   // cv::waitKey(10);
 
-    dec->m_RtspCallBack();
+  //   dec->m_RtspCallBack();
 
-    // g_print("num: %d \n", checkData(srcBuffer,dstBuffer));
+  //   // g_print("num: %d \n", checkData(srcBuffer,dstBuffer));
 
-    // cv::Mat img(BUFFER_HEIGHT, BUFFER_WIDTH , CV_8UC3, dstBuffer);
-    // cv::imwrite("test.jpg", img); 
-    // //unchar_to_Mat(dstBuffer); 
-    // g_print( "*Rga ret = %d \n",ret);
-    // if (!ret) {
-    // 		///do something with frame_rgb
-    // 		cv::imwrite("test.jpg", img);
-    // 		cv::waitKey(10);
-    // }
+  //   // cv::Mat img(BUFFER_HEIGHT, BUFFER_WIDTH , CV_8UC3, dstBuffer);
+  //   // cv::imwrite("test.jpg", img); 
+  //   // //unchar_to_Mat(dstBuffer); 
+  //   // g_print( "*Rga ret = %d \n",ret);
+  //   // if (!ret) {
+  //   // 		///do something with frame_rgb
+  //   // 		cv::imwrite("test.jpg", img);
+  //   // 		cv::waitKey(10);
+  //   // }
 
-    //unchar_to_Mat(dstBuffer);  // 将 unsigned char BGR格式转换为 Mat BGR格式
-    //cv::imwrite
-    //cv::imshow("image",img);
-    //cv::waitKey(20);
+  //   //unchar_to_Mat(dstBuffer);  // 将 unsigned char BGR格式转换为 Mat BGR格式
+  //   //cv::imwrite
+  //   //cv::imshow("image",img);
+  //   //cv::waitKey(20);
 
-    // g_snprintf (filename, sizeof (filename), "img%05d.%s", dec->frame,
-    //     pixfmt_str);
-    // g_file_set_contents (filename, (char *) map_info.data, map_info.size, NULL);
-  } else {
+  //   // g_snprintf (filename, sizeof (filename), "img%05d.%s", dec->frame,
+  //   //     pixfmt_str);
+  //   // g_file_set_contents (filename, (char *) map_info.data, map_info.size, NULL);
+  // } else {
 
-    g_print("b* \n");
+  //   g_print("b* \n");
 
-    // rga_buffer_t 	src;
-    //     rga_buffer_t 	dst;
-    //     rga_buffer_t  dst_output;
-    //     rga_buffer_t  dst_resize_output;
+  //   // rga_buffer_t 	src;
+  //   //     rga_buffer_t 	dst;
+  //   //     rga_buffer_t  dst_output;
+  //   //     rga_buffer_t  dst_resize_output;
 
-    // // h264 h265 1280 * 720 == 1280 * 720
-    //       src = wrapbuffer_virtualaddr((char *) map_info.data, 1280, 720, SRC_FORMAT);
-    //       if (dec->dst_buf == NULL){
-    //           dec->dst_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
-    //       }
-    //       dst = wrapbuffer_virtualaddr(dec->dst_buf, 1280, 720, DST_FORMAT);
-    //       // if (this->m_data->dst_output_buf == NULL){
-    //       //     this->m_data->dst_output_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
-    //       // }
-    //       // dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 1280, 720, DST_FORMAT);
-    //       if (dec->dst_resize_output_buf == NULL){
-    //           dec->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
-    //       }
-    //       dst_resize_output = wrapbuffer_virtualaddr(dec->dst_resize_output_buf, width, height, DST_FORMAT);
-    //       if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
-    //         printf("%s, %s\n", __FUNCTION__, imStrError());
-    //         return;
-    //       }
-    //       imcvtcolor(src, dst, src.format, dst.format);
-    //       //im_rect src_rect = {0, 0, 1280, 720};
-    //       //g_print("imcrop %d",src_rect.width);
-    //       //imcrop(dst,dst_output,src_rect);
+  //   // // h264 h265 1280 * 720 == 1280 * 720
+  //   //       src = wrapbuffer_virtualaddr((char *) map_info.data, 1280, 720, SRC_FORMAT);
+  //   //       if (dec->dst_buf == NULL){
+  //   //           dec->dst_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
+  //   //       }
+  //   //       dst = wrapbuffer_virtualaddr(dec->dst_buf, 1280, 720, DST_FORMAT);
+  //   //       // if (this->m_data->dst_output_buf == NULL){
+  //   //       //     this->m_data->dst_output_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
+  //   //       // }
+  //   //       // dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 1280, 720, DST_FORMAT);
+  //   //       if (dec->dst_resize_output_buf == NULL){
+  //   //           dec->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+  //   //       }
+  //   //       dst_resize_output = wrapbuffer_virtualaddr(dec->dst_resize_output_buf, width, height, DST_FORMAT);
+  //   //       if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
+  //   //         printf("%s, %s\n", __FUNCTION__, imStrError());
+  //   //         return;
+  //   //       }
+  //   //       imcvtcolor(src, dst, src.format, dst.format);
+  //   //       //im_rect src_rect = {0, 0, 1280, 720};
+  //   //       //g_print("imcrop %d",src_rect.width);
+  //   //       //imcrop(dst,dst_output,src_rect);
 
-    //       // imresize(dst,dst_resize_output);
+  //   //       // imresize(dst,dst_resize_output);
 
-    //       cv::Mat img(720, 1280 , CV_8UC3, dec->dst_buf);
-    //       std::string name = "i10st.jpg";
+  //   //       cv::Mat img(720, 1280 , CV_8UC3, dec->dst_buf);
+  //   //       std::string name = "i10st.jpg";
             
-    //       cv::imwrite( name, img);
+  //   //       cv::imwrite( name, img);
 
 
-    // g_print("queue empty %d" , dec->mqueue.empty());
-    // FrameData framedata;
-    // framedata.data = (char *) map_info.data;
-    // framedata.size = map_info.size;
-    // framedata.width = width;
-    // framedata.height = height;
-    // framedata.isRun = dec->isRun;
+  //   // g_print("queue empty %d" , dec->mqueue.empty());
+  //   // FrameData framedata;
+  //   // framedata.data = (char *) map_info.data;
+  //   // framedata.size = map_info.size;
+  //   // framedata.width = width;
+  //   // framedata.height = height;
+  //   // framedata.isRun = dec->isRun;
 
-    // MppFrameData mppframeData;
-    // //memcpy(mppframeData.data,(char *)map_info.data, map_info.size);
-    // // mppframeData.data = (char *)map_info.data;
-    // mppframeData.size = map_info.size;
-    // if (dec->mqueue->is_empty()){
-    //   // g_print("queue empty \n");
-    //   dec->mqueue->add(mppframeData);
-    // }else if (dec->mqueue->size() < 3){
-    //   // g_print("queue size < 2 \n");
-    //   dec->mqueue->add(mppframeData);
-    // } else {
-    //   // while(dec->mqueue->size())
-    //   // g_print(">2 pop \n");
-    //   // MppFrameData datas = 
-    //   dec->mqueue->pop();
-    // }
-  }
+  //   // MppFrameData mppframeData;
+  //   // //memcpy(mppframeData.data,(char *)map_info.data, map_info.size);
+  //   // // mppframeData.data = (char *)map_info.data;
+  //   // mppframeData.size = map_info.size;
+  //   // if (dec->mqueue->is_empty()){
+  //   //   // g_print("queue empty \n");
+  //   //   dec->mqueue->add(mppframeData);
+  //   // }else if (dec->mqueue->size() < 3){
+  //   //   // g_print("queue size < 2 \n");
+  //   //   dec->mqueue->add(mppframeData);
+  //   // } else {
+  //   //   // while(dec->mqueue->size())
+  //   //   // g_print(">2 pop \n");
+  //   //   // MppFrameData datas = 
+  //   //   dec->mqueue->pop();
+  //   // }
+  // }
 
   gst_buffer_unmap (buf, &map_info);
 
@@ -729,6 +731,7 @@ static void* connectrtsp(void *arg) {
   // g_main_loop_unref(data->loop);
 
   g_print("init done");
+  g_main_loop_unref(data->loop);
   data->isRun = STATUS_DISCONNECT;
 
   // exit(0);
@@ -738,14 +741,18 @@ static void* connectrtsp(void *arg) {
 }
 
 bool
-RtspClient::enable(int id, char * url, FRtspCallBack frtspcallback) {
+RtspClient::enable(int id, const char * url, FRtspCallBack frtspcallback) {
 
   g_print("RtspClient enable ! \n");
 
   if (this->m_data == NULL) {
       this->m_data = g_new0 (struct CustomData, 1);
       this->m_data->m_Id = id;
-      this->m_data->m_RtspUri = url;
+      // this->m_data->m_RtspUri = (char*) new char[sizeof(url)];
+      size_t len = strlen(url)+1;
+      char* cpurl = new char[len];
+      memcpy(cpurl, url, len);
+      this->m_data->m_RtspUri = cpurl;
       this->m_data->m_RtspCallBack = frtspcallback;
       int ret = pthread_create(&m_thread, NULL, connectrtsp, this->m_data);
       if ( ret != 0) {
@@ -763,14 +770,19 @@ RtspClient::enable(int id, char * url, FRtspCallBack frtspcallback) {
 
 
 bool
-RtspClient::enable(int id, char* url) {
+RtspClient::enable(int id, const char* url) {
 
   g_print("RtspClient enable ! \n");
 
   if (this->m_data == NULL) {
       this->m_data = g_new0 (struct CustomData, 1);
       this->m_data->m_Id = id;
-      this->m_data->m_RtspUri = (char*)url;
+      // this->m_data->m_RtspUri = (char*)url;
+      // this->m_data->m_RtspUri = (char*)malloc(sizeof(url) );
+      size_t len = strlen(url)+1;
+      char* cpurl = new char[len];
+      memcpy(cpurl, url, len);
+      this->m_data->m_RtspUri = cpurl;
       int ret = pthread_create(&m_thread, NULL, connectrtsp, this->m_data);
       if ( ret != 0) {
         g_error("enable fail, rtsp thread create fail \n");
@@ -822,19 +834,28 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
   GstSample *samp;
   GstBuffer *buf;
 
-  samp = gst_app_sink_pull_sample (GST_APP_SINK (this->m_data->appsink));
-  // samp = gst_app_sink_try_pull_sample (GST_APP_SINK (dec->appsink),100000);
+  // samp = gst_app_sink_pull_sample (GST_APP_SINK (this->m_data->appsink));
+  samp = gst_app_sink_try_pull_sample (GST_APP_SINK (this->m_data->appsink), GST_SECOND * 3); // 1000 * 5 100000
   if (!samp) {
     GST_DEBUG ("got no appsink sample");
-    if (gst_app_sink_is_eos (GST_APP_SINK (this->m_data->appsink)))
+    if (gst_app_sink_is_eos (GST_APP_SINK (this->m_data->appsink))){
       GST_DEBUG ("eos");
+      data->isRun = STATUS_DISCONNECT;
+      this->m_data->isRun = STATUS_DISCONNECT;
+      data->size = 0;
       return data;
+    }else{
+      GST_DEBUG ("gst_app_sink_try_pull_sample null");
+      data->isRun = STATUS_DISCONNECT;
+      this->m_data->isRun = STATUS_DISCONNECT;
+      data->size = 0;
+      return data;
+    }
   }
 
   buf = gst_sample_get_buffer (samp);
   
   // ** 
-
   // int ret;
   // GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
   // guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data->info));
@@ -1072,7 +1093,7 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
   // ** 
   gst_sample_unref (samp);
 
-  this->m_data->frame++; 
+  // this->m_data->frame++; 
 
   return data;
 
