@@ -546,6 +546,7 @@ rtsp_init(struct CustomData *data) {
     // g_object_set (GST_OBJECT (data->rtspsrc), "udp-reconnect", 1, NULL);
     // g_object_set (GST_OBJECT (data->rtspsrc), "retry", 1000, NULL);
     // g_object_set (GST_OBJECT (data->rtspsrc), "debug", 1, NULL);
+    g_object_set (GST_OBJECT (data->rtspsrc), "protocols", GST_RTSP_LOWER_TRANS_TCP, NULL);
 
     /**
      * GstRTSPLowerTrans:

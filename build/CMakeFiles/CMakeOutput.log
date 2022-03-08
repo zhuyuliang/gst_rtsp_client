@@ -10,7 +10,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/3.13.4/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/3.13.4/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/c++ 
@@ -23,33 +23,33 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/3.13.4/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/3.13.4/CompilerIdCXX/a.out"
 
 Determining if the C compiler works passed with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_fcef3/fast"
-/usr/bin/make -f CMakeFiles/cmTC_fcef3.dir/build.make CMakeFiles/cmTC_fcef3.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_fcef3.dir/testCCompiler.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_fcef3.dir/testCCompiler.c.o   -c /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_fcef3
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fcef3.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_fcef3.dir/testCCompiler.c.o  -o cmTC_fcef3 
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_16996/fast"
+/usr/bin/make -f CMakeFiles/cmTC_16996.dir/build.make CMakeFiles/cmTC_16996.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_16996.dir/testCCompiler.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_16996.dir/testCCompiler.c.o   -c /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_16996
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_16996.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_16996.dir/testCCompiler.c.o  -o cmTC_16996 
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_4e0e0/fast"
-/usr/bin/make -f CMakeFiles/cmTC_4e0e0.dir/build.make CMakeFiles/cmTC_4e0e0.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_4e0e0.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_4e0e0.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.13/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_4e0e0
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4e0e0.dir/link.txt --verbose=1
-/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_4e0e0.dir/CMakeCCompilerABI.c.o  -o cmTC_4e0e0 
+Run Build Command:"/usr/bin/make" "cmTC_df3a1/fast"
+/usr/bin/make -f CMakeFiles/cmTC_df3a1.dir/build.make CMakeFiles/cmTC_df3a1.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_df3a1.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_df3a1.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.13/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_df3a1
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_df3a1.dir/link.txt --verbose=1
+/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_df3a1.dir/CMakeCCompilerABI.c.o  -o cmTC_df3a1 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper
@@ -59,24 +59,24 @@ Thread model: posix
 gcc version 8.3.0 (Debian 8.3.0-6) 
 COMPILER_PATH=/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/:/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib/:/lib/aarch64-linux-gnu/:/lib/../lib/:/usr/lib/aarch64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_4e0e0' '-mlittle-endian' '-mabi=lp64'
- /usr/lib/gcc/aarch64-linux-gnu/8/collect2 -plugin /usr/lib/gcc/aarch64-linux-gnu/8/liblto_plugin.so -plugin-opt=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccc7LGFm.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -export-dynamic -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-843419 -pie -o cmTC_4e0e0 /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/Scrt1.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crti.o /usr/lib/gcc/aarch64-linux-gnu/8/crtbeginS.o -L/usr/lib/gcc/aarch64-linux-gnu/8 -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib -L/lib/aarch64-linux-gnu -L/lib/../lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/aarch64-linux-gnu/8/../../.. CMakeFiles/cmTC_4e0e0.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/aarch64-linux-gnu/8/crtendS.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_4e0e0' '-mlittle-endian' '-mabi=lp64'
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_df3a1' '-mlittle-endian' '-mabi=lp64'
+ /usr/lib/gcc/aarch64-linux-gnu/8/collect2 -plugin /usr/lib/gcc/aarch64-linux-gnu/8/liblto_plugin.so -plugin-opt=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccrDDn4p.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -export-dynamic -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-843419 -pie -o cmTC_df3a1 /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/Scrt1.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crti.o /usr/lib/gcc/aarch64-linux-gnu/8/crtbeginS.o -L/usr/lib/gcc/aarch64-linux-gnu/8 -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib -L/lib/aarch64-linux-gnu -L/lib/../lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/aarch64-linux-gnu/8/../../.. CMakeFiles/cmTC_df3a1.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/aarch64-linux-gnu/8/crtendS.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_df3a1' '-mlittle-endian' '-mabi=lp64'
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_4e0e0/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_4e0e0.dir/build.make CMakeFiles/cmTC_4e0e0.dir/build]
-  ignore line: [make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_4e0e0.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_4e0e0.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.13/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_4e0e0]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4e0e0.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_4e0e0.dir/CMakeCCompilerABI.c.o  -o cmTC_4e0e0 ]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_df3a1/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_df3a1.dir/build.make CMakeFiles/cmTC_df3a1.dir/build]
+  ignore line: [make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_df3a1.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_df3a1.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.13/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_df3a1]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_df3a1.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_df3a1.dir/CMakeCCompilerABI.c.o  -o cmTC_df3a1 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper]
@@ -86,13 +86,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 8.3.0 (Debian 8.3.0-6) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/:/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib/:/lib/aarch64-linux-gnu/:/lib/../lib/:/usr/lib/aarch64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_4e0e0' '-mlittle-endian' '-mabi=lp64']
-  link line: [ /usr/lib/gcc/aarch64-linux-gnu/8/collect2 -plugin /usr/lib/gcc/aarch64-linux-gnu/8/liblto_plugin.so -plugin-opt=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccc7LGFm.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -export-dynamic -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-843419 -pie -o cmTC_4e0e0 /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/Scrt1.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crti.o /usr/lib/gcc/aarch64-linux-gnu/8/crtbeginS.o -L/usr/lib/gcc/aarch64-linux-gnu/8 -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib -L/lib/aarch64-linux-gnu -L/lib/../lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/aarch64-linux-gnu/8/../../.. CMakeFiles/cmTC_4e0e0.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/aarch64-linux-gnu/8/crtendS.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_df3a1' '-mlittle-endian' '-mabi=lp64']
+  link line: [ /usr/lib/gcc/aarch64-linux-gnu/8/collect2 -plugin /usr/lib/gcc/aarch64-linux-gnu/8/liblto_plugin.so -plugin-opt=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccrDDn4p.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -export-dynamic -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-843419 -pie -o cmTC_df3a1 /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/Scrt1.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crti.o /usr/lib/gcc/aarch64-linux-gnu/8/crtbeginS.o -L/usr/lib/gcc/aarch64-linux-gnu/8 -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib -L/lib/aarch64-linux-gnu -L/lib/../lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/aarch64-linux-gnu/8/../../.. CMakeFiles/cmTC_df3a1.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/aarch64-linux-gnu/8/crtendS.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/aarch64-linux-gnu/8/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/aarch64-linux-gnu/8/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccc7LGFm.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccrDDn4p.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -110,7 +110,7 @@ Parsed C implicit link information from above output:
     arg [--fix-cortex-a53-843419] ==> ignore
     arg [-pie] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_4e0e0] ==> ignore
+    arg [cmTC_df3a1] ==> ignore
     arg [/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/aarch64-linux-gnu/8/crtbeginS.o] ==> ignore
@@ -122,7 +122,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/aarch64-linux-gnu] ==> dir [/usr/lib/aarch64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/aarch64-linux-gnu/8/../../..] ==> dir [/usr/lib/gcc/aarch64-linux-gnu/8/../../..]
-    arg [CMakeFiles/cmTC_4e0e0.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_df3a1.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--push-state] ==> ignore
     arg [--as-needed] ==> ignore
@@ -152,17 +152,17 @@ Parsed C implicit link information from above output:
 
 
 Detecting C [-std=c11] compiler features compiled with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_e2e0d/fast"
-/usr/bin/make -f CMakeFiles/cmTC_e2e0d.dir/build.make CMakeFiles/cmTC_e2e0d.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e2e0d.dir/feature_tests.c.o
-/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_e2e0d.dir/feature_tests.c.o   -c /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_e2e0d
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e2e0d.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_e2e0d.dir/feature_tests.c.o  -o cmTC_e2e0d 
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_7a7a7/fast"
+/usr/bin/make -f CMakeFiles/cmTC_7a7a7.dir/build.make CMakeFiles/cmTC_7a7a7.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_7a7a7.dir/feature_tests.c.o
+/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_7a7a7.dir/feature_tests.c.o   -c /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_7a7a7
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7a7a7.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_7a7a7.dir/feature_tests.c.o  -o cmTC_7a7a7 
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -172,17 +172,17 @@ make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/C
 
 
 Detecting C [-std=c99] compiler features compiled with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_c242b/fast"
-/usr/bin/make -f CMakeFiles/cmTC_c242b.dir/build.make CMakeFiles/cmTC_c242b.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_c242b.dir/feature_tests.c.o
-/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_c242b.dir/feature_tests.c.o   -c /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_c242b
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c242b.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_c242b.dir/feature_tests.c.o  -o cmTC_c242b 
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_ce209/fast"
+/usr/bin/make -f CMakeFiles/cmTC_ce209.dir/build.make CMakeFiles/cmTC_ce209.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ce209.dir/feature_tests.c.o
+/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_ce209.dir/feature_tests.c.o   -c /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_ce209
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ce209.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_ce209.dir/feature_tests.c.o  -o cmTC_ce209 
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -192,17 +192,17 @@ make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/C
 
 
 Detecting C [-std=c90] compiler features compiled with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_bd93e/fast"
-/usr/bin/make -f CMakeFiles/cmTC_bd93e.dir/build.make CMakeFiles/cmTC_bd93e.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_bd93e.dir/feature_tests.c.o
-/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_bd93e.dir/feature_tests.c.o   -c /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_bd93e
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bd93e.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_bd93e.dir/feature_tests.c.o  -o cmTC_bd93e 
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_e3795/fast"
+/usr/bin/make -f CMakeFiles/cmTC_e3795.dir/build.make CMakeFiles/cmTC_e3795.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e3795.dir/feature_tests.c.o
+/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_e3795.dir/feature_tests.c.o   -c /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_e3795
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e3795.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_e3795.dir/feature_tests.c.o  -o cmTC_e3795 
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -210,30 +210,30 @@ make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/C
     Feature record: C_FEATURE:0c_static_assert
     Feature record: C_FEATURE:0c_variadic_macros
 Determining if the CXX compiler works passed with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_0c8c9/fast"
-/usr/bin/make -f CMakeFiles/cmTC_0c8c9.dir/build.make CMakeFiles/cmTC_0c8c9.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_0c8c9.dir/testCXXCompiler.cxx.o
-/usr/bin/c++     -o CMakeFiles/cmTC_0c8c9.dir/testCXXCompiler.cxx.o -c /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_0c8c9
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0c8c9.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_0c8c9.dir/testCXXCompiler.cxx.o  -o cmTC_0c8c9 
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_3d84f/fast"
+/usr/bin/make -f CMakeFiles/cmTC_3d84f.dir/build.make CMakeFiles/cmTC_3d84f.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_3d84f.dir/testCXXCompiler.cxx.o
+/usr/bin/c++     -o CMakeFiles/cmTC_3d84f.dir/testCXXCompiler.cxx.o -c /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_3d84f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3d84f.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_3d84f.dir/testCXXCompiler.cxx.o  -o cmTC_3d84f 
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_900e8/fast"
-/usr/bin/make -f CMakeFiles/cmTC_900e8.dir/build.make CMakeFiles/cmTC_900e8.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_900e8.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++     -o CMakeFiles/cmTC_900e8.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.13/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_900e8
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_900e8.dir/link.txt --verbose=1
-/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_900e8.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_900e8 
+Run Build Command:"/usr/bin/make" "cmTC_51619/fast"
+/usr/bin/make -f CMakeFiles/cmTC_51619.dir/build.make CMakeFiles/cmTC_51619.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_51619.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++     -o CMakeFiles/cmTC_51619.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.13/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_51619
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_51619.dir/link.txt --verbose=1
+/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_51619.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_51619 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper
@@ -243,24 +243,24 @@ Thread model: posix
 gcc version 8.3.0 (Debian 8.3.0-6) 
 COMPILER_PATH=/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/:/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib/:/lib/aarch64-linux-gnu/:/lib/../lib/:/usr/lib/aarch64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_900e8' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64'
- /usr/lib/gcc/aarch64-linux-gnu/8/collect2 -plugin /usr/lib/gcc/aarch64-linux-gnu/8/liblto_plugin.so -plugin-opt=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPxPVde.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -export-dynamic -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-843419 -pie -o cmTC_900e8 /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/Scrt1.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crti.o /usr/lib/gcc/aarch64-linux-gnu/8/crtbeginS.o -L/usr/lib/gcc/aarch64-linux-gnu/8 -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib -L/lib/aarch64-linux-gnu -L/lib/../lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/aarch64-linux-gnu/8/../../.. CMakeFiles/cmTC_900e8.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/aarch64-linux-gnu/8/crtendS.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_900e8' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64'
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_51619' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64'
+ /usr/lib/gcc/aarch64-linux-gnu/8/collect2 -plugin /usr/lib/gcc/aarch64-linux-gnu/8/liblto_plugin.so -plugin-opt=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper -plugin-opt=-fresolution=/tmp/cchyitcl.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -export-dynamic -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-843419 -pie -o cmTC_51619 /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/Scrt1.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crti.o /usr/lib/gcc/aarch64-linux-gnu/8/crtbeginS.o -L/usr/lib/gcc/aarch64-linux-gnu/8 -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib -L/lib/aarch64-linux-gnu -L/lib/../lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/aarch64-linux-gnu/8/../../.. CMakeFiles/cmTC_51619.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/aarch64-linux-gnu/8/crtendS.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_51619' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64'
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_900e8/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_900e8.dir/build.make CMakeFiles/cmTC_900e8.dir/build]
-  ignore line: [make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_900e8.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTC_900e8.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.13/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_900e8]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_900e8.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_900e8.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_900e8 ]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_51619/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_51619.dir/build.make CMakeFiles/cmTC_51619.dir/build]
+  ignore line: [make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_51619.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTC_51619.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.13/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_51619]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_51619.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_51619.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_51619 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper]
@@ -270,13 +270,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 8.3.0 (Debian 8.3.0-6) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/:/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/aarch64-linux-gnu/8/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib/:/lib/aarch64-linux-gnu/:/lib/../lib/:/usr/lib/aarch64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/aarch64-linux-gnu/8/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_900e8' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64']
-  link line: [ /usr/lib/gcc/aarch64-linux-gnu/8/collect2 -plugin /usr/lib/gcc/aarch64-linux-gnu/8/liblto_plugin.so -plugin-opt=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPxPVde.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -export-dynamic -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-843419 -pie -o cmTC_900e8 /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/Scrt1.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crti.o /usr/lib/gcc/aarch64-linux-gnu/8/crtbeginS.o -L/usr/lib/gcc/aarch64-linux-gnu/8 -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib -L/lib/aarch64-linux-gnu -L/lib/../lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/aarch64-linux-gnu/8/../../.. CMakeFiles/cmTC_900e8.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/aarch64-linux-gnu/8/crtendS.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_51619' '-shared-libgcc' '-mlittle-endian' '-mabi=lp64']
+  link line: [ /usr/lib/gcc/aarch64-linux-gnu/8/collect2 -plugin /usr/lib/gcc/aarch64-linux-gnu/8/liblto_plugin.so -plugin-opt=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper -plugin-opt=-fresolution=/tmp/cchyitcl.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -export-dynamic -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux --fix-cortex-a53-843419 -pie -o cmTC_51619 /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/Scrt1.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crti.o /usr/lib/gcc/aarch64-linux-gnu/8/crtbeginS.o -L/usr/lib/gcc/aarch64-linux-gnu/8 -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu -L/usr/lib/gcc/aarch64-linux-gnu/8/../../../../lib -L/lib/aarch64-linux-gnu -L/lib/../lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/aarch64-linux-gnu/8/../../.. CMakeFiles/cmTC_51619.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/aarch64-linux-gnu/8/crtendS.o /usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/aarch64-linux-gnu/8/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/aarch64-linux-gnu/8/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/aarch64-linux-gnu/8/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccPxPVde.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cchyitcl.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -294,7 +294,7 @@ Parsed CXX implicit link information from above output:
     arg [--fix-cortex-a53-843419] ==> ignore
     arg [-pie] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_900e8] ==> ignore
+    arg [cmTC_51619] ==> ignore
     arg [/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/aarch64-linux-gnu/8/../../../aarch64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/aarch64-linux-gnu/8/crtbeginS.o] ==> ignore
@@ -306,7 +306,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/aarch64-linux-gnu] ==> dir [/usr/lib/aarch64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/aarch64-linux-gnu/8/../../..] ==> dir [/usr/lib/gcc/aarch64-linux-gnu/8/../../..]
-    arg [CMakeFiles/cmTC_900e8.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_51619.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -332,17 +332,17 @@ Parsed CXX implicit link information from above output:
 
 
 Detecting CXX [-std=c++2a] compiler features compiled with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_99f58/fast"
-/usr/bin/make -f CMakeFiles/cmTC_99f58.dir/build.make CMakeFiles/cmTC_99f58.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_99f58.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++2a -o CMakeFiles/cmTC_99f58.dir/feature_tests.cxx.o -c /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_99f58
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_99f58.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_99f58.dir/feature_tests.cxx.o  -o cmTC_99f58 
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_ec06b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_ec06b.dir/build.make CMakeFiles/cmTC_ec06b.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ec06b.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++2a -o CMakeFiles/cmTC_ec06b.dir/feature_tests.cxx.o -c /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_ec06b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ec06b.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_ec06b.dir/feature_tests.cxx.o  -o cmTC_ec06b 
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -405,17 +405,17 @@ make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/C
 
 
 Detecting CXX [-std=c++17] compiler features compiled with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_ae092/fast"
-/usr/bin/make -f CMakeFiles/cmTC_ae092.dir/build.make CMakeFiles/cmTC_ae092.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_ae092.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++17 -o CMakeFiles/cmTC_ae092.dir/feature_tests.cxx.o -c /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_ae092
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ae092.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_ae092.dir/feature_tests.cxx.o  -o cmTC_ae092 
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_a516a/fast"
+/usr/bin/make -f CMakeFiles/cmTC_a516a.dir/build.make CMakeFiles/cmTC_a516a.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_a516a.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++17 -o CMakeFiles/cmTC_a516a.dir/feature_tests.cxx.o -c /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_a516a
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a516a.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_a516a.dir/feature_tests.cxx.o  -o cmTC_a516a 
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -478,17 +478,17 @@ make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/C
 
 
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_eaaec/fast"
-/usr/bin/make -f CMakeFiles/cmTC_eaaec.dir/build.make CMakeFiles/cmTC_eaaec.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_eaaec.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++14 -o CMakeFiles/cmTC_eaaec.dir/feature_tests.cxx.o -c /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_eaaec
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_eaaec.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_eaaec.dir/feature_tests.cxx.o  -o cmTC_eaaec 
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_afad9/fast"
+/usr/bin/make -f CMakeFiles/cmTC_afad9.dir/build.make CMakeFiles/cmTC_afad9.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_afad9.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++14 -o CMakeFiles/cmTC_afad9.dir/feature_tests.cxx.o -c /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_afad9
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_afad9.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_afad9.dir/feature_tests.cxx.o  -o cmTC_afad9 
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -551,17 +551,17 @@ make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/C
 
 
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_73ecb/fast"
-/usr/bin/make -f CMakeFiles/cmTC_73ecb.dir/build.make CMakeFiles/cmTC_73ecb.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_73ecb.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_73ecb.dir/feature_tests.cxx.o -c /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_73ecb
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_73ecb.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_73ecb.dir/feature_tests.cxx.o  -o cmTC_73ecb 
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_1a29d/fast"
+/usr/bin/make -f CMakeFiles/cmTC_1a29d.dir/build.make CMakeFiles/cmTC_1a29d.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_1a29d.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_1a29d.dir/feature_tests.cxx.o -c /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_1a29d
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1a29d.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_1a29d.dir/feature_tests.cxx.o  -o cmTC_1a29d 
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -624,17 +624,17 @@ make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/C
 
 
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
-Change Dir: /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp
+Change Dir: /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_530f3/fast"
-/usr/bin/make -f CMakeFiles/cmTC_530f3.dir/build.make CMakeFiles/cmTC_530f3.dir/build
-make[1]: Entering directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_530f3.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_530f3.dir/feature_tests.cxx.o -c /home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_530f3
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_530f3.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_530f3.dir/feature_tests.cxx.o  -o cmTC_530f3 
-make[1]: Leaving directory '/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_13076/fast"
+/usr/bin/make -f CMakeFiles/cmTC_13076.dir/build.make CMakeFiles/cmTC_13076.dir/build
+make[1]: Entering directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_13076.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_13076.dir/feature_tests.cxx.o -c /home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_13076
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_13076.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_13076.dir/feature_tests.cxx.o  -o cmTC_13076 
+make[1]: Leaving directory '/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers

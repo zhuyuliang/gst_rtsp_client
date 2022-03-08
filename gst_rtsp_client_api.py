@@ -5,18 +5,22 @@ import time
 client = cdll.LoadLibrary("build/libRtspClientLib.so")
 
 def createRtspClient( id, url):
-    time.sleep(1)
+    time.sleep(2)
     print("createRtspClient id = %d %s",id, url)
     isSuccess = client.createRtspClient( id,url.encode())
+    time.sleep(2)
     return isSuccess
 
 def destoryRtspClientAll():
+    time.sleep(2)
     isSuccess = client.destoryRtspClientAll()
+    time.sleep(2)
     return isSuccess
 
 def destoryRtspClient(id):
-    time.sleep(1)
+    time.sleep(2)
     isSuccess = client.destoryRtspClient(id)
+    time.sleep(2)
     return isSuccess
     
 def isConnect( id):

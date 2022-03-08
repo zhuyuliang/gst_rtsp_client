@@ -76,7 +76,7 @@ opencv2/imgproc.hpp
 opencv2/core/mat.hpp
 -
 
-/home/toybrick/Dev/temp/gst_rtsp_client_test/src/gst_rtsp_client.cpp
+/home/toybrick/Dev/gst_rtsp_client/src/gst_rtsp_client.cpp
 gst_rtsp_client.h
 -
 string
@@ -148,7 +148,7 @@ opencv2/imgproc.hpp
 opencv2/core/mat.hpp
 -
 
-/home/toybrick/Dev/temp/gst_rtsp_client_test/src/setup.cpp
+/home/toybrick/Dev/gst_rtsp_client/src/setup.cpp
 string.h
 -
 unordered_map

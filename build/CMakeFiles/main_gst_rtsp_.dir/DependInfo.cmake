@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/toybrick/Dev/temp/gst_rtsp_client_test/src/gst_rtsp_client.cpp" "/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o"
-  "/home/toybrick/Dev/temp/gst_rtsp_client_test/test/c_test_main_rtsp.cpp" "/home/toybrick/Dev/temp/gst_rtsp_client_test/build/CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o"
+  "/home/toybrick/Dev/gst_rtsp_client/src/gst_rtsp_client.cpp" "/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/main_gst_rtsp_.dir/src/gst_rtsp_client.cpp.o"
+  "/home/toybrick/Dev/gst_rtsp_client/test/c_test_main_rtsp.cpp" "/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/main_gst_rtsp_.dir/test/c_test_main_rtsp.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

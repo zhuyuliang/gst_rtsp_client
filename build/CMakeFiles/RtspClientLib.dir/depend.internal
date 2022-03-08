@@ -3,7 +3,7 @@
 
 CMakeFiles/RtspClientLib.dir/src/gst_rtsp_client.cpp.o
  ../include/gst_rtsp_client.h
- /home/toybrick/Dev/temp/gst_rtsp_client_test/src/gst_rtsp_client.cpp
+ /home/toybrick/Dev/gst_rtsp_client/src/gst_rtsp_client.cpp
  /usr/include/glib-2.0/glib-object.h
  /usr/include/glib-2.0/glib.h
  /usr/include/glib-2.0/glib/deprecated/gallocator.h
@@ -374,7 +374,7 @@ CMakeFiles/RtspClientLib.dir/src/gst_rtsp_client.cpp.o
  /usr/local/include/rga/rga.h
 CMakeFiles/RtspClientLib.dir/src/setup.cpp.o
  ../include/gst_rtsp_client.h
- /home/toybrick/Dev/temp/gst_rtsp_client_test/src/setup.cpp
+ /home/toybrick/Dev/gst_rtsp_client/src/setup.cpp
  /usr/include/glib-2.0/glib-object.h
  /usr/include/glib-2.0/glib.h
  /usr/include/glib-2.0/glib/deprecated/gallocator.h
