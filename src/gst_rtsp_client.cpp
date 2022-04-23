@@ -45,8 +45,6 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/core/mat.hpp>
 
-// #include <arrayqueue.h>
-
 // static GstFlowReturn 
 // new_sample (GstElement *sink, GMainLoop *pipline) {
 //     GstSample *sample;
@@ -154,7 +152,6 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
   
   //param not use
   // (void) bus;
-
   // g_print ( "piple call_bus message m_Id %s %d \n", gst_message_type_get_name(GST_MESSAGE_TYPE (msg)),dec->m_Id);
   
 
@@ -294,151 +291,150 @@ buffer_to_file (struct CustomData *dec, GstBuffer * buf)
     printf ("===================================\n");
   }
 
-  // if (dec->m_RtspCallBack != NULL)
-  // {
-  //   g_print( "*");
-  //   // int resize_w = 1920, resize_h = 1080;
-  //   // static int frame_size = 0;
-  //   // unsigned char *frame_rgb = NULL;
-  //   // frame_size = resize_w * resize_h * 3;
-  //   // frame_rgb = (unsigned char *)malloc(frame_size);
-  //   // //cv::Mat img(resize_h , resize_w , CV_8UC3, frame_rgb);
-  //   // if (!frame_rgb)
-  //   //   return 0;
+  if (dec->m_RtspCallBack != NULL)
+  {
+    // int resize_w = 1920, resize_h = 1080;
+    // static int frame_size = 0;
+    // unsigned char *frame_rgb = NULL;
+    // frame_size = resize_w * resize_h * 3;
+    // frame_rgb = (unsigned char *)malloc(frame_size);
+    // //cv::Mat img(resize_h , resize_w , CV_8UC3, frame_rgb);
+    // if (!frame_rgb)
+    //   return 0;
       
-  //   // mRga->ops->setDstBufferPtr(mRga, frame_rgb);
+    // mRga->ops->setDstBufferPtr(mRga, frame_rgb);
 
-  //   // // g_print( "*Rga \n");
-  //   // // //memcpy((char *) map_info.data, srcBuffer, BUFFER_SIZE);
-  //   // mRga->ops->setSrcBufferPtr(mRga, (char *) map_info.data);
-  //   // // mRga->ops->setDstBufferPtr(mRga, dstBuffer);
-  //   // rga_buffer_t 	src;
-  //   // rga_buffer_t 	dst;
-  //   // rga_buffer_t  dst_output;
+    // // g_print( "*Rga \n");
+    // // //memcpy((char *) map_info.data, srcBuffer, BUFFER_SIZE);
+    // mRga->ops->setSrcBufferPtr(mRga, (char *) map_info.data);
+    // // mRga->ops->setDstBufferPtr(mRga, dstBuffer);
+    // rga_buffer_t 	src;
+    // rga_buffer_t 	dst;
+    // rga_buffer_t  dst_output;
 
-  //   // // mpp 265 256 2304 | 264 16 1088
+    // // mpp 265 256 2304 | 264 16 1088
 
-  //   // if (map_info.size == 4976640){
-  //   //   // g_print("h265");
-  //   //   src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, SRC_HEIGHT, SRC_FORMAT);
-  //   //   dst = wrapbuffer_virtualaddr(srcBuffer_265, 2304, DST_HEIGHT, DST_FORMAT);
-  //   // } else {
-  //   //   src = wrapbuffer_virtualaddr((char *) map_info.data, SRC_WIDTH, 1088, SRC_FORMAT);
-  //   //   dst = wrapbuffer_virtualaddr(srcBuffer_264, DST_WIDTH, 1088, DST_FORMAT);
-  //   // }
-  //   // // dst = wrapbuffer_virtualaddr(srcBuffer_264, DST_WIDTH, DST_WIDTH, DST_FORMAT);
-  //   // dst_output = wrapbuffer_virtualaddr(dstBuffer, DST_WIDTH, DST_HEIGHT, DST_FORMAT);
+    // if (map_info.size == 4976640){
+    //   // g_print("h265");
+    //   src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, SRC_HEIGHT, SRC_FORMAT);
+    //   dst = wrapbuffer_virtualaddr(srcBuffer_265, 2304, DST_HEIGHT, DST_FORMAT);
+    // } else {
+    //   src = wrapbuffer_virtualaddr((char *) map_info.data, SRC_WIDTH, 1088, SRC_FORMAT);
+    //   dst = wrapbuffer_virtualaddr(srcBuffer_264, DST_WIDTH, 1088, DST_FORMAT);
+    // }
+    // // dst = wrapbuffer_virtualaddr(srcBuffer_264, DST_WIDTH, DST_WIDTH, DST_FORMAT);
+    // dst_output = wrapbuffer_virtualaddr(dstBuffer, DST_WIDTH, DST_HEIGHT, DST_FORMAT);
 
-  //   // if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
-  //   //   printf("%s, %s\n", __FUNCTION__, imStrError());
-  //   //   return;
-  //   // }
+    // if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
+    //   printf("%s, %s\n", __FUNCTION__, imStrError());
+    //   return;
+    // }
 
-  //   // // g_print("imcvtcolor");
+    // // g_print("imcvtcolor");
 
-  //   // // ret = mRga->ops->go(mRga);
-  //   // imcvtcolor(src, dst, src.format, dst.format);
+    // // ret = mRga->ops->go(mRga);
+    // imcvtcolor(src, dst, src.format, dst.format);
 
-  //   // im_rect src_rect = {0, 0, DST_WIDTH, DST_HEIGHT};
-  //   // //g_print("imcrop %d",src_rect.width);
-  //   // imcrop(dst,dst_output,src_rect);
+    // im_rect src_rect = {0, 0, DST_WIDTH, DST_HEIGHT};
+    // //g_print("imcrop %d",src_rect.width);
+    // imcrop(dst,dst_output,src_rect);
 
-  //   // cv::Mat img(DST_HEIGHT, DST_WIDTH , CV_8UC3, dstBuffer);
-  //   // char buf1[32] = {0};
-  //   // snprintf(buf1, sizeof(buf1), "%u",dec->frame);
-  //   // std::string str = buf1;
-  //   // std::string name = str + "test.jpg";
+    // cv::Mat img(DST_HEIGHT, DST_WIDTH , CV_8UC3, dstBuffer);
+    // char buf1[32] = {0};
+    // snprintf(buf1, sizeof(buf1), "%u",dec->frame);
+    // std::string str = buf1;
+    // std::string name = str + "test.jpg";
     
-  //   // cv::imwrite( name, img);
-  //   // cv::waitKey(10);
+    // cv::imwrite( name, img);
+    // cv::waitKey(10);
 
-  //   dec->m_RtspCallBack();
+    dec->m_RtspCallBack();
 
-  //   // g_print("num: %d \n", checkData(srcBuffer,dstBuffer));
+    // g_print("num: %d \n", checkData(srcBuffer,dstBuffer));
 
-  //   // cv::Mat img(BUFFER_HEIGHT, BUFFER_WIDTH , CV_8UC3, dstBuffer);
-  //   // cv::imwrite("test.jpg", img); 
-  //   // //unchar_to_Mat(dstBuffer); 
-  //   // g_print( "*Rga ret = %d \n",ret);
-  //   // if (!ret) {
-  //   // 		///do something with frame_rgb
-  //   // 		cv::imwrite("test.jpg", img);
-  //   // 		cv::waitKey(10);
-  //   // }
+    // cv::Mat img(BUFFER_HEIGHT, BUFFER_WIDTH , CV_8UC3, dstBuffer);
+    // cv::imwrite("test.jpg", img); 
+    // //unchar_to_Mat(dstBuffer); 
+    // g_print( "*Rga ret = %d \n",ret);
+    // if (!ret) {
+    // 		///do something with frame_rgb
+    // 		cv::imwrite("test.jpg", img);
+    // 		cv::waitKey(10);
+    // }
 
-  //   //unchar_to_Mat(dstBuffer);  // 将 unsigned char BGR格式转换为 Mat BGR格式
-  //   //cv::imwrite
-  //   //cv::imshow("image",img);
-  //   //cv::waitKey(20);
+    //unchar_to_Mat(dstBuffer);  // 将 unsigned char BGR格式转换为 Mat BGR格式
+    //cv::imwrite
+    //cv::imshow("image",img);
+    //cv::waitKey(20);
 
-  //   // g_snprintf (filename, sizeof (filename), "img%05d.%s", dec->frame,
-  //   //     pixfmt_str);
-  //   // g_file_set_contents (filename, (char *) map_info.data, map_info.size, NULL);
-  // } else {
+    // g_snprintf (filename, sizeof (filename), "img%05d.%s", dec->frame,
+    //     pixfmt_str);
+    // g_file_set_contents (filename, (char *) map_info.data, map_info.size, NULL);
+  } else {
 
-  //   g_print("b* \n");
+    g_print("b* \n");
 
-  //   // rga_buffer_t 	src;
-  //   //     rga_buffer_t 	dst;
-  //   //     rga_buffer_t  dst_output;
-  //   //     rga_buffer_t  dst_resize_output;
+    // rga_buffer_t 	src;
+    //     rga_buffer_t 	dst;
+    //     rga_buffer_t  dst_output;
+    //     rga_buffer_t  dst_resize_output;
 
-  //   // // h264 h265 1280 * 720 == 1280 * 720
-  //   //       src = wrapbuffer_virtualaddr((char *) map_info.data, 1280, 720, SRC_FORMAT);
-  //   //       if (dec->dst_buf == NULL){
-  //   //           dec->dst_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
-  //   //       }
-  //   //       dst = wrapbuffer_virtualaddr(dec->dst_buf, 1280, 720, DST_FORMAT);
-  //   //       // if (this->m_data->dst_output_buf == NULL){
-  //   //       //     this->m_data->dst_output_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
-  //   //       // }
-  //   //       // dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 1280, 720, DST_FORMAT);
-  //   //       if (dec->dst_resize_output_buf == NULL){
-  //   //           dec->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
-  //   //       }
-  //   //       dst_resize_output = wrapbuffer_virtualaddr(dec->dst_resize_output_buf, width, height, DST_FORMAT);
-  //   //       if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
-  //   //         printf("%s, %s\n", __FUNCTION__, imStrError());
-  //   //         return;
-  //   //       }
-  //   //       imcvtcolor(src, dst, src.format, dst.format);
-  //   //       //im_rect src_rect = {0, 0, 1280, 720};
-  //   //       //g_print("imcrop %d",src_rect.width);
-  //   //       //imcrop(dst,dst_output,src_rect);
+    // // h264 h265 1280 * 720 == 1280 * 720
+    //       src = wrapbuffer_virtualaddr((char *) map_info.data, 1280, 720, SRC_FORMAT);
+    //       if (dec->dst_buf == NULL){
+    //           dec->dst_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
+    //       }
+    //       dst = wrapbuffer_virtualaddr(dec->dst_buf, 1280, 720, DST_FORMAT);
+    //       // if (this->m_data->dst_output_buf == NULL){
+    //       //     this->m_data->dst_output_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
+    //       // }
+    //       // dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 1280, 720, DST_FORMAT);
+    //       if (dec->dst_resize_output_buf == NULL){
+    //           dec->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+    //       }
+    //       dst_resize_output = wrapbuffer_virtualaddr(dec->dst_resize_output_buf, width, height, DST_FORMAT);
+    //       if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
+    //         printf("%s, %s\n", __FUNCTION__, imStrError());
+    //         return;
+    //       }
+    //       imcvtcolor(src, dst, src.format, dst.format);
+    //       //im_rect src_rect = {0, 0, 1280, 720};
+    //       //g_print("imcrop %d",src_rect.width);
+    //       //imcrop(dst,dst_output,src_rect);
 
-  //   //       // imresize(dst,dst_resize_output);
+    //       // imresize(dst,dst_resize_output);
 
-  //   //       cv::Mat img(720, 1280 , CV_8UC3, dec->dst_buf);
-  //   //       std::string name = "i10st.jpg";
+    //       cv::Mat img(720, 1280 , CV_8UC3, dec->dst_buf);
+    //       std::string name = "i10st.jpg";
             
-  //   //       cv::imwrite( name, img);
+    //       cv::imwrite( name, img);
 
 
-  //   // g_print("queue empty %d" , dec->mqueue.empty());
-  //   // FrameData framedata;
-  //   // framedata.data = (char *) map_info.data;
-  //   // framedata.size = map_info.size;
-  //   // framedata.width = width;
-  //   // framedata.height = height;
-  //   // framedata.isRun = dec->isRun;
+    // g_print("queue empty %d" , dec->mqueue.empty());
+    // FrameData framedata;
+    // framedata.data = (char *) map_info.data;
+    // framedata.size = map_info.size;
+    // framedata.width = width;
+    // framedata.height = height;
+    // framedata.isRun = dec->isRun;
 
-  //   // MppFrameData mppframeData;
-  //   // //memcpy(mppframeData.data,(char *)map_info.data, map_info.size);
-  //   // // mppframeData.data = (char *)map_info.data;
-  //   // mppframeData.size = map_info.size;
-  //   // if (dec->mqueue->is_empty()){
-  //   //   // g_print("queue empty \n");
-  //   //   dec->mqueue->add(mppframeData);
-  //   // }else if (dec->mqueue->size() < 3){
-  //   //   // g_print("queue size < 2 \n");
-  //   //   dec->mqueue->add(mppframeData);
-  //   // } else {
-  //   //   // while(dec->mqueue->size())
-  //   //   // g_print(">2 pop \n");
-  //   //   // MppFrameData datas = 
-  //   //   dec->mqueue->pop();
-  //   // }
-  // }
+    // MppFrameData mppframeData;
+    // //memcpy(mppframeData.data,(char *)map_info.data, map_info.size);
+    // // mppframeData.data = (char *)map_info.data;
+    // mppframeData.size = map_info.size;
+    // if (dec->mqueue->is_empty()){
+    //   // g_print("queue empty \n");
+    //   dec->mqueue->add(mppframeData);
+    // }else if (dec->mqueue->size() < 3){
+    //   // g_print("queue size < 2 \n");
+    //   dec->mqueue->add(mppframeData);
+    // } else {
+    //   // while(dec->mqueue->size())
+    //   // g_print(">2 pop \n");
+    //   // MppFrameData datas = 
+    //   dec->mqueue->pop();
+    // }
+  }
 
   gst_buffer_unmap (buf, &map_info);
 
@@ -450,13 +446,8 @@ video_frame_loop (void *arg)
 {
   struct CustomData *dec = (struct CustomData *) arg;
 
-  //mRga->ops->setSrcBufferPtr(mRga, srcBuffer);
-  //mRga->ops->setDstBufferPtr(mRga, dstBuffer);
   // gst_app_sink_set_max_buffers (GST_APP_SINK(dec->appsink),1);
   // gst_app_sink_set_buffer_list_support (GST_APP_SINK(dec->appsink),FALSE);
-
-  // //h264 h265 1920  (other inch no support)
-  // dec->mqueue = new ArrayQueue<MppFrameData>();
 
   do {
     GstSample *samp;
@@ -621,9 +612,6 @@ rtsp_init(struct CustomData *data) {
     // gst_bus_add_watch (bus, (GstBusFunc) bus_uridecodebin_cb, data);
     // gst_object_unref ( GST_OBJECT (bus));
 
-    //h264 h265 1920  (other inch no support)
-    // data->mqueue = new ArrayQueue<MppFrameData>();
-
     // start playing
     g_print ("start playing \n");
     gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_PLAYING);
@@ -643,30 +631,13 @@ rtsp_destroy (pthread_t m_thread, struct CustomData *data)
   if (data != NULL) {
 
     gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_NULL);
-    // if (DISPLAY) {
-    //   gst_bin_remove_many (GST_BIN(data->pipeline), data->queue_displaysink, data->displaysink, NULL);
-    //   gst_object_unref (data->queue_displaysink);
-    //   gst_object_unref (data->displaysink);
-    // }
-    
-    // g_print ("start gst_pad_unlink \n");
-    // gst_pad_unlink(data->tee2_video_pad, data->queue2_video_pad);
-    // gst_element_remove_pad(GST_ELEMENT(data->tee),data->tee2_video_pad);
-    // gst_element_remove_pad(GST_ELEMENT(data->queue_appsink),data->queue2_video_pad);
-
-    // g_print ("start gst_bin_remove_many \n");
-    // gst_element_unlink_many(data->appsink,data->queue_appsink,data->tee,data->decode,data->rtspsrc);
-    // gst_element_unlink_many(data->queue_appsink,data->tee);
-    // gst_element_unlink_many(data->tee,data->decode);
-    // gst_element_unlink_many(data->decode,data->rtspsrc);
+    if (DISPLAY) {
+      gst_bin_remove_many (GST_BIN(data->pipeline), data->queue_displaysink, data->displaysink, NULL);
+      gst_object_unref (data->queue_displaysink);
+      gst_object_unref (data->displaysink);
+    }
     gst_bin_remove_many(GST_BIN(data->pipeline), data->rtspsrc, data->decode, data->tee, NULL);
     gst_bin_remove_many(GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
-
-    // gst_object_unref (data->appsink);
-    // gst_object_unref (data->queue_appsink);
-    // gst_object_unref (data->tee);
-    // gst_object_unref (data->decode);
-    // gst_object_unref (data->rtspsrc);
 
     // g_print ("start gst_object_unref3 \n");
     gst_object_unref (data->pipeline);
@@ -687,7 +658,7 @@ rtsp_destroy (pthread_t m_thread, struct CustomData *data)
     g_free (data->dst_buf);
     g_free (data->dst_output_buf);
     g_free (data->dst_resize_output_buf);
-    // g_free (data->m_RtspUri);
+    g_free (data->m_RtspUri);
 
     g_free (data->dst_output_resize_buf);
     g_free (data->dst_resize_output_resize_buf);
@@ -706,16 +677,16 @@ RtspClient::~RtspClient() {
     g_print("rtsp ~rtspclient!\n");
 }
 
+// connect rtsp
 static void* connectrtsp(void *arg) {
 
   // int p = fork();
-
   struct CustomData *data = (struct CustomData *)arg;
 
-  // // gst init
+  // gst init
   gst_init (NULL, NULL);
   /** gst debug */
-  //GST_DEBUG_CATEGORY_INIT (rk_appsink_debug, "rk_appsink", 2, "App sink");
+  // GST_DEBUG_CATEGORY_INIT (rk_appsink_debug, "rk_appsink", 2, "App sink");
   g_print("mId %d mRtspUri %s \n", data->m_Id, data->m_RtspUri);
 
   rtsp_init (data);
@@ -741,17 +712,17 @@ static void* connectrtsp(void *arg) {
 
 }
 
+// start create async
 bool
 RtspClient::enable(int id, const char * url, FRtspCallBack frtspcallback) {
 
   g_print("RtspClient enable ! \n");
-
   if (this->m_data == NULL) {
       this->m_data = g_new0 (struct CustomData, 1);
       this->m_data->m_Id = id;
-      // this->m_data->m_RtspUri = (char*) new char[sizeof(url)];
       size_t len = strlen(url)+1;
-      char* cpurl = new char[len];
+      char* cpurl = (char*)malloc(len);
+      memset(cpurl, 0, len);
       memcpy(cpurl, url, len);
       this->m_data->m_RtspUri = cpurl;
       this->m_data->m_RtspCallBack = frtspcallback;
@@ -769,7 +740,7 @@ RtspClient::enable(int id, const char * url, FRtspCallBack frtspcallback) {
 
 }
 
-
+// start create sync
 bool
 RtspClient::enable(int id, const char* url) {
 
@@ -778,10 +749,9 @@ RtspClient::enable(int id, const char* url) {
   if (this->m_data == NULL) {
       this->m_data = g_new0 (struct CustomData, 1);
       this->m_data->m_Id = id;
-      // this->m_data->m_RtspUri = (char*)url;
-      // this->m_data->m_RtspUri = (char*)malloc(sizeof(url) );
       size_t len = strlen(url)+1;
-      char* cpurl = new char[len];
+      char* cpurl = (char*)malloc(len);
+      memset(cpurl, 0, len);
       memcpy(cpurl, url, len);
       this->m_data->m_RtspUri = cpurl;
       int ret = pthread_create(&m_thread, NULL, connectrtsp, this->m_data);
@@ -798,15 +768,15 @@ RtspClient::enable(int id, const char* url) {
 
 }
 
+// destroy instance
 void 
 RtspClient::disable() {
-
     g_print("RtspClient start ~disable!\n");
     rtsp_destroy(this->m_thread, this->m_data);
     g_print("RtspClient end ~disable!\n");
-
 }
 
+// connect status
 int RtspClient::isConnect() 
 {
   if (this->m_data == NULL){
@@ -816,6 +786,7 @@ int RtspClient::isConnect()
   return this->m_data->isRun;
 }
 
+// read frame
 struct FrameData *
 RtspClient::read(int width, int height,int resize_width, int resize_height) {
 
@@ -857,17 +828,17 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
   buf = gst_sample_get_buffer (samp);
   
   // ** 
-  // int ret;
-  // GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
-  // guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data->info));
-  // guint width, height;
+  int ret;
+  GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
+  guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data->info));
+  guint width, height;
   GstMapInfo map_info;
-  // gchar filename[128];
-  // GstVideoFormat pixfmt;
-  // const char *pixfmt_str;
+  gchar filename[128];
+  GstVideoFormat pixfmt;
+  const char *pixfmt_str;
 
-  // pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data->info));
-  // pixfmt_str = gst_video_format_to_string (pixfmt);
+  pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data->info));
+  pixfmt_str = gst_video_format_to_string (pixfmt);
 
   /* TODO: use the DMABUF directly */
   gst_buffer_map (buf, &map_info, GST_MAP_READ);
@@ -876,14 +847,16 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
   int source_height = GST_VIDEO_INFO_HEIGHT (&(this->m_data->info));
 
   /* output some information at the beginning (= when the first frame is handled) */
-  // if (this->m_data->frame == 0) {
-  //   printf ("===================================\n");
-  //   printf ("GStreamer video stream information:\n");
-  //   printf ("  size: %u x %u pixel\n", source_width, source_height);
-  //   printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
-  //   printf ("  video meta found: %s\n", yesno (meta != NULL));
-  //   printf ("===================================\n");
-  // }
+  if (this->m_data->frame == 0) {
+    printf ("===================================\n");
+    printf ("GStreamer video stream information:\n");
+    printf ("  size: %u x %u pixel\n", source_width, source_height);
+    printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
+    printf ("  video meta found: %s\n", yesno (meta != NULL));
+    printf ("===================================\n");
+  }
+  g_print("mpp frame size : %d \n", map_info.size);
+  g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
 
   // rga
   rga_buffer_t 	src;
@@ -893,14 +866,8 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
   rga_buffer_t  dst_two_resize_output;
   rga_buffer_t  dst_two_output;
 
-  // g_print("mppframe size : %d \n", map_info.size);
-
-  // g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
-
-  // // 1920*1080
-  // // mpp 265 256 2304 | 264 16 1088
+  // h265 256bit 1920 * 1080  == 2304 * 1080
   if (map_info.size == 3732480 || map_info.size == 4976640 ) {
-    // h265 256bit 1920 * 1080  == 2304 * 1080
     src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, 1080, SRC_FORMAT);
     if (this->m_data->dst_buf == NULL){
       this->m_data->dst_buf = (char*)malloc(2304*1080*get_bpp_from_format(DST_FORMAT));
@@ -931,9 +898,8 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
    }
 
   } else 
-
-  if (map_info.size == 3133440 || map_info.size == 4177920 ) {
-    // h264 16bit 1920 * 1080 == 1920 * 1088
+  // h264 16bit 1920 * 1080 == 1920 * 1088
+  if (map_info.size == 3133440 || map_info.size == 4177920 ) {  
     src = wrapbuffer_virtualaddr((char *) map_info.data, 1920, 1088, SRC_FORMAT);
     if (this->m_data->dst_buf == NULL){
         this->m_data->dst_buf = (char*)malloc(1920*1088*get_bpp_from_format(DST_FORMAT));
@@ -966,9 +932,8 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
     }
 
   } else
-
+  // h265 2560 * 1440 256 2816 1584
   if (map_info.size == 6082560 || map_info.size == 8110080) {
-       // h265 2560 * 1440 256 2816 1584
     src = wrapbuffer_virtualaddr((char *) map_info.data, 2816, 1440, SRC_FORMAT);
     if (this->m_data->dst_buf == NULL){
         this->m_data->dst_buf = (char*)malloc(2816*1440*get_bpp_from_format(DST_FORMAT));
@@ -1001,9 +966,8 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
     }
     
   } else
-
+  //h265 640*480 768 * 480 
   if (map_info.size == 552960) {
-    //h265 640*480 768 * 480
     src = wrapbuffer_virtualaddr((char *) map_info.data, 768, 480, SRC_FORMAT);
     if (this->m_data->dst_buf == NULL){
         this->m_data->dst_buf = (char*)malloc(768*480*get_bpp_from_format(DST_FORMAT));
@@ -1036,10 +1000,11 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
     }
 
   }
-  else {
-      // h265 h264
-      // supoort 1280*720 3840*2160
-            
+  else 
+  // h265 h264
+  // supoort 1280*720 3840*2160
+  {
+      
       src = wrapbuffer_virtualaddr((char *) map_info.data, source_width, source_height, SRC_FORMAT);
       if (this->m_data->dst_buf == NULL){
           this->m_data->dst_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
@@ -1094,7 +1059,7 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
   // ** 
   gst_sample_unref (samp);
 
-  // this->m_data->frame++; 
+  this->m_data->frame++; 
 
   return data;
 

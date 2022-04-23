@@ -74,8 +74,6 @@ yesno (int yes)
 
 typedef std::function<void()> FRtspCallBack;
 
-// typedef std::function<void()> REConnect;
-
 struct MppFrameData {
     std::string data;
     int size;
@@ -87,7 +85,7 @@ struct FrameData {
     int width;
     int height;
     int isRun = STATUS_INIT;
-    // inference 640 scale
+    // inference scale
     int size_resize;
     char * data_resize;
 };
@@ -110,12 +108,10 @@ struct CustomData {
 
     unsigned frame;
 
-    const char * m_RtspUri;
+    char * m_RtspUri;
     int m_Id = 0; 
     FRtspCallBack m_RtspCallBack;
     int isRun = STATUS_INIT;
-
-    // ArrayQueue<MppFrameData> *mqueue;
 
     // rga buf
     char * dst_buf;
@@ -136,7 +132,6 @@ public:
     bool enable(int id, const char * url);
     bool enable(int id, const char * url, FRtspCallBack callBack);
     void disable();
-    // int reconnect();
     int isConnect();
 
     struct FrameData * read(int width, int height, int resize_width, int resize_height);

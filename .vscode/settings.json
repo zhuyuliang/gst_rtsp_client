@@ -4,6 +4,13 @@
         "cstring": "cpp",
         "array": "cpp",
         "string": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "bitset": "cpp",
+        "initializer_list": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "utility": "cpp"
     }
 }

@@ -1,8 +1,10 @@
 #include <iostream>
-#include <../include/gst_rtsp_client.h>
 #include <string>
 #include <time.h>
 #include <sys/select.h>
+
+// rtsp lib
+#include <../include/gst_rtsp_client.h>
 #include <../src/setup.cpp>
 
 // opencv2
@@ -10,8 +12,6 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/core/mat.hpp>
-
-// #include <python3.7m/Python.h>
 
 using namespace std;
 
@@ -25,23 +25,20 @@ using namespace std;
 // 	//g_print("callback");
 // }
 
+// sleep for ms 
 static void sleep_ms(unsigned int secs)
-
 {
-
     struct timeval tval;
-
     tval.tv_sec=secs/1000;
-
     tval.tv_usec=(secs*1000)%1000000;
-
     select(0,NULL,NULL,NULL,&tval);
-
 }
 
 
 int main()
 {
+
+    // TODO multi rtsp
 
     char* url1 = (char*)"rtsp://admin:shangqu2020@192.168.2.30:554/cam/realmonitor?channel=1&subtype=0";
     char* url2 = (char*)"rtsp://admin:shangqu2020@192.168.2.141:554/Streaming/Channels/1";
@@ -167,6 +164,7 @@ int main()
 
     } while (1);
     
+    // TODO callback
     
     // RtspClient *client = new RtspClient();
     // RtspClient *client1 = new RtspClient();

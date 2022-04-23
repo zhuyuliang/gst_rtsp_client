@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 # project name
-project(vscode_cmakegstreamer_learn)
+project(vscode_cmake_gstreamer_learn)
 
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_CXX_COMPILER g++)
@@ -83,14 +83,9 @@ find_package(CURL REQUIRED)
 find_package(OpenCV REQUIRED)
 set(link_libs curl pthread opencv_core opencv_highgui opencv_imgcodecs)
 
-# aux_source_directory(. DIR_SRCS)
-
 set(SRC_LIST ./test/c_test_main_rtsp.cpp 
             ./src/gst_rtsp_client.cpp)
-            # ./include/arrayqueue.h)
 
 add_executable (main_gst_rtsp_ ${SRC_LIST})
-
 target_link_libraries(main_gst_rtsp_ ${link_libs})
-
 add_library(RtspClientLib SHARED ./include/gst_rtsp_client.h ./src/gst_rtsp_client.cpp ./src/setup.cpp)

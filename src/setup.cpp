@@ -48,29 +48,34 @@ createRtspClient (int id, const char * url)
     return FAIL;
 }
 
-// extern "C" int
-// createRtspClient (int id, char * url, FRtspCallBack frtspcallback)
-// {
-//     //&& id != nullptr && url != nullptr
-//     g_print("setup createRtspClient %d \n",id);
-//     if ( mMap.find(id) == mMap.end() )
-//     {
-//       mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
-//       if (mMap.find(id)->second->enable(id, url, frtspcallback)){
-//           return SUCCESS;
-//       }else{
-//           // mMap.find(id)->second->disable();
-//           // delete mMap.find(id)->second;
-//           // mMap.erase(id);
-//           return FAIL;
-//       }
-//     } else {
-//       // mMap.find(id)->second->disable();
-//       // delete mMap.find(id)->second;
-//       // mMap.erase(id);
-//       return FAIL;
-//     }
-// }
+extern "C" int
+createRtspClient (int id, char * url, FRtspCallBack frtspcallback)
+{
+    m_mutex.lock();
+    //&& id != nullptr && url != nullptr
+    g_print("setup createRtspClient %d \n",id);
+    if ( mMap.find(id) == mMap.end() )
+    {
+      mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
+      if (mMap.find(id)->second->enable(id, url, frtspcallback)){
+          m_mutex.unlock();
+          return SUCCESS;
+      }
+      // else{
+      //     // mMap.find(id)->second->disable();
+      //     // delete mMap.find(id)->second;
+      //     // mMap.erase(id);
+      //     return FAIL;
+      // }
+    }
+    //  else {
+      // mMap.find(id)->second->disable();
+      // delete mMap.find(id)->second;
+      // mMap.erase(id);
+    m_mutex.unlock();
+    return FAIL;
+    // }
+}
 
 extern "C" int
 destoryRtspClientAll()
@@ -109,17 +114,6 @@ destoryRtspClient(int id)
   return SUCCESS;
 }
 
-// extern "C" int
-// reconnectRtsp(int id)
-// {
-//     if (mMap.find(id) != mMap.end()){
-//       mMap.find(id)->second->reconnect();
-//       return SUCCESS;
-//     }else{
-//       return FAIL;
-//     }
-// }
-
 extern "C" int
 isConnect(int id)
 {
@@ -135,14 +129,6 @@ isConnect(int id)
   }
 }
 
-// typedef struct _framedata_struct
-// {
-//     int     integer;
-//     char *  c_str;
-//     void *  ptr;
-//     int     array[8];
-// };
-
 extern "C" int
 mread(int id, int width, int height, int resize_width, int resize_height, unsigned char * buf, int len, unsigned char * buf_resize, int len_resize)
 {
@@ -156,21 +142,11 @@ mread(int id, int width, int height, int resize_width, int resize_height, unsign
         if (resize_width > 0 and resize_height >0){
           memcpy( buf_resize, framedata->data_resize, framedata->size_resize);
         }
-        // free( framedata->data);
-        // free( framedata->data_resize);
         free( framedata);
         m_mutex.unlock();
         return SUCCESS;
       }
-      // delete framedata->data;
-      // delete framedata->data_resize;
       free( framedata);
-      // len = framedata.size;
-      // g_print("len %d", len);
-      // g_print("size %d", framedata.size);
-      // if (sizeof(len) == framedata.size){
-      //   return SUCCESS;
-      // }
     }
   }
   // m_mutex.unlock();

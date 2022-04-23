@@ -1,5 +1,4 @@
 # gstreamer_rtsp_client
-
 ## gst rtsp _ rk3399prod
 ### rtspsrc->decodebin(mppvideodec)->tee->queue->appsink->rga
 #### 优点:
@@ -20,5 +19,9 @@
 * 2.[MPP_GSTREAMER插件](https://github.com/rockchip-linux/gstreamer-rockchip)
 
 ---
-## gst rtsp _ (deepstream)/tensorrt .. wait ..
-### rtspsrc decodebin(Gst-nvvideo4linux2) tee queue Gst-nvvideoconvert appsink (GST-nvinfer Gst-nvtracker)
+## 待处理
+[] 多显示
+[] API整理测试
+[] 测试用例
+[] API文档
+[] gst rtsp _ (deepstream)/tensorrt .. wait .. (rtspsrc decodebin(Gst-nvvideo4linux2) tee queue Gst-nvvideoconvert appsink (GST-nvinfer Gst-nvtracker))
