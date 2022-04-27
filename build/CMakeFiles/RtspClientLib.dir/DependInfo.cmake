@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/toybrick/Dev/gst_rtsp_client/src/gst_rtsp_client.cpp" "/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/RtspClientLib.dir/src/gst_rtsp_client.cpp.o"
-  "/home/toybrick/Dev/gst_rtsp_client/src/setup.cpp" "/home/toybrick/Dev/gst_rtsp_client/build/CMakeFiles/RtspClientLib.dir/src/setup.cpp.o"
+  "/home/toybrick/Dev/github/gst_rtsp_client/src/gst_rtsp_client.cpp" "/home/toybrick/Dev/github/gst_rtsp_client/build/CMakeFiles/RtspClientLib.dir/src/gst_rtsp_client.cpp.o"
+  "/home/toybrick/Dev/github/gst_rtsp_client/src/setup.cpp" "/home/toybrick/Dev/github/gst_rtsp_client/build/CMakeFiles/RtspClientLib.dir/src/setup.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -23,6 +23,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/local/include"
   "/usr/local/lib/aarch64-linux-gnu"
   "../include"
+  "../librga"
   )
 
 # Targets to which this target links.

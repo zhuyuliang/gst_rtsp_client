@@ -5,10 +5,14 @@ import time
 # 加载库文件
 rtsp_client = cdll.LoadLibrary("build/libRtspClientLib.so")
 
+DEFAULT_CONN_MODE = 0
+TCP_CONN_MODE = 1
+UDP_CONN_MODE = 2
+
 # 创建RTSP实例
-def createRtspClient( id, url):
+def createRtspClient( id, url, mode = TCP_CONN_MODE):
     print("createRtspClient id = %d %s",id, url)
-    isSuccess = rtsp_client.createRtspClient( id,url.encode())
+    isSuccess = rtsp_client.createRtspClient( id,url.encode(),mode)
     return isSuccess
 
 # 销毁全部RTSP连接

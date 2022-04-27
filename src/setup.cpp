@@ -18,7 +18,7 @@ unordered_map<int,RtspClient*> ::iterator it;
 mutex m_mutex;
 
 extern "C" int
-createRtspClient (int id, const char * url)
+createRtspClient (int id, const char* url, int conn_mode)
 {
     m_mutex.lock();
     //&& id != nullptr && url != nullptr
@@ -26,55 +26,13 @@ createRtspClient (int id, const char * url)
     if ( mMap.find(id) == mMap.end() )
     {
       mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
-      if (mMap.find(id)->second->enable(id, url)){
+      if (mMap.find(id)->second->enable(id, url, conn_mode)){
           m_mutex.unlock();
           return SUCCESS;
       }
-      // else{
-      //     // mMap.find(id)->second->disable();
-      //     // delete mMap.find(id)->second;
-      //     // mMap.erase(id);
-      //     m_mutex.unlock();
-      //     return FAIL;
-      // }
     }
-    //  else {
-    //   // mMap.find(id)->second->disable();
-    //   // delete mMap.find(id)->second;
-    //   // mMap.erase(id);
-    //   return FAIL;
-    // }
     m_mutex.unlock();
     return FAIL;
-}
-
-extern "C" int
-createRtspClient (int id, char * url, FRtspCallBack frtspcallback)
-{
-    m_mutex.lock();
-    //&& id != nullptr && url != nullptr
-    g_print("setup createRtspClient %d \n",id);
-    if ( mMap.find(id) == mMap.end() )
-    {
-      mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
-      if (mMap.find(id)->second->enable(id, url, frtspcallback)){
-          m_mutex.unlock();
-          return SUCCESS;
-      }
-      // else{
-      //     // mMap.find(id)->second->disable();
-      //     // delete mMap.find(id)->second;
-      //     // mMap.erase(id);
-      //     return FAIL;
-      // }
-    }
-    //  else {
-      // mMap.find(id)->second->disable();
-      // delete mMap.find(id)->second;
-      // mMap.erase(id);
-    m_mutex.unlock();
-    return FAIL;
-    // }
 }
 
 extern "C" int
@@ -89,11 +47,6 @@ destoryRtspClientAll()
   } 
   mMap.clear();
   malloc_trim(0);
-  // if (mMap.find(id) != NULL){
-  //   mMap.find(id)->disable();
-  //   mMap.erase(id)
-  //   // rtspclient = NULL;
-  // }
   m_mutex.unlock();
   return SUCCESS;
 }
@@ -143,7 +96,7 @@ mread(int id, int width, int height, int resize_width, int resize_height, unsign
           memcpy( buf_resize, framedata->data_resize, framedata->size_resize);
         }
         free( framedata);
-        m_mutex.unlock();
+        // m_mutex.unlock();
         return SUCCESS;
       }
       free( framedata);

@@ -51,6 +51,7 @@ include_directories(
         /usr/local/include
         /usr/local/lib/aarch64-linux-gnu
         ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/librga
 )
 
 link_libraries(
@@ -72,7 +73,8 @@ link_libraries(
 	# ${SYS_USR_LIB}/librockchip_rga.so.0
 	# /usr/local/lib/libopencv_imgproc.so.3.4
 	# /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.3.2
-        /usr/lib/aarch64-linux-gnu/librga.so
+        # /usr/lib/aarch64-linux-gnu/librga.so
+        ${CMAKE_CURRENT_SOURCE_DIR}/librga/librga.so
 	#/home/firefly/linux-rga/build/librga.so
 )
 

@@ -65,14 +65,17 @@
 #define STATUS_CONNECTED 1
 #define STATUS_DISCONNECT 2
 #define STATUS_CONNECTING 3
+#define STATUS_DISCONNECTING 4
+
+#define DEFAULT_CONN_MODE 0
+#define TCP_CONN_MODE 1
+#define UDP_CONN_MODE 2
 
 inline static const char *
 yesno (int yes)
 {
   return yes ? "yes" : "no";
 }
-
-typedef std::function<void()> FRtspCallBack;
 
 struct MppFrameData {
     std::string data;
@@ -101,7 +104,8 @@ struct CustomData {
     GstElement *queue_displaysink;
     GstElement *appsink;
     GstElement *displaysink;
-    pthread_t gst_thread;
+    
+    GstBus *bus;
 
     gint format;
     GstVideoInfo info;
@@ -109,8 +113,8 @@ struct CustomData {
     unsigned frame;
 
     char * m_RtspUri;
-    int m_Id = 0; 
-    FRtspCallBack m_RtspCallBack;
+    int m_Id = 0;
+    int conn_Mode = DEFAULT_CONN_MODE; 
     int isRun = STATUS_INIT;
 
     // rga buf
@@ -129,8 +133,7 @@ public:
     RtspClient();
     ~RtspClient();
     
-    bool enable(int id, const char * url);
-    bool enable(int id, const char * url, FRtspCallBack callBack);
+    bool enable(int id, const char * url, int conn_mode);
     void disable();
     int isConnect();
 

@@ -291,151 +291,6 @@ buffer_to_file (struct CustomData *dec, GstBuffer * buf)
     printf ("===================================\n");
   }
 
-  if (dec->m_RtspCallBack != NULL)
-  {
-    // int resize_w = 1920, resize_h = 1080;
-    // static int frame_size = 0;
-    // unsigned char *frame_rgb = NULL;
-    // frame_size = resize_w * resize_h * 3;
-    // frame_rgb = (unsigned char *)malloc(frame_size);
-    // //cv::Mat img(resize_h , resize_w , CV_8UC3, frame_rgb);
-    // if (!frame_rgb)
-    //   return 0;
-      
-    // mRga->ops->setDstBufferPtr(mRga, frame_rgb);
-
-    // // g_print( "*Rga \n");
-    // // //memcpy((char *) map_info.data, srcBuffer, BUFFER_SIZE);
-    // mRga->ops->setSrcBufferPtr(mRga, (char *) map_info.data);
-    // // mRga->ops->setDstBufferPtr(mRga, dstBuffer);
-    // rga_buffer_t 	src;
-    // rga_buffer_t 	dst;
-    // rga_buffer_t  dst_output;
-
-    // // mpp 265 256 2304 | 264 16 1088
-
-    // if (map_info.size == 4976640){
-    //   // g_print("h265");
-    //   src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, SRC_HEIGHT, SRC_FORMAT);
-    //   dst = wrapbuffer_virtualaddr(srcBuffer_265, 2304, DST_HEIGHT, DST_FORMAT);
-    // } else {
-    //   src = wrapbuffer_virtualaddr((char *) map_info.data, SRC_WIDTH, 1088, SRC_FORMAT);
-    //   dst = wrapbuffer_virtualaddr(srcBuffer_264, DST_WIDTH, 1088, DST_FORMAT);
-    // }
-    // // dst = wrapbuffer_virtualaddr(srcBuffer_264, DST_WIDTH, DST_WIDTH, DST_FORMAT);
-    // dst_output = wrapbuffer_virtualaddr(dstBuffer, DST_WIDTH, DST_HEIGHT, DST_FORMAT);
-
-    // if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
-    //   printf("%s, %s\n", __FUNCTION__, imStrError());
-    //   return;
-    // }
-
-    // // g_print("imcvtcolor");
-
-    // // ret = mRga->ops->go(mRga);
-    // imcvtcolor(src, dst, src.format, dst.format);
-
-    // im_rect src_rect = {0, 0, DST_WIDTH, DST_HEIGHT};
-    // //g_print("imcrop %d",src_rect.width);
-    // imcrop(dst,dst_output,src_rect);
-
-    // cv::Mat img(DST_HEIGHT, DST_WIDTH , CV_8UC3, dstBuffer);
-    // char buf1[32] = {0};
-    // snprintf(buf1, sizeof(buf1), "%u",dec->frame);
-    // std::string str = buf1;
-    // std::string name = str + "test.jpg";
-    
-    // cv::imwrite( name, img);
-    // cv::waitKey(10);
-
-    dec->m_RtspCallBack();
-
-    // g_print("num: %d \n", checkData(srcBuffer,dstBuffer));
-
-    // cv::Mat img(BUFFER_HEIGHT, BUFFER_WIDTH , CV_8UC3, dstBuffer);
-    // cv::imwrite("test.jpg", img); 
-    // //unchar_to_Mat(dstBuffer); 
-    // g_print( "*Rga ret = %d \n",ret);
-    // if (!ret) {
-    // 		///do something with frame_rgb
-    // 		cv::imwrite("test.jpg", img);
-    // 		cv::waitKey(10);
-    // }
-
-    //unchar_to_Mat(dstBuffer);  // 将 unsigned char BGR格式转换为 Mat BGR格式
-    //cv::imwrite
-    //cv::imshow("image",img);
-    //cv::waitKey(20);
-
-    // g_snprintf (filename, sizeof (filename), "img%05d.%s", dec->frame,
-    //     pixfmt_str);
-    // g_file_set_contents (filename, (char *) map_info.data, map_info.size, NULL);
-  } else {
-
-    g_print("b* \n");
-
-    // rga_buffer_t 	src;
-    //     rga_buffer_t 	dst;
-    //     rga_buffer_t  dst_output;
-    //     rga_buffer_t  dst_resize_output;
-
-    // // h264 h265 1280 * 720 == 1280 * 720
-    //       src = wrapbuffer_virtualaddr((char *) map_info.data, 1280, 720, SRC_FORMAT);
-    //       if (dec->dst_buf == NULL){
-    //           dec->dst_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
-    //       }
-    //       dst = wrapbuffer_virtualaddr(dec->dst_buf, 1280, 720, DST_FORMAT);
-    //       // if (this->m_data->dst_output_buf == NULL){
-    //       //     this->m_data->dst_output_buf = (char*)malloc(1280*720*get_bpp_from_format(DST_FORMAT));
-    //       // }
-    //       // dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 1280, 720, DST_FORMAT);
-    //       if (dec->dst_resize_output_buf == NULL){
-    //           dec->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
-    //       }
-    //       dst_resize_output = wrapbuffer_virtualaddr(dec->dst_resize_output_buf, width, height, DST_FORMAT);
-    //       if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
-    //         printf("%s, %s\n", __FUNCTION__, imStrError());
-    //         return;
-    //       }
-    //       imcvtcolor(src, dst, src.format, dst.format);
-    //       //im_rect src_rect = {0, 0, 1280, 720};
-    //       //g_print("imcrop %d",src_rect.width);
-    //       //imcrop(dst,dst_output,src_rect);
-
-    //       // imresize(dst,dst_resize_output);
-
-    //       cv::Mat img(720, 1280 , CV_8UC3, dec->dst_buf);
-    //       std::string name = "i10st.jpg";
-            
-    //       cv::imwrite( name, img);
-
-
-    // g_print("queue empty %d" , dec->mqueue.empty());
-    // FrameData framedata;
-    // framedata.data = (char *) map_info.data;
-    // framedata.size = map_info.size;
-    // framedata.width = width;
-    // framedata.height = height;
-    // framedata.isRun = dec->isRun;
-
-    // MppFrameData mppframeData;
-    // //memcpy(mppframeData.data,(char *)map_info.data, map_info.size);
-    // // mppframeData.data = (char *)map_info.data;
-    // mppframeData.size = map_info.size;
-    // if (dec->mqueue->is_empty()){
-    //   // g_print("queue empty \n");
-    //   dec->mqueue->add(mppframeData);
-    // }else if (dec->mqueue->size() < 3){
-    //   // g_print("queue size < 2 \n");
-    //   dec->mqueue->add(mppframeData);
-    // } else {
-    //   // while(dec->mqueue->size())
-    //   // g_print(">2 pop \n");
-    //   // MppFrameData datas = 
-    //   dec->mqueue->pop();
-    // }
-  }
-
   gst_buffer_unmap (buf, &map_info);
 
   return;
@@ -482,18 +337,18 @@ rtsp_init(struct CustomData *data) {
 
     /* Build Pipeline */
     data->pipeline = gst_pipeline_new(std::to_string(data->m_Id).c_str());
-
-    data->rtspsrc = gst_element_factory_make ( "rtspsrc", "rtspsrc0");
-    data->decode  = gst_element_factory_make ( "decodebin", "decodebin0");
+    g_print(("rtspsrc" + std::to_string(data->m_Id)).c_str());
+    data->rtspsrc = gst_element_factory_make ( "rtspsrc", ("rtspsrc" + std::to_string(data->m_Id)).c_str());
+    data->decode  = gst_element_factory_make ( "decodebin", ("decodebin"+ std::to_string(data->m_Id)).c_str());
     //data->mppdec = gst_element_factory_make ( "mppvideodec", "mppvideodec0");
-    data->tee    = gst_element_factory_make ( "tee", "tee0");
+    data->tee    = gst_element_factory_make ( "tee", ("tee"+ std::to_string(data->m_Id)).c_str());
 
     if (DISPLAY) {
-        data->queue_displaysink  = gst_element_factory_make ( "queue", "queue_displaysink0");
-        data->displaysink      = gst_element_factory_make ( "rkximagesink", "display_sink0");
+        data->queue_displaysink  = gst_element_factory_make ( "queue", ("queue_displaysink"+ std::to_string(data->m_Id)).c_str());
+        data->displaysink      = gst_element_factory_make ( "rkximagesink", ("display_sink"+ std::to_string(data->m_Id)).c_str());
     }
-    data->queue_appsink      = gst_element_factory_make ( "queue", "queue_appsink0");
-    data->appsink            = gst_element_factory_make ( "appsink", "app_sink0");
+    data->queue_appsink      = gst_element_factory_make ( "queue", ("queue_appsink"+ std::to_string(data->m_Id)).c_str());
+    data->appsink            = gst_element_factory_make ( "appsink", ("app_sink"+ std::to_string(data->m_Id)).c_str());
 
     if (!DISPLAY) {
         if ( !data->pipeline || !data->rtspsrc | !data->decode || !data->tee || !data->queue_appsink || !data->appsink) {
@@ -537,7 +392,13 @@ rtsp_init(struct CustomData *data) {
     // g_object_set (GST_OBJECT (data->rtspsrc), "udp-reconnect", 1, NULL);
     // g_object_set (GST_OBJECT (data->rtspsrc), "retry", 1000, NULL);
     // g_object_set (GST_OBJECT (data->rtspsrc), "debug", 1, NULL);
-    g_object_set (GST_OBJECT (data->rtspsrc), "protocols", GST_RTSP_LOWER_TRANS_TCP, NULL);
+    if (data->conn_Mode == 1) {
+    	g_object_set (GST_OBJECT (data->rtspsrc), "protocols", GST_RTSP_LOWER_TRANS_TCP, NULL);
+    }else if ( data->conn_Mode == 2){
+        g_object_set (GST_OBJECT (data->rtspsrc), "protocols", GST_RTSP_LOWER_TRANS_UDP, NULL);
+    } else {
+        g_object_set (GST_OBJECT (data->rtspsrc), "protocols", GST_RTSP_LOWER_TRANS_UNKNOWN, NULL);
+    }
 
     /**
      * GstRTSPLowerTrans:
@@ -604,9 +465,9 @@ rtsp_init(struct CustomData *data) {
     g_signal_connect(data->rtspsrc, "pad-added", G_CALLBACK( on_src_decodebin_added), data);
     g_signal_connect(data->decode, "pad-added", G_CALLBACK( on_src_tee_added), data);
     
-    GstBus* bus = gst_pipeline_get_bus( GST_PIPELINE (data->pipeline));
-    gst_bus_add_watch (bus, bus_watch_cb, data);
-    gst_object_unref ( GST_OBJECT (bus));
+    data->bus = gst_pipeline_get_bus( GST_PIPELINE (data->pipeline));
+    gst_bus_add_watch (data->bus, bus_watch_cb, data);
+    //gst_object_unref ( GST_OBJECT (bus));
 
     // bus = gst_element_get_bus( GST_ELEMENT (data->appsink));
     // gst_bus_add_watch (bus, (GstBusFunc) bus_uridecodebin_cb, data);
@@ -616,10 +477,8 @@ rtsp_init(struct CustomData *data) {
     g_print ("start playing \n");
     gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_PLAYING);
 
-    if (data->m_RtspCallBack != NULL){
-      //g_main_loop_run (main_loop);
-      pthread_create (&data->gst_thread, NULL, video_frame_loop, data);
-    }
+    //g_main_loop_run (main_loop);
+    // pthread_create (&data->gst_thread, NULL, video_frame_loop, data);
     
     return data;
 }
@@ -630,40 +489,29 @@ rtsp_destroy (pthread_t m_thread, struct CustomData *data)
 {
   if (data != NULL) {
 
+    g_main_loop_quit (data->loop);    
     gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_NULL);
-    if (DISPLAY) {
-      gst_bin_remove_many (GST_BIN(data->pipeline), data->queue_displaysink, data->displaysink, NULL);
-      gst_object_unref (data->queue_displaysink);
-      gst_object_unref (data->displaysink);
-    }
-    gst_bin_remove_many(GST_BIN(data->pipeline), data->rtspsrc, data->decode, data->tee, NULL);
-    gst_bin_remove_many(GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
-
-    // g_print ("start gst_object_unref3 \n");
+    
+    g_print ("start gst_object_unref element \n");
+    gst_bus_remove_watch (data->bus);
+    gst_object_unref ( GST_OBJECT (data->bus));
     gst_object_unref (data->pipeline);
-
-    // g_print ("start g_main_loop_quit \n");
-    g_main_loop_quit (data->loop);
     g_main_loop_unref (data->loop);
 
-    if (data->m_RtspCallBack != NULL){
-      pthread_join (data->gst_thread, 0);
-      pthread_detach (data->gst_thread);
+    // g_print ("start g_free \n");
+    free (data->dst_buf);
+    free (data->dst_output_buf);
+    free (data->dst_resize_output_buf);
+    if (data->m_RtspUri != NULL){
+    	free (data->m_RtspUri);
+        data->m_RtspUri = NULL;
     }
 
-    pthread_join (m_thread, 0);
-    pthread_detach (m_thread);
+    free (data->dst_output_resize_buf);
+    free (data->dst_resize_output_resize_buf);
 
-    // g_print ("start g_free \n");
-    g_free (data->dst_buf);
-    g_free (data->dst_output_buf);
-    g_free (data->dst_resize_output_buf);
-    g_free (data->m_RtspUri);
-
-    g_free (data->dst_output_resize_buf);
-    g_free (data->dst_resize_output_resize_buf);
-
-    g_free (data);
+    free (data);
+    data = NULL;
     
   }
 
@@ -677,78 +525,80 @@ RtspClient::~RtspClient() {
     g_print("rtsp ~rtspclient!\n");
 }
 
+int rtsp_check_url(char const* url)
+{
+#define RTSP_URL_PREFIX "rtsp://"
+
+    int pos = sizeof(RTSP_URL_PREFIX)-1;
+
+    // Parse URL, get configuration
+    // the url MUST start with "rtsp://"
+    if (strncmp(url, RTSP_URL_PREFIX, pos) != 0) {
+        printf("URL not started with \"rtsp://\".\n");
+        return -1;
+    }
+
+    return 1;
+}
+
 // connect rtsp
 static void* connectrtsp(void *arg) {
 
   // int p = fork();
   struct CustomData *data = (struct CustomData *)arg;
 
-  // gst init
-  gst_init (NULL, NULL);
-  /** gst debug */
-  // GST_DEBUG_CATEGORY_INIT (rk_appsink_debug, "rk_appsink", 2, "App sink");
-  g_print("mId %d mRtspUri %s \n", data->m_Id, data->m_RtspUri);
-
-  rtsp_init (data);
-
-  if (data != NULL) {
-    data->isRun = STATUS_CONNECTING;
-    data->loop = g_main_loop_new (NULL, FALSE);
-    g_main_loop_run (data->loop);
-  } else {
-    g_print("enable connect fail \n");
+  if (data == NULL){
+      pthread_detach(pthread_self());
+      g_print("pthread_exit data == NULL \n");
+      pthread_exit(0);
+      return 0;
   }
+	
+  int ret = rtsp_check_url(data->m_RtspUri);
+  if (ret == 1) {
+      // gst init
+      gst_init (NULL, NULL);
+      /** gst debug */
+      // GST_DEBUG_CATEGORY_INIT (rk_appsink_debug, "rk_appsink", 2, "App sink");
+      g_print("mId %d mRtspUri %s \n", data->m_Id, data->m_RtspUri);
 
-  // rtsp_destroy(data);
-  // g_main_loop_unref(data->loop);
+      rtsp_init (data);
 
-  g_print("init done");
-  g_main_loop_unref(data->loop);
-  data->isRun = STATUS_DISCONNECT;
+      if (data != NULL) {
+        data->isRun = STATUS_CONNECTING;
+        data->loop = g_main_loop_new (NULL, FALSE);
+        g_main_loop_run (data->loop);
+      } else {
+        g_print("enable connect fail \n");
+        return 0;
+      }
 
+      // rtsp_destroy(data);
+      // g_main_loop_unref(data->loop);
+
+      g_print("init exit mId %d \n", data->m_Id);
+      data->isRun = STATUS_DISCONNECT;
+    
+  }
   // exit(0);
+  pthread_detach(pthread_self());
+  g_print("pthread_exit \n");
+  pthread_exit(0);
 
   return 0;
 
 }
 
-// start create async
-bool
-RtspClient::enable(int id, const char * url, FRtspCallBack frtspcallback) {
-
-  g_print("RtspClient enable ! \n");
-  if (this->m_data == NULL) {
-      this->m_data = g_new0 (struct CustomData, 1);
-      this->m_data->m_Id = id;
-      size_t len = strlen(url)+1;
-      char* cpurl = (char*)malloc(len);
-      memset(cpurl, 0, len);
-      memcpy(cpurl, url, len);
-      this->m_data->m_RtspUri = cpurl;
-      this->m_data->m_RtspCallBack = frtspcallback;
-      int ret = pthread_create(&m_thread, NULL, connectrtsp, this->m_data);
-      if ( ret != 0) {
-        g_error("enable fail, rtsp thread create fail \n");
-        return FALSE;
-      }
-  } else {
-      g_error("enable fail, rtsp thread running \n");
-      return FALSE;
-  } 
-
-  return TRUE;
-
-}
-
 // start create sync
 bool
-RtspClient::enable(int id, const char* url) {
+RtspClient::enable(int id, const char* url, int conn_mode) {
 
-  g_print("RtspClient enable ! \n");
+  g_print("RtspClient enable ! %d \n", id);
 
   if (this->m_data == NULL) {
       this->m_data = g_new0 (struct CustomData, 1);
       this->m_data->m_Id = id;
+      this->m_data->conn_Mode = conn_mode;
       size_t len = strlen(url)+1;
       char* cpurl = (char*)malloc(len);
       memset(cpurl, 0, len);
@@ -771,9 +621,10 @@ RtspClient::enable(int id, const char* url) {
 // destroy instance
 void 
 RtspClient::disable() {
-    g_print("RtspClient start ~disable!\n");
+    g_print("RtspClient start ~disable! mId %d \n",this->m_data->m_Id);
+    this->m_data->isRun = STATUS_DISCONNECTING;
     rtsp_destroy(this->m_thread, this->m_data);
-    g_print("RtspClient end ~disable!\n");
+    g_print("RtspClient end ~disable! mId %d \n", this->m_data->m_Id);
 }
 
 // connect status
@@ -788,7 +639,7 @@ int RtspClient::isConnect()
 
 // read frame
 struct FrameData *
-RtspClient::read(int width, int height,int resize_width, int resize_height) {
+RtspClient::read(int width, int height, int resize_width, int resize_height) {
 
   FrameData * data = new FrameData();
 
@@ -831,7 +682,7 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
   int ret;
   GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
   guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data->info));
-  guint width, height;
+  // guint width, height;
   GstMapInfo map_info;
   gchar filename[128];
   GstVideoFormat pixfmt;
@@ -855,8 +706,9 @@ RtspClient::read(int width, int height,int resize_width, int resize_height) {
     printf ("  video meta found: %s\n", yesno (meta != NULL));
     printf ("===================================\n");
   }
-  g_print("mpp frame size : %d \n", map_info.size);
-  g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
+  
+  //g_print("mpp frame size : %d \n", map_info.size);
+  //g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
 
   // rga
   rga_buffer_t 	src;

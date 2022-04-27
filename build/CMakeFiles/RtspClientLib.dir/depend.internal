@@ -3,7 +3,15 @@
 
 CMakeFiles/RtspClientLib.dir/src/gst_rtsp_client.cpp.o
  ../include/gst_rtsp_client.h
- /home/toybrick/Dev/gst_rtsp_client/src/gst_rtsp_client.cpp
+ ../librga/rga/GrallocOps.h
+ ../librga/rga/RgaMutex.h
+ ../librga/rga/RgaSingleton.h
+ ../librga/rga/RgaUtils.h
+ ../librga/rga/RockchipRga.h
+ ../librga/rga/drmrga.h
+ ../librga/rga/im2d.h
+ ../librga/rga/rga.h
+ /home/toybrick/Dev/github/gst_rtsp_client/src/gst_rtsp_client.cpp
  /usr/include/glib-2.0/glib-object.h
  /usr/include/glib-2.0/glib.h
  /usr/include/glib-2.0/glib/deprecated/gallocator.h
@@ -364,17 +372,17 @@ CMakeFiles/RtspClientLib.dir/src/gst_rtsp_client.cpp.o
  /usr/local/include/opencv2/videostab/ring_buffer.hpp
  /usr/local/include/opencv2/videostab/stabilizer.hpp
  /usr/local/include/opencv2/videostab/wobble_suppression.hpp
- /usr/local/include/rga/GrallocOps.h
- /usr/local/include/rga/RgaMutex.h
- /usr/local/include/rga/RgaSingleton.h
- /usr/local/include/rga/RgaUtils.h
- /usr/local/include/rga/RockchipRga.h
- /usr/local/include/rga/drmrga.h
- /usr/local/include/rga/im2d.h
- /usr/local/include/rga/rga.h
 CMakeFiles/RtspClientLib.dir/src/setup.cpp.o
  ../include/gst_rtsp_client.h
- /home/toybrick/Dev/gst_rtsp_client/src/setup.cpp
+ ../librga/rga/GrallocOps.h
+ ../librga/rga/RgaMutex.h
+ ../librga/rga/RgaSingleton.h
+ ../librga/rga/RgaUtils.h
+ ../librga/rga/RockchipRga.h
+ ../librga/rga/drmrga.h
+ ../librga/rga/im2d.h
+ ../librga/rga/rga.h
+ /home/toybrick/Dev/github/gst_rtsp_client/src/setup.cpp
  /usr/include/glib-2.0/glib-object.h
  /usr/include/glib-2.0/glib.h
  /usr/include/glib-2.0/glib/deprecated/gallocator.h
@@ -733,11 +741,3 @@ CMakeFiles/RtspClientLib.dir/src/setup.cpp.o
  /usr/local/include/opencv2/videostab/ring_buffer.hpp
  /usr/local/include/opencv2/videostab/stabilizer.hpp
  /usr/local/include/opencv2/videostab/wobble_suppression.hpp
- /usr/local/include/rga/GrallocOps.h
- /usr/local/include/rga/RgaMutex.h
- /usr/local/include/rga/RgaSingleton.h
- /usr/local/include/rga/RgaUtils.h
- /usr/local/include/rga/RockchipRga.h
- /usr/local/include/rga/drmrga.h
- /usr/local/include/rga/im2d.h
- /usr/local/include/rga/rga.h
