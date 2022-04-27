@@ -22,5 +22,5 @@
 ## 待处理
 
 - [x] 测试用例测试
-- [] 添加DRM显示
-- [] gst rtsp _ (deepstream)/tensorrt .. wait .. (rtspsrc decodebin(Gst-nvvideo4linux2) tee queue Gst-nvvideoconvert appsink (GST-nvinfer Gst-nvtracker))
+- [ ] 添加DRM显示
+- [ ] gst rtsp _ (deepstream)/tensorrt .. wait .. (rtspsrc decodebin(Gst-nvvideo4linux2) tee queue Gst-nvvideoconvert appsink (GST-nvinfer Gst-nvtracker))
