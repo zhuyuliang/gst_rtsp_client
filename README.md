@@ -20,8 +20,7 @@
 
 ---
 ## 待处理
-[] 多显示
-[] API整理测试
-[] 测试用例
-[] API文档
+
+[x] 测试用例测试
+[] 添加DRM显示
 [] gst rtsp _ (deepstream)/tensorrt .. wait .. (rtspsrc decodebin(Gst-nvvideo4linux2) tee queue Gst-nvvideoconvert appsink (GST-nvinfer Gst-nvtracker))
