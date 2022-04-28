@@ -211,7 +211,7 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
       // g_main_loop_quit (dec->loop);
       //dec->isRun = STATUS_DISCONNECT;
       dec->isRun = STATUS_DISCONNECTING;
-      rtsp_destroy(dec->m_thread, dec->m_data);
+      rtsp_destroy(dec->m_data);
       break;
     case GST_MESSAGE_INFO:
     case GST_MESSAGE_WARNING:
@@ -251,7 +251,7 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
       // g_main_loop_quit(dec->loop);
       g_print("bus disconnect %d \n",dec->m_Id);
       dec->isRun = STATUS_DISCONNECTING;
-      rtsp_destroy(dec->m_thread, dec->m_data);
+      rtsp_destroy(dec->m_data);
 
       break;
     }
@@ -488,7 +488,7 @@ rtsp_init(struct CustomData *data) {
 
 // destroy
 static void 
-rtsp_destroy (pthread_t m_thread, struct CustomData *data)
+rtsp_destroy (struct CustomData *data)
 {
   if (data != NULL) {
 
@@ -582,7 +582,7 @@ static void* connectrtsp(void *arg) {
       g_print("init exit mId %d \n", data->m_Id);
       if (data->isRun != STATUS_DISCONNECTING){
         data->isRun = STATUS_DISCONNECTING;
-        rtsp_destroy(data->m_thread, data->m_data);
+        rtsp_destroy(data->m_data);
       }
     
   }
@@ -629,7 +629,7 @@ void
 RtspClient::disable() {
     g_print("RtspClient start ~disable! mId %d \n",this->m_data->m_Id);
     this->m_data->isRun = STATUS_DISCONNECTING;
-    rtsp_destroy(this->m_thread, this->m_data);
+    rtsp_destroy(this->m_data);
     g_print("RtspClient end ~disable! mId %d \n", this->m_data->m_Id);
 }
 
@@ -653,7 +653,13 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
     data->isRun = STATUS_DISCONNECT;
     data->size = 0;
     return data;
+  } else if (this->m_data->isRun == STATUS_DISCONNECTING)
+  {
+    data->isRun = STATUS_DISCONNECTING;
+    data->size = 0;
+    return data;
   }
+  
 
   data->isRun = this->m_data->isRun;
   data->size = 0;
@@ -671,14 +677,14 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
       GST_DEBUG ("eos");
       data->isRun = STATUS_DISCONNECT;
       this->m_data->isRun = STATUS_DISCONNECTING;
-      rtsp_destroy(this->m_data->m_thread, this->m_data->m_data);
+      rtsp_destroy(this->m_data->m_data);
       data->size = 0;
       return data;
     }else{
       GST_DEBUG ("gst_app_sink_try_pull_sample null");
       data->isRun = STATUS_DISCONNECT;
       this->m_data->isRun = STATUS_DISCONNECTING;
-      rtsp_destroy(this->m_data->m_thread, this->m_data->m_data);
+      rtsp_destroy(this->m_data->m_data);
       data->size = 0;
       return data;
     }

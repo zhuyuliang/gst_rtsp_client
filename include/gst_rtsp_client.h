@@ -104,7 +104,7 @@ struct CustomData {
     GstElement *queue_displaysink;
     GstElement *appsink;
     GstElement *displaysink;
-    
+
     GstBus *bus;
 
     gint format;
