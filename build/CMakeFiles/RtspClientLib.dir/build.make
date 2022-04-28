@@ -107,7 +107,7 @@ libRtspClientLib.so: /usr/lib/aarch64-linux-gnu/libgmodule-2.0.so.0
 libRtspClientLib.so: /lib/aarch64-linux-gnu/libm.so.6
 libRtspClientLib.so: /usr/lib/aarch64-linux-gnu/libffi.so.6
 libRtspClientLib.so: /lib/aarch64-linux-gnu/libpcre.so.3
-libRtspClientLib.so: ../librga/librga.so
+libRtspClientLib.so: /home/toybrick/EdgeComputing/sq_main_/rtsp/librga.so
 libRtspClientLib.so: CMakeFiles/RtspClientLib.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/toybrick/Dev/github/gst_rtsp_client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libRtspClientLib.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/RtspClientLib.dir/link.txt --verbose=$(VERBOSE)

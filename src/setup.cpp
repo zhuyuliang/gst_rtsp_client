@@ -18,21 +18,26 @@ unordered_map<int,RtspClient*> ::iterator it;
 mutex m_mutex;
 
 extern "C" int
+destoryRtspClient(int id);
+
+extern "C" int
 createRtspClient (int id, const char* url, int conn_mode)
 {
-    m_mutex.lock();
+    //m_mutex.lock();
     //&& id != nullptr && url != nullptr
     g_print("setup createRtspClient %d %s\n",id,url);
-    if ( mMap.find(id) == mMap.end() )
-    {
-      mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
-      if (mMap.find(id)->second->enable(id, url, conn_mode)){
-          m_mutex.unlock();
-          return SUCCESS;
-      }
+    if ( mMap.find(id) != mMap.end() ) {
+      destoryRtspClient(id);
     }
-    m_mutex.unlock();
-    return FAIL;
+    m_mutex.lock();
+    mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
+    if (mMap.find(id)->second->enable(id, url, conn_mode)){
+        m_mutex.unlock();
+        return SUCCESS;
+    }else{
+        m_mutex.unlock();
+        return FAIL;
+    }
 }
 
 extern "C" int

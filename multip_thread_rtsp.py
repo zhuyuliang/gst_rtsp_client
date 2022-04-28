@@ -32,7 +32,7 @@ def func_rtspdisplay(index,url, usr, pwd):
         if (ret1 == 1):
             status, img, img_resize = rtspclient.mread(index,width,height,resize_width,resize_height)
             if status == 1:
-                print("*")
+                print("success %d, %d",index,ret1)
                 time.sleep(1)
                 pass
             #     # print(type(ret2.frame))
@@ -72,11 +72,11 @@ if __name__ == '__main__':
     # idx4 = gl.add_view(640, 540, 640, 360)
     # idx5 = gl.add_view(1280, 540, 640, 360)
 
-    t0 = threading.Thread(target=func_rtspdisplay, args = (1,'rtsp://admin:shangqu2020@192.168.2.30:554/Streaming/Channels/1', "admin", "passwd"))
-    t1 = threading.Thread(target=func_rtspdisplay, args = (2,"rtsp://admin:shagnqu2020@192.168.2.141:554/Streaming/Channels/1", "admin", "passwd"))
-    t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:shangqu2020@192.168.2.64:554/Streaming/Channels/1", "admin", "passwd"))
-    t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:shangqu2020@192.168.2.50:554/Streaming/Channels/1', "admin", "admin"))
-    t4 = threading.Thread(target=func_rtspdisplay, args = (5, "rtsp://admin:shangqu2020@192.168.2.33:554//Streaming/Channels/1", "admin", "passwd"))
+    t0 = threading.Thread(target=func_rtspdisplay, args = (1,"rtsp://admin:pwd@192.168.2.141:554/Streaming/Channels/1", "admin", "passwd"))
+    t1 = threading.Thread(target=func_rtspdisplay, args = (2,"rtsp://admin:pwd@192.168.2.141:554/Streaming/Channels/1", "admin", "passwd"))
+    t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:pwd@192.168.2.64:554/Streaming/Channels/1", "admin", "passwd"))
+    t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:pwd@192.168.2.64:554/Streaming/Channels/1', "admin", "admin"))
+    t4 = threading.Thread(target=func_rtspdisplay, args = (5,"rtsp://admin:pwd@192.168.2.33:554//Streaming/Channels/1", "admin", "passwd"))
     # t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:passwd@192.168.2.64/Streaming/Channels/1", "admin", "passwd"))
 
     t0.start()

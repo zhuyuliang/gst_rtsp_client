@@ -107,7 +107,7 @@ main_gst_rtsp_: /usr/lib/aarch64-linux-gnu/libgmodule-2.0.so.0
 main_gst_rtsp_: /lib/aarch64-linux-gnu/libm.so.6
 main_gst_rtsp_: /usr/lib/aarch64-linux-gnu/libffi.so.6
 main_gst_rtsp_: /lib/aarch64-linux-gnu/libpcre.so.3
-main_gst_rtsp_: ../librga/librga.so
+main_gst_rtsp_: /home/toybrick/EdgeComputing/sq_main_/rtsp/librga.so
 main_gst_rtsp_: /usr/local/lib/libopencv_highgui.so.3.4.14
 main_gst_rtsp_: /usr/local/lib/libopencv_videoio.so.3.4.14
 main_gst_rtsp_: /usr/local/lib/libopencv_imgcodecs.so.3.4.14
