@@ -46,7 +46,6 @@ def func_rtspdisplay(index,url, usr, pwd):
                 print("python disconnect")
         elif (ret1 == 2):
             print("destoryRtspClient")
-            rtspclient.destoryRtspClient(index)
             rtspclient.createRtspClient(index,url)
 
     print('# End of Thread %d' % (index))

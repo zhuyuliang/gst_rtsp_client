@@ -30,11 +30,11 @@ int main()
 
     // multi rtsp
 
-    const char* url1 = "rtsp://admin:passwd@192.168.2.141:554/Streaming/Channels/1";
-    const char* url2 = "rtsp://admin:passwd@192.168.2.141:554/Streaming/Channels/1";
-    const char* url3 = "rtsp://admin:passwd@192.168.2.64:554/Streaming/Channels/1";
-    const char* url4 = "rtsp://admin:admin@192.168.2.50:554/Streaming/Channels/1";
-    const char* url5 = "rtsp://admin:passwd@192.168.2.33:554/Streaming/Channels/1";
+    const char* url1 = "rtsp://admin:shangqu2020@192.168.2.30:554/Streaming/Channels/1";
+    const char* url2 = "rtsp://admin:shangqu2020@192.168.2.141:554/Streaming/Channels/1";
+    const char* url3 = "rtsp://admin:shangqu2020@192.168.2.64:554/Streaming/Channels/1";
+    const char* url4 = "rtsp://admin:shangqu2020@192.168.2.50:554/Streaming/Channels/1";
+    const char* url5 = "rtsp://admin:shangqu2020@192.168.2.33:554/Streaming/Channels/1";
 
     createRtspClient(0, url1, UDP_CONN_MODE);
     createRtspClient(1, url2, DEFAULT_CONN_MODE);
@@ -58,7 +58,7 @@ int main()
             g_print("id:0 disconnect\n");
             sleep_ms(500);
             if (isConnect(0) == STATUS_DISCONNECT) {
-                 destoryRtspClient(0);
+                 // destoryRtspClient(0);
                  sleep_ms(500);
                  createRtspClient(0,url1, TCP_CONN_MODE);
                  sleep_ms(500);
@@ -79,7 +79,7 @@ int main()
             g_print("id:1 disconnect\n");
             sleep_ms(500);
             if (isConnect(1) == STATUS_DISCONNECT) {
-                 destoryRtspClient(1);
+                 //destoryRtspClient(1);
                  sleep_ms(500);
                  createRtspClient(1,url2, TCP_CONN_MODE);
                  sleep_ms(500);
@@ -100,7 +100,7 @@ int main()
             g_print("id:2 disconnect\n");
             sleep_ms(500);
             if (isConnect(2) == STATUS_DISCONNECT) {
-                 destoryRtspClient(2);
+                 //destoryRtspClient(2);
                  sleep_ms(500);
                  createRtspClient(2,url3, TCP_CONN_MODE);
                  sleep_ms(500);
@@ -121,7 +121,7 @@ int main()
             g_print("id:3 disconnect\n");
             sleep_ms(500);
             if (isConnect(3) == STATUS_DISCONNECT) {
-                destoryRtspClient(3);
+                //destoryRtspClient(3);
                 sleep_ms(500);
                 createRtspClient(3,url4, TCP_CONN_MODE);
                 sleep_ms(500);
@@ -142,7 +142,7 @@ int main()
             g_print("id:4 disconnect\n");
             sleep_ms(500);
             if (isConnect(4) == STATUS_DISCONNECT) {
-                 destoryRtspClient(4);
+                 //destoryRtspClient(4);
                  sleep_ms(500);
                  createRtspClient(4,url5, TCP_CONN_MODE);
                  sleep_ms(500);

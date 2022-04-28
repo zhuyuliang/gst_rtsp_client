@@ -49,13 +49,10 @@ def func_rtspdisplay(index,url, usr, pwd):
             #     # cv2.imwrite('a640' + str(index) +'.jpg',ret2.frame_resize)
             elif status == 2:
                 print("python disconnect", index)
-                print("destoryRtspClient", index)
-                rtspclient.destoryRtspClient(index)
                 rtspclient.createRtspClient(index,url)
             del status, img, img_resize
         elif (ret1 == 2):
             print("destoryRtspClient", index)
-            rtspclient.destoryRtspClient(index)
             rtspclient.createRtspClient(index,url)
         else:
             time.sleep(3)

@@ -294,7 +294,6 @@ def func_rtspdisplay(index,url, usr, pwd):
 
             cv2.imwrite('a' + str(index) +'.jpg',ret2.frame)
         elif (ret1 == 2):
-            rtspclient.destoryRtspClient(index)
             #time.sleep(4)
             rtspclient.createRtspClient(index,url)
             #time.sleep(10)

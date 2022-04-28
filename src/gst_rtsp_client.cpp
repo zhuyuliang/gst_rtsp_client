@@ -209,7 +209,9 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
     case GST_MESSAGE_EOS:
       g_print("bus eos \n");
       // g_main_loop_quit (dec->loop);
-      dec->isRun = STATUS_DISCONNECT;
+      //dec->isRun = STATUS_DISCONNECT;
+      dec->isRun = STATUS_DISCONNECTING;
+      rtsp_destroy(dec->m_thread, dec->m_data);
       break;
     case GST_MESSAGE_INFO:
     case GST_MESSAGE_WARNING:
@@ -248,7 +250,8 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
       // TODO: stop mainloop in case of an error
       // g_main_loop_quit(dec->loop);
       g_print("bus disconnect %d \n",dec->m_Id);
-      dec->isRun = STATUS_DISCONNECT;
+      dec->isRun = STATUS_DISCONNECTING;
+      rtsp_destroy(dec->m_thread, dec->m_data);
 
       break;
     }
@@ -577,7 +580,10 @@ static void* connectrtsp(void *arg) {
       // g_main_loop_unref(data->loop);
 
       g_print("init exit mId %d \n", data->m_Id);
-      data->isRun = STATUS_DISCONNECT;
+      if (data->isRun != STATUS_DISCONNECTING){
+        data->isRun = STATUS_DISCONNECTING;
+        rtsp_destroy(data->m_thread, data->m_data);
+      }
     
   }
   // exit(0);
@@ -664,13 +670,15 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
     if (gst_app_sink_is_eos (GST_APP_SINK (this->m_data->appsink))){
       GST_DEBUG ("eos");
       data->isRun = STATUS_DISCONNECT;
-      this->m_data->isRun = STATUS_DISCONNECT;
+      this->m_data->isRun = STATUS_DISCONNECTING;
+      rtsp_destroy(this->m_data->m_thread, this->m_data->m_data);
       data->size = 0;
       return data;
     }else{
       GST_DEBUG ("gst_app_sink_try_pull_sample null");
       data->isRun = STATUS_DISCONNECT;
-      this->m_data->isRun = STATUS_DISCONNECT;
+      this->m_data->isRun = STATUS_DISCONNECTING;
+      rtsp_destroy(this->m_data->m_thread, this->m_data->m_data);
       data->size = 0;
       return data;
     }
