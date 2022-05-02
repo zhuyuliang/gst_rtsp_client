@@ -52,7 +52,8 @@ def func_rtspdisplay(index,url, usr, pwd):
                 rtspclient.createRtspClient(index,url)
             del status, img, img_resize
         elif (ret1 == 2):
-            print("destoryRtspClient", index)
+            print("status %d, %d",index,ret1)
+            print("*************** destoryRtspClient", index)
             rtspclient.createRtspClient(index,url)
         else:
             time.sleep(3)
@@ -72,23 +73,23 @@ if __name__ == '__main__':
     # idx4 = gl.add_view(640, 540, 640, 360)
     # idx5 = gl.add_view(1280, 540, 640, 360)
 
-    t0 = threading.Thread(target=func_rtspdisplay, args = (1,"rtsp://admin:pwd@192.168.2.141:554/Streaming/Channels/1", "admin", "passwd"))
-    t1 = threading.Thread(target=func_rtspdisplay, args = (2,"rtsp://admin:pwd@192.168.2.141:554/Streaming/Channels/1", "admin", "passwd"))
-    t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:pwd@192.168.2.64:554/Streaming/Channels/1", "admin", "passwd"))
-    t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:pwd@192.168.2.64:554/Streaming/Channels/1', "admin", "admin"))
+    t0 = threading.Thread(target=func_rtspdisplay, args = (1,"rtsp://admin:pwd@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0", "admin", "passwd"))
+    t1 = threading.Thread(target=func_rtspdisplay, args = (2,"rtsp://admin:pwd@192.168.2.27:554/cam/realmonitor?channel=1&subtype=0", "admin", "passwd"))
+    t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:pwd@192.168.2.141:554/Streaming/Channels/1", "admin", "passwd"))
+    t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:pwd@192.168.2.141:554/Streaming/Channels/1', "admin", "admin"))
     t4 = threading.Thread(target=func_rtspdisplay, args = (5,"rtsp://admin:pwd@192.168.2.33:554//Streaming/Channels/1", "admin", "passwd"))
-    # t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:passwd@192.168.2.64/Streaming/Channels/1", "admin", "passwd"))
+    t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:pwd@192.168.2.64/Streaming/Channels/1", "admin", "passwd"))
 
     t0.start()
     t1.start()
     t2.start()
     t3.start()
     t4.start()
-    # t5.start()
+    t5.start()
 
     t0.join()
     t1.join()
     t2.join()
     t3.join()
     t4.join()
-    # t5.join()
+    t5.join()

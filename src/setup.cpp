@@ -18,18 +18,19 @@ unordered_map<int,RtspClient*> ::iterator it;
 mutex m_mutex;
 
 extern "C" int
-destoryRtspClient(int id);
-
-extern "C" int
 createRtspClient (int id, const char* url, int conn_mode)
 {
-    //m_mutex.lock();
-    //&& id != nullptr && url != nullptr
-    g_print("setup createRtspClient %d %s\n",id,url);
-    if ( mMap.find(id) != mMap.end() ) {
-      destoryRtspClient(id);
-    }
     m_mutex.lock();
+    //&& id != nullptr && url != nullptr
+    g_print("*** c createRtspClient %d %s\n",id,url);
+    if (mMap.find(id) != mMap.end()) {
+      mMap.find(id)->second->disable();
+      delete mMap.find(id)->second;
+      mMap.find(id)->second = NULL;
+      mMap.erase(id);
+      malloc_trim(0);
+    }
+    // m_mutex.lock();
     mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
     if (mMap.find(id)->second->enable(id, url, conn_mode)){
         m_mutex.unlock();
@@ -75,14 +76,11 @@ destoryRtspClient(int id)
 extern "C" int
 isConnect(int id)
 {
-  // m_mutex.lock();
   if (mMap.find(id) != mMap.end()){
       int ret = mMap.find(id)->second->isConnect();
-      // m_mutex.unlock();
       return ret;
   }else{
-      // g_print ("isConnect STATUS_DISCONNECT \n");
-      // m_mutex.unlock();
+      g_print ("isConnect STATUS_DISCONNECT \n");
       return STATUS_DISCONNECT;
   }
 }

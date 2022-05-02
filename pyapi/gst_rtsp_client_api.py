@@ -11,7 +11,7 @@ UDP_CONN_MODE = 2
 
 # 创建RTSP实例
 def createRtspClient( id, url, mode = TCP_CONN_MODE):
-    print("createRtspClient id = %d %s",id, url)
+    print("python createRtspClient id = %d %s",id, url)
     isSuccess = rtsp_client.createRtspClient( id,url.encode(),mode)
     return isSuccess
 
