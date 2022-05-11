@@ -21,8 +21,10 @@ extern "C" int
 createRtspClient (int id, const char* url, int conn_mode)
 {
     m_mutex.lock();
+    
     //&& id != nullptr && url != nullptr
     g_print("*** c createRtspClient %d %s\n",id,url);
+    try{
     if (mMap.find(id) != mMap.end()) {
       mMap.find(id)->second->disable();
       delete mMap.find(id)->second;
@@ -30,13 +32,27 @@ createRtspClient (int id, const char* url, int conn_mode)
       mMap.erase(id);
       malloc_trim(0);
     }
+    } catch(...) 
+    {
+        g_print("*** c createRtspClient disable fail !");
+        return FAIL;
+    }
+    if (mMap.find(id) == mMap.end()) {
     // m_mutex.lock();
     mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
     if (mMap.find(id)->second->enable(id, url, conn_mode)){
         m_mutex.unlock();
+        g_print("*** c createRtspClient return SUCCESS");
         return SUCCESS;
     }else{
         m_mutex.unlock();
+        g_print("*** c createRtspClient return FAIL");
+        return FAIL;
+    }
+    } else 
+    {
+        m_mutex.unlock();
+        g_print("c createRtspClient create FAIL");
         return FAIL;
     }
 }

@@ -140,8 +140,8 @@ public:
     struct FrameData * read(int width, int height, int resize_width, int resize_height);
 
 private:
-    pthread_t m_thread = 0;
-    struct CustomData *m_data = NULL;
+    pthread_t m_thread;
+    struct CustomData m_data;
 
 };
 

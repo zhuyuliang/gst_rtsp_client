@@ -211,8 +211,8 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
     }
     case GST_MESSAGE_EOS:
       g_print("bus eos \n");
+      dec->isRun = STATUS_DISCONNECTING;
       g_main_loop_quit (dec->loop);
-      dec->isRun = STATUS_DISCONNECT;
       break;
     case GST_MESSAGE_INFO:
     case GST_MESSAGE_WARNING:
@@ -249,9 +249,10 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
             GST_DEBUG_GRAPH_SHOW_ALL, "error");
       }
       // TODO: stop mainloop in case of an error
-      g_main_loop_quit(dec->loop);
+      //g_main_loop_quit(dec->loop);
       g_print("bus disconnect %d \n",dec->m_Id);
-      dec->isRun = STATUS_DISCONNECT;
+      dec->isRun = STATUS_DISCONNECTING;
+      g_main_loop_quit (dec->loop);
 
       break;
     }
@@ -491,36 +492,83 @@ static void
 rtsp_destroy (struct CustomData *data)
 {
   if (data != NULL) {
-
     try{
-    //g_main_loop_quit (data->loop);    
-    gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_NULL);
-    
-    g_print ("start gst_object_unref element \n");
-    gst_bus_remove_watch (data->bus);
-    gst_object_unref ( GST_OBJECT (data->bus));
-    gst_object_unref (data->pipeline);
-    g_main_loop_unref (data->loop);
+        if (data->loop != NULL) {
+    	    g_main_loop_quit (data->loop);
+        }
+        if (data->pipeline != NULL) {    
+            gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_NULL);
+        }
+        g_print ("start gst_object_unref element \n");
+        if (data->bus != NULL) 
+        {
+            gst_bus_remove_watch (data->bus);
+            gst_object_unref ( GST_OBJECT (data->bus));
+            data->bus = NULL;
+        }
+        if (data->pipeline != NULL)
+        {
+            gst_object_unref (data->pipeline);
+            data->pipeline = NULL;
+        }
+        if (data->loop != NULL) {
+            g_main_loop_unref (data->loop);
+            data->loop = NULL;
+        }
+        //pthread_join(m_thread,NULL);
     } catch (...) 
     {
-       g_print("rtsp_destroy error for gstreamer");
+       g_print("rtsp_destroy error for gstreamer \n");
     }
 
-    // g_print ("start g_free \n");
-    free (data->dst_buf);
-    free (data->dst_output_buf);
-    free (data->dst_resize_output_buf);
-    if (data->m_RtspUri != NULL){
-    	free (data->m_RtspUri);
-        data->m_RtspUri = NULL;
+    try {
+        if (data->m_RtspUri != NULL){
+    	    free (data->m_RtspUri);
+            data->m_RtspUri = NULL;
+        }
+    } catch (...) 
+    {
+        g_print("mRtspUri free fail \n");
     }
-
-    free (data->dst_output_resize_buf);
-    free (data->dst_resize_output_resize_buf);
-
-    free (data);
-    data = NULL;
     
+    try {
+        if (data->dst_buf != NULL)
+        {
+           free (data->dst_buf);
+           data->dst_buf = NULL;
+        }
+        if (data->dst_output_buf != NULL)
+        {
+           free (data->dst_output_buf);
+           data->dst_output_buf = NULL;
+        }
+        if (data->dst_resize_output_buf != NULL)
+        {
+           free (data->dst_resize_output_buf);
+           data->dst_resize_output_buf = NULL;
+        }
+        if (data->dst_output_resize_buf != NULL)
+        {
+           free (data->dst_output_resize_buf);
+           data->dst_output_resize_buf = NULL;
+        }
+        if (data->dst_resize_output_resize_buf != NULL)
+        {
+           free (data->dst_resize_output_resize_buf);
+           data->dst_resize_output_resize_buf = NULL;
+	}
+    } catch (...) {
+        g_print("rtsp_destroy error for bufi \n");
+    }
+
+    g_print("rtsp_destory data = null \n");
+    data->isRun = STATUS_DISCONNECT;
+
+    //free (data);
+    //data = NULL;
+    
+  } else {
+    g_print("rtspDestory data== NULL \n");
   }
 
 }
@@ -555,16 +603,18 @@ static void* connectrtsp(void *arg) {
   // int p = fork();
   struct CustomData *data = (struct CustomData *)arg;
 
-  if (data == NULL){
-      pthread_detach(pthread_self());
-      g_print("pthread_exit data == NULL \n");
-      pthread_exit(0);
-      return 0;
-  }
-
   g_print("connectrtsp m_RtspUri %s \n", data->m_RtspUri);
-	
-  int ret = rtsp_check_url(data->m_RtspUri);
+  
+  int ret = -1;
+  try {	
+      ret = rtsp_check_url(data->m_RtspUri);
+  } catch (...) {
+      g_print("connectrtsp mRtspUri check URI fail !");
+      data->isRun = STATUS_DISCONNECT;
+      g_print("pthread_exit rtsp_check_url exit\n");
+      pthread_exit(0);
+      return NULL;
+  }
   g_print("connectrtsp m_RtspUri check ret %d \n", ret);
   if (ret == 1) {
       // gst init
@@ -578,44 +628,41 @@ static void* connectrtsp(void *arg) {
       try {
          ret = rtsp_init (data);
       } catch (...){
-         data->isRun = STATUS_DISCONNECT;
-         //rtsp_destroy(data);
-         pthread_detach(pthread_self());
-         g_print("pthread_exit loop exit\n");
+         data->isRun = STATUS_DISCONNECTING;
+         rtsp_destroy(data);
+         //pthread_detach(pthread_self());
+         g_print("pthread_exit rtsp_init exit\n");
          pthread_exit(0);
-         return 0;
+         return NULL;
       }
       if ( ret == -1)
       {
-         data->isRun = STATUS_DISCONNECT;
-         //rtsp_destroy(data);
-         pthread_detach(pthread_self());
-         g_print("pthread_exit loop exit\n");
+         data->isRun = STATUS_DISCONNECTING;
+         rtsp_destroy(data);
+         //pthread_detach(pthread_self());
+         g_print("pthread_exit rtsp_init return fail exit\n");
          pthread_exit(0);
+         return NULL;
       }
       data->loop = g_main_loop_new (NULL, FALSE);
       g_main_loop_run (data->loop);
 
-      // rtsp_destroy(data);
-      // g_main_loop_unref(data->loop);
-
       g_print("init exit mId %d \n", data->m_Id);
-      //data->isRun = STATUS_DISCONNECT;
-      //rtsp_destroy(data);
-      pthread_detach(pthread_self());
+      data->isRun = STATUS_DISCONNECTING;
+      rtsp_destroy(data);
+      //pthread_detach(pthread_self());
       g_print("pthread_exit loop exit\n");
       pthread_exit(0);
-      return 0;
+      return NULL;
     
   }
 
-  data->isRun = STATUS_DISCONNECT;
-  // exit(0);
-  pthread_detach(pthread_self());
+  data->isRun = STATUS_DISCONNECTING;
+  rtsp_destroy(data);
+  //pthread_detach(pthread_self());
   g_print("pthread_exit url check fail\n");
   pthread_exit(0);
-
-  return 0;
+  return NULL;
 
 }
 
@@ -625,26 +672,21 @@ RtspClient::enable(int id, const char* url, int conn_mode) {
 
   g_print("RtspClient enable ! %d \n", id);
 
-  if (this->m_data == NULL) {
-      this->m_data = g_new0 (struct CustomData, 1);
-      this->m_data->m_Id = id;
-      this->m_data->conn_Mode = conn_mode;
+  if (this->m_data.isRun != STATUS_CONNECTING) {
+      //this.m_data = g_new0 (struct CustomData, 1);
+      this->m_data.m_Id = id;
+      this->m_data.conn_Mode = conn_mode;
       size_t len = strlen(url)+1;
       char* cpurl = (char*)malloc(len);
       memset(cpurl, 0, len);
       memcpy(cpurl, url, len);
-      this->m_data->m_RtspUri = cpurl;
+      this->m_data.m_RtspUri = cpurl;
       g_print("RtspClient mRtspUri %s \n",cpurl);
-      if (this->m_data->isRun != STATUS_CONNECTING){
-          this->m_data->isRun = STATUS_CONNECTING;
-          int ret = pthread_create(&m_thread, NULL, connectrtsp, this->m_data);
-          if ( ret != 0) {
-              g_error("enable fail, rtsp thread create fail \n");
-              return FALSE;
-          }
-      }else{
-          g_error("enable fail, rtsp thread create fail != null \n");
-          return FALSE;  
+      this->m_data.isRun = STATUS_CONNECTING;
+      int ret = pthread_create(&m_thread, NULL, connectrtsp, &this->m_data);
+      if ( ret != 0) {
+          g_error("enable fail, rtsp thread create fail \n");
+          return FALSE;
       }
   } else {
       g_error("enable fail, rtsp thread running \n");
@@ -658,29 +700,31 @@ RtspClient::enable(int id, const char* url, int conn_mode) {
 // destroy instance
 void 
 RtspClient::disable() {
-    g_print("RtspClient ~disable start! mId %d \n",this->m_data->m_Id);
-    try {
-        this->m_data->isRun = STATUS_DISCONNECTING;
-        rtsp_destroy(this->m_data);
-    } catch (...) {
-        g_print("rtsp_destroy fail \n");
-        if (this->m_data != NULL)
+    g_print("RtspClient ~disable start! mId %d \n",this->m_data.m_Id);
+    if ( this->m_data.isRun == STATUS_DISCONNECT) {
+        //this->m_data->isRun = STATUS_DISCONNECTING;
+        //rtsp_destroy(this->m_data);
+        g_print("RtspCLient ~disable DISCONNECT \n");
+    }else if( this->m_data.isRun == STATUS_CONNECTED){
+        this->m_data.isRun = STATUS_DISCONNECTING;
+        try {
+            //if(this->m_data.loop != NULL) {
+            g_main_loop_quit(this->m_data.loop);
+            //}
+        } catch (...)
         {
-            free(this->m_data);
-            this->m_data = NULL;
+            g_print("RtspCLient ~disable destroy fail \n");
         }
     }
-    g_print("RtspClient ~disable! end mId %d \n", this->m_data->m_Id);
+    pthread_cancel(this->m_thread);
+    pthread_join(this->m_thread, NULL);
+    g_print("RtspClient ~disable! end mId %d \n", this->m_data.m_Id);
 }
 
 // connect status
 int RtspClient::isConnect() 
 {
-  if (this->m_data == NULL){
-    g_print("RtspClient isConnect this->m_data == NULL!\n");
-    return STATUS_DISCONNECT;
-  }
-  return this->m_data->isRun;
+  return this->m_data.isRun;
 }
 
 // read frame
@@ -689,11 +733,11 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
 
   FrameData * data = new FrameData();
 
-  if (this->m_data == NULL || this->m_data->isRun == STATUS_DISCONNECT){
+  if ( this->m_data.isRun == STATUS_DISCONNECT){
     data->isRun = STATUS_DISCONNECT;
     data->size = 0;
     return data;
-  } else if (this->m_data->isRun == STATUS_DISCONNECTING)
+  } else if (this->m_data.isRun == STATUS_DISCONNECTING)
   {
     data->isRun = STATUS_DISCONNECTING;
     data->size = 0;
@@ -702,28 +746,28 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
  
   try { 
  
-  data->isRun = this->m_data->isRun;
+  data->isRun = this->m_data.isRun;
   data->size = 0;
-  data->width = this->m_data->info.width;
-  data->height = this->m_data->info.height;
+  data->width = this->m_data.info.width;
+  data->height = this->m_data.info.height;
 
   GstSample *samp;
   GstBuffer *buf;
  
   // samp = gst_app_sink_pull_sample (GST_APP_SINK (this->m_data->appsink));
-  samp = gst_app_sink_try_pull_sample (GST_APP_SINK (this->m_data->appsink), GST_SECOND * 3); // 1000 * 5 100000
+  samp = gst_app_sink_try_pull_sample (GST_APP_SINK (this->m_data.appsink), GST_SECOND * 3); // 1000 * 5 100000
   if (!samp) {
     GST_DEBUG ("got no appsink sample");
-    if (gst_app_sink_is_eos (GST_APP_SINK (this->m_data->appsink))){
+    if (gst_app_sink_is_eos (GST_APP_SINK (this->m_data.appsink))){
       GST_DEBUG ("eos");
-      data->isRun = STATUS_DISCONNECT;
-      this->m_data->isRun = STATUS_DISCONNECT;
+      g_main_loop_quit(this->m_data.loop);
+      data->isRun = STATUS_DISCONNECTING;
       data->size = 0;
       return data;
     }else{
       GST_DEBUG ("gst_app_sink_try_pull_sample null");
-      data->isRun = STATUS_DISCONNECT;
-      this->m_data->isRun = STATUS_DISCONNECT;
+      g_main_loop_quit(this->m_data.loop);
+      data->isRun = STATUS_DISCONNECTING;
       data->size = 0;
       return data;
     }
@@ -734,24 +778,24 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
   // ** 
   int ret;
   GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
-  guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data->info));
+  guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data.info));
   // guint width, height;
   GstMapInfo map_info;
   gchar filename[128];
   GstVideoFormat pixfmt;
   const char *pixfmt_str;
 
-  pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data->info));
+  pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data.info));
   pixfmt_str = gst_video_format_to_string (pixfmt);
 
   /* TODO: use the DMABUF directly */
   gst_buffer_map (buf, &map_info, GST_MAP_READ);
 
-  int source_width = GST_VIDEO_INFO_WIDTH (&(this->m_data->info));
-  int source_height = GST_VIDEO_INFO_HEIGHT (&(this->m_data->info));
+  int source_width = GST_VIDEO_INFO_WIDTH (&(this->m_data.info));
+  int source_height = GST_VIDEO_INFO_HEIGHT (&(this->m_data.info));
 
   /* output some information at the beginning (= when the first frame is handled) */
-  if (this->m_data->frame == 0) {
+  if (this->m_data.frame == 0) {
     printf ("===================================\n");
     printf ("GStreamer video stream information:\n");
     printf ("  size: %u x %u pixel\n", source_width, source_height);
@@ -774,18 +818,18 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
   // h265 256bit 1920 * 1080  == 2304 * 1080
   if (map_info.size == 3732480 || map_info.size == 4976640 ) {
     src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, 1080, SRC_FORMAT);
-    if (this->m_data->dst_buf == NULL){
-      this->m_data->dst_buf = (char*)malloc(2304*1080*get_bpp_from_format(DST_FORMAT));
+    if (this->m_data.dst_buf == NULL){
+      this->m_data.dst_buf = (char*)malloc(2304*1080*get_bpp_from_format(DST_FORMAT));
     }
-    dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, 2304, 1080, DST_FORMAT);
-    if (this->m_data->dst_output_buf == NULL){
-        this->m_data->dst_output_buf = (char*)malloc(1920*1080*get_bpp_from_format(DST_FORMAT));
+    dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 2304, 1080, DST_FORMAT);
+    if (this->m_data.dst_output_buf == NULL){
+        this->m_data.dst_output_buf = (char*)malloc(1920*1080*get_bpp_from_format(DST_FORMAT));
     }
-    dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 1920, 1080, DST_FORMAT);
-    if (this->m_data->dst_resize_output_buf == NULL){
-        this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+    dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 1920, 1080, DST_FORMAT);
+    if (this->m_data.dst_resize_output_buf == NULL){
+        this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
     }
-    dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height,DST_FORMAT);
+    dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height,DST_FORMAT);
     if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
       printf("%s, %s\n", __FUNCTION__, imStrError());
       // return data;
@@ -798,7 +842,7 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
 
       imresize(dst_output,dst_resize_output);
 
-      data->data = this->m_data->dst_resize_output_buf;
+      data->data = this->m_data.dst_resize_output_buf;
       data->size = width*height*get_bpp_from_format(DST_FORMAT);
    }
 
@@ -806,18 +850,18 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
   // h264 16bit 1920 * 1080 == 1920 * 1088
   if (map_info.size == 3133440 || map_info.size == 4177920 ) {  
     src = wrapbuffer_virtualaddr((char *) map_info.data, 1920, 1088, SRC_FORMAT);
-    if (this->m_data->dst_buf == NULL){
-        this->m_data->dst_buf = (char*)malloc(1920*1088*get_bpp_from_format(DST_FORMAT));
+    if (this->m_data.dst_buf == NULL){
+        this->m_data.dst_buf = (char*)malloc(1920*1088*get_bpp_from_format(DST_FORMAT));
     }
-    dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, 1920, 1088, DST_FORMAT);
-    if (this->m_data->dst_output_buf == NULL){
-        this->m_data->dst_output_buf = (char*)malloc(1920*1080*get_bpp_from_format(DST_FORMAT));
+    dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 1920, 1088, DST_FORMAT);
+    if (this->m_data.dst_output_buf == NULL){
+        this->m_data.dst_output_buf = (char*)malloc(1920*1080*get_bpp_from_format(DST_FORMAT));
     }
-    dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 1920, 1080, DST_FORMAT);
-    if (this->m_data->dst_resize_output_buf == NULL){
-        this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+    dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 1920, 1080, DST_FORMAT);
+    if (this->m_data.dst_resize_output_buf == NULL){
+        this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
     }
-    dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
+    dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
     if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
       printf("%s, %s\n", __FUNCTION__, imStrError());
       // return data;
@@ -832,7 +876,7 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
 
       data->width = width;
       data->height = height;
-      data->data = this->m_data->dst_resize_output_buf;
+      data->data = this->m_data.dst_resize_output_buf;
       data->size = width*height*get_bpp_from_format(DST_FORMAT);
     }
 
@@ -840,18 +884,18 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
   // h265 2560 * 1440 256 2816 1584
   if (map_info.size == 6082560 || map_info.size == 8110080) {
     src = wrapbuffer_virtualaddr((char *) map_info.data, 2816, 1440, SRC_FORMAT);
-    if (this->m_data->dst_buf == NULL){
-        this->m_data->dst_buf = (char*)malloc(2816*1440*get_bpp_from_format(DST_FORMAT));
+    if (this->m_data.dst_buf == NULL){
+        this->m_data.dst_buf = (char*)malloc(2816*1440*get_bpp_from_format(DST_FORMAT));
     }
-    dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, 2816, 1440, DST_FORMAT);
-    if (this->m_data->dst_output_buf == NULL){
-        this->m_data->dst_output_buf = (char*)malloc(2560*1440*get_bpp_from_format(DST_FORMAT));
+    dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 2816, 1440, DST_FORMAT);
+    if (this->m_data.dst_output_buf == NULL){
+        this->m_data.dst_output_buf = (char*)malloc(2560*1440*get_bpp_from_format(DST_FORMAT));
     }
-    dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 2560, 1440, DST_FORMAT);
-    if (this->m_data->dst_resize_output_buf == NULL){
-        this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+    dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 2560, 1440, DST_FORMAT);
+    if (this->m_data.dst_resize_output_buf == NULL){
+        this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
     }
-    dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
+    dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
     if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
       printf("%s, %s\n", __FUNCTION__, imStrError());
       // return data;
@@ -866,7 +910,7 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
 
       data->width = width;
       data->height = height;
-      data->data = this->m_data->dst_resize_output_buf;
+      data->data = this->m_data.dst_resize_output_buf;
       data->size = width*height*get_bpp_from_format(DST_FORMAT);
     }
     
@@ -874,18 +918,18 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
   //h265 640*480 768 * 480 
   if (map_info.size == 552960) {
     src = wrapbuffer_virtualaddr((char *) map_info.data, 768, 480, SRC_FORMAT);
-    if (this->m_data->dst_buf == NULL){
-        this->m_data->dst_buf = (char*)malloc(768*480*get_bpp_from_format(DST_FORMAT));
+    if (this->m_data.dst_buf == NULL){
+        this->m_data.dst_buf = (char*)malloc(768*480*get_bpp_from_format(DST_FORMAT));
     }
-    dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, 768, 480, DST_FORMAT);
-    if (this->m_data->dst_output_buf == NULL){
-        this->m_data->dst_output_buf = (char*)malloc(640*480*get_bpp_from_format(DST_FORMAT));
+    dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 768, 480, DST_FORMAT);
+    if (this->m_data.dst_output_buf == NULL){
+        this->m_data.dst_output_buf = (char*)malloc(640*480*get_bpp_from_format(DST_FORMAT));
     }
-    dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, 640, 480, DST_FORMAT);
-    if (this->m_data->dst_resize_output_buf == NULL){
-        this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+    dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 640, 480, DST_FORMAT);
+    if (this->m_data.dst_resize_output_buf == NULL){
+        this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
     }
-    dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
+    dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
     if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
       printf("%s, %s\n", __FUNCTION__, imStrError());
       // return data;
@@ -900,7 +944,7 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
 
       data->width = width;
       data->height = height;
-      data->data = this->m_data->dst_resize_output_buf;
+      data->data = this->m_data.dst_resize_output_buf;
       data->size = width*height*get_bpp_from_format(DST_FORMAT);
     }
 
@@ -911,18 +955,18 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
   {
       
       src = wrapbuffer_virtualaddr((char *) map_info.data, source_width, source_height, SRC_FORMAT);
-      if (this->m_data->dst_buf == NULL){
-          this->m_data->dst_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
+      if (this->m_data.dst_buf == NULL){
+          this->m_data.dst_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
       }
-      dst = wrapbuffer_virtualaddr(this->m_data->dst_buf, source_width, source_height, DST_FORMAT);
-      if (this->m_data->dst_output_buf == NULL){
-          this->m_data->dst_output_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
+      dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, source_width, source_height, DST_FORMAT);
+      if (this->m_data.dst_output_buf == NULL){
+          this->m_data.dst_output_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
       }
-      dst_output = wrapbuffer_virtualaddr(this->m_data->dst_output_buf, source_width, source_height, DST_FORMAT);
-      if (this->m_data->dst_resize_output_buf == NULL){
-          this->m_data->dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+      dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, source_width, source_height, DST_FORMAT);
+      if (this->m_data.dst_resize_output_buf == NULL){
+          this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
       }
-      dst_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_buf, width, height, DST_FORMAT);
+      dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
       if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
         printf("%s, %s\n", __FUNCTION__, imStrError());
         // return data;
@@ -933,7 +977,7 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
 
         data->width = width;
         data->height = height;
-        data->data = this->m_data->dst_resize_output_buf;
+        data->data = this->m_data.dst_resize_output_buf;
         data->size = width*height*get_bpp_from_format(DST_FORMAT);
 
       }
@@ -942,20 +986,20 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
 
   if (resize_width > 0 and resize_height > 0){
     // scale 640 resize data
-    if (this->m_data->dst_resize_output_resize_buf == NULL){
-        this->m_data->dst_resize_output_resize_buf = (char*)malloc(resize_width*resize_height*get_bpp_from_format(DST_FORMAT));
+    if (this->m_data.dst_resize_output_resize_buf == NULL){
+        this->m_data.dst_resize_output_resize_buf = (char*)malloc(resize_width*resize_height*get_bpp_from_format(DST_FORMAT));
     }
-    if (this->m_data->dst_output_resize_buf == NULL){
-        this->m_data->dst_output_resize_buf = (char*)malloc(resize_width*resize_height*get_bpp_from_format(DST_FORMAT));
+    if (this->m_data.dst_output_resize_buf == NULL){
+        this->m_data.dst_output_resize_buf = (char*)malloc(resize_width*resize_height*get_bpp_from_format(DST_FORMAT));
     }
-    dst_two_resize_output = wrapbuffer_virtualaddr(this->m_data->dst_resize_output_resize_buf, resize_width, resize_height, DST_FORMAT);
-    dst_two_output = wrapbuffer_virtualaddr(this->m_data->dst_output_resize_buf, resize_width, resize_height, DST_FORMAT);
+    dst_two_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_resize_buf, resize_width, resize_height, DST_FORMAT);
+    dst_two_output = wrapbuffer_virtualaddr(this->m_data.dst_output_resize_buf, resize_width, resize_height, DST_FORMAT);
     if(src.width == 0 || dst.width == 0 || dst_two_resize_output.width == 0) {
       printf("%s, %s\n", __FUNCTION__, imStrError());
     }else{
       imresize(dst, dst_two_resize_output, (double(resize_width)/width), (double(resize_height)/width));
       imtranslate(dst_two_resize_output, dst_two_output, 0, int((resize_height - (height * (double(resize_height)/width)))/2));
-      data->data_resize = this->m_data->dst_output_resize_buf;
+      data->data_resize = this->m_data.dst_output_resize_buf;
       data->size_resize = resize_width * resize_height * get_bpp_from_format(DST_FORMAT);
     }
   }
@@ -964,7 +1008,7 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
   // ** 
   gst_sample_unref (samp);
 
-  this->m_data->frame++; 
+  this->m_data.frame++; 
 
   } catch (...) {
     data->isRun = STATUS_DISCONNECT;
