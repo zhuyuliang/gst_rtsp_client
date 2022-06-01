@@ -94,6 +94,10 @@ isConnect(int id)
 {
   if (mMap.find(id) != mMap.end()){
       int ret = mMap.find(id)->second->isConnect();
+      if (ret == STATUS_BUS_ERROR) 
+      { 
+          return STATUS_DISCONNECT;
+      }
       return ret;
   }else{
       g_print ("isConnect STATUS_DISCONNECT \n");

@@ -30,17 +30,17 @@ int main()
 
     // multi rtsp
 
-    const char* url1 = "rtsp://admin:pwd@192.168.2.141:554/Streaming/Channels/1";
-    const char* url2 = "rtsp://admin:pwd@192.168.2.141:554/Streaming/Channels/1";
-    const char* url3 = "rtsp://admin:pwd@192.168.2.64:554/Streaming/Channels/1";
-    const char* url4 = "rtsp://admin:pwd@192.168.2.64:554/Streaming/Channels/1";
-    const char* url5 = "rtsp://admin:pwd@192.168.2.33:554/Streaming/Channels/1";
+    const char* url1 = "rtsp://admin:sq123456@192.168.2.141:554/Streaming/Channels/1";
+    // const char* url2 = "rtsp://admin:passwd@192.168.2.141:554/Streaming/Channels/1";
+    // const char* url3 = "rtsp://admin:passwd@192.168.2.64:554/Streaming/Channels/1";
+    // const char* url4 = "rtsp://admin:passwd@192.168.2.64:554/Streaming/Channels/1";
+    // const char* url5 = "rtsp://admin:passwd@192.168.2.33:554/Streaming/Channels/1";
 
-    createRtspClient(0, url1, UDP_CONN_MODE);
-    createRtspClient(1, url2, DEFAULT_CONN_MODE);
-    createRtspClient(2, url3, TCP_CONN_MODE);
-    createRtspClient(3, url4, TCP_CONN_MODE);
-    createRtspClient(4, url5, TCP_CONN_MODE);
+    createRtspClient(0, url1, DEFAULT_CONN_MODE);
+    // createRtspClient(1, url2, TCP_CONN_MODE);
+    // createRtspClient(2, url3, TCP_CONN_MODE);
+    // createRtspClient(3, url4, TCP_CONN_MODE);
+    // createRtspClient(4, url5, TCP_CONN_MODE);
 
     do {
 
@@ -66,93 +66,93 @@ int main()
             }
         }
 
-        if (isConnect(1) == STATUS_CONNECTED)
-        {
+        // if (isConnect(1) == STATUS_CONNECTED)
+        // {
 
-            unsigned char* buf = (unsigned char *)malloc(1920*1080*3);
-            unsigned char* buf_resize = (unsigned char *)malloc(640*640*3);
-            int status = mread(1,1920,1080,640,640,buf , 1920*1080*3, buf_resize, 640*640*3);
-            free(buf);
-            free(buf_resize);
-            g_print("id:1 connected\n");
+        //     unsigned char* buf = (unsigned char *)malloc(1920*1080*3);
+        //     unsigned char* buf_resize = (unsigned char *)malloc(640*640*3);
+        //     int status = mread(1,1920,1080,640,640,buf , 1920*1080*3, buf_resize, 640*640*3);
+        //     free(buf);
+        //     free(buf_resize);
+        //     g_print("id:1 connected\n");
 
-        } else {
-            g_print("id:1 disconnect %d\n", isConnect(1));
-            sleep_ms(500);
-            if (isConnect(1) == STATUS_DISCONNECT) {
-                 //destoryRtspClient(1);
-                 g_print("id:1 create\n");
-                 sleep_ms(500);
-                 createRtspClient(1,url2, TCP_CONN_MODE);
-                 sleep_ms(500);
-            }
-        }
+        // } else {
+        //     g_print("id:1 disconnect %d\n", isConnect(1));
+        //     sleep_ms(500);
+        //     if (isConnect(1) == STATUS_DISCONNECT) {
+        //          //destoryRtspClient(1);
+        //          g_print("id:1 create\n");
+        //          sleep_ms(500);
+        //          createRtspClient(1,url2, TCP_CONN_MODE);
+        //          sleep_ms(500);
+        //     }
+        // }
 
-        if (isConnect(2) == STATUS_CONNECTED)
-        {
+        // if (isConnect(2) == STATUS_CONNECTED)
+        // {
 
-            unsigned char* buf = (unsigned char *)malloc(1920*1080*3);
-            unsigned char* buf_resize = (unsigned char *)malloc(640*640*3);
-            int status = mread(2,1920,1080,640,640,buf , 1920*1080*3, buf_resize, 640*640*3);
-            free(buf);
-            free(buf_resize);
-            g_print("id:2 connected\n");
+        //     unsigned char* buf = (unsigned char *)malloc(1920*1080*3);
+        //     unsigned char* buf_resize = (unsigned char *)malloc(640*640*3);
+        //     int status = mread(2,1920,1080,640,640,buf , 1920*1080*3, buf_resize, 640*640*3);
+        //     free(buf);
+        //     free(buf_resize);
+        //     g_print("id:2 connected\n");
 
-        } else {
-            g_print("id:2 disconnect %d \n", isConnect(2));
-            sleep_ms(500);
-            if (isConnect(2) == STATUS_DISCONNECT) {
-                 //destoryRtspClient(2);
-                 g_print("id:2 create\n");
-                 sleep_ms(500);
-                 createRtspClient(2,url3, TCP_CONN_MODE);
-                 sleep_ms(500);
-            }
-        }
+        // } else {
+        //     g_print("id:2 disconnect %d \n", isConnect(2));
+        //     sleep_ms(500);
+        //     if (isConnect(2) == STATUS_DISCONNECT) {
+        //          //destoryRtspClient(2);
+        //          g_print("id:2 create\n");
+        //          sleep_ms(500);
+        //          createRtspClient(2,url3, TCP_CONN_MODE);
+        //          sleep_ms(500);
+        //     }
+        // }
 
-        if (isConnect(3) == STATUS_CONNECTED)
-        {
+        // if (isConnect(3) == STATUS_CONNECTED)
+        // {
 
-            unsigned char* buf = (unsigned char *)malloc(1920*1080*3);
-            unsigned char* buf_resize = (unsigned char *)malloc(640*640*3);
-            int status = mread(3,1920,1080,640,640,buf , 1920*1080*3, buf_resize, 640*640*3);
-            free(buf);
-            free(buf_resize);
-            g_print("id:3 connected\n");
+        //     unsigned char* buf = (unsigned char *)malloc(1920*1080*3);
+        //     unsigned char* buf_resize = (unsigned char *)malloc(640*640*3);
+        //     int status = mread(3,1920,1080,640,640,buf , 1920*1080*3, buf_resize, 640*640*3);
+        //     free(buf);
+        //     free(buf_resize);
+        //     g_print("id:3 connected\n");
 
-        } else {
-            g_print("id:3 disconnect %d \n",isConnect(3));
-            sleep_ms(500);
-            if (isConnect(3) == STATUS_DISCONNECT) {
-                //destoryRtspClient(3);
-                g_print("id:3 create\n");
-                sleep_ms(500);
-                createRtspClient(3,url4, TCP_CONN_MODE);
-                sleep_ms(500);
-            }
-        }
+        // } else {
+        //     g_print("id:3 disconnect %d \n",isConnect(3));
+        //     sleep_ms(500);
+        //     if (isConnect(3) == STATUS_DISCONNECT) {
+        //         //destoryRtspClient(3);
+        //         g_print("id:3 create\n");
+        //         sleep_ms(500);
+        //         createRtspClient(3,url4, TCP_CONN_MODE);
+        //         sleep_ms(500);
+        //     }
+        // }
 
-        if (isConnect(4) == STATUS_CONNECTED)
-        {
+        // if (isConnect(4) == STATUS_CONNECTED)
+        // {
 
-            unsigned char* buf = (unsigned char *)malloc(1920*1080*3);
-            unsigned char* buf_resize = (unsigned char *)malloc(640*640*3);
-            int status = mread(4,1920,1080,640,640,buf , 1920*1080*3, buf_resize, 640*640*3);
-            free(buf);
-            free(buf_resize);
-            g_print("id:4 connected\n");
+        //     unsigned char* buf = (unsigned char *)malloc(1920*1080*3);
+        //     unsigned char* buf_resize = (unsigned char *)malloc(640*640*3);
+        //     int status = mread(4,1920,1080,640,640,buf , 1920*1080*3, buf_resize, 640*640*3);
+        //     free(buf);
+        //     free(buf_resize);
+        //     g_print("id:4 connected\n");
 
-        } else {
-            g_print("id:4 disconnect %d\n",isConnect(4));
-            sleep_ms(500);
-            if (isConnect(4) == STATUS_DISCONNECT) {
-                 //destoryRtspClient(4);
-                 g_print("id:4 create\n");
-                 sleep_ms(500);
-                 createRtspClient(4,url5, TCP_CONN_MODE);
-                 sleep_ms(500);
-            }
-        }
+        // } else {
+        //     g_print("id:4 disconnect %d\n",isConnect(4));
+        //     sleep_ms(500);
+        //     if (isConnect(4) == STATUS_DISCONNECT) {
+        //          //destoryRtspClient(4);
+        //          g_print("id:4 create\n");
+        //          sleep_ms(500);
+        //          createRtspClient(4,url5, TCP_CONN_MODE);
+        //          sleep_ms(500);
+        //     }
+        // }
 
 
     } while (1);

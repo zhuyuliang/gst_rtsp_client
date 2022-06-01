@@ -59,9 +59,6 @@
 //     return GST_FLOW_ERROR;
 // }
 
-static void
-rtsp_destroy (struct CustomData *data);
-
 // appsink probe
 static GstPadProbeReturn
 pad_probe (GstPad * pad, GstPadProbeInfo * info, gpointer user_data)
@@ -211,8 +208,7 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
     }
     case GST_MESSAGE_EOS:
       g_print("bus eos \n");
-      dec->isRun = STATUS_DISCONNECTING;
-      g_main_loop_quit (dec->loop);
+      dec->isRun = STATUS_BUS_ERROR;
       break;
     case GST_MESSAGE_INFO:
     case GST_MESSAGE_WARNING:
@@ -238,7 +234,7 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
         default:
           g_assert_not_reached ();
       }
-      g_print ("GStreamer %s: %s; debug info: %s", prefix, error->message,
+      g_print ("GStreamer %s: %s; debug info: %s \n", prefix, error->message,
           debug_info);
 
       g_clear_error (&error);
@@ -251,8 +247,7 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
       // TODO: stop mainloop in case of an error
       //g_main_loop_quit(dec->loop);
       g_print("bus disconnect %d \n",dec->m_Id);
-      dec->isRun = STATUS_DISCONNECTING;
-      g_main_loop_quit (dec->loop);
+      dec->isRun = STATUS_BUS_ERROR;
 
       break;
     }
@@ -493,9 +488,10 @@ rtsp_destroy (struct CustomData *data)
 {
   if (data != NULL) {
     try{
-        if (data->loop != NULL) {
-    	    g_main_loop_quit (data->loop);
-        }
+        //if (data->loop != NULL) {
+    	//    g_main_loop_quit (data->loop);
+        //}
+
         if (data->pipeline != NULL) {    
             gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_NULL);
         }
@@ -506,15 +502,27 @@ rtsp_destroy (struct CustomData *data)
             gst_object_unref ( GST_OBJECT (data->bus));
             data->bus = NULL;
         }
+
+        try{
+          gst_bin_remove_many(GST_BIN(data->pipeline), data->rtspsrc, data->decode, data->tee, NULL);
+          gst_bin_remove_many(GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
+        } catch (...) 
+        {
+          g_print("rtsp_destroy error for gst_bin_remove_many \n");
+        }
+
+        g_print("finish bus unref \n");
         if (data->pipeline != NULL)
         {
             gst_object_unref (data->pipeline);
             data->pipeline = NULL;
         }
+        g_print("finish pipeline unref \n");
         if (data->loop != NULL) {
             g_main_loop_unref (data->loop);
             data->loop = NULL;
         }
+        g_print("finish loop unref \n");
         //pthread_join(m_thread,NULL);
     } catch (...) 
     {
@@ -524,12 +532,14 @@ rtsp_destroy (struct CustomData *data)
     try {
         if (data->m_RtspUri != NULL){
     	    free (data->m_RtspUri);
-            data->m_RtspUri = NULL;
+          data->m_RtspUri = NULL;
         }
     } catch (...) 
     {
         g_print("mRtspUri free fail \n");
     }
+    
+    g_print("finish free m_RtspUri \n");
     
     try {
         if (data->dst_buf != NULL)
@@ -611,6 +621,7 @@ static void* connectrtsp(void *arg) {
   } catch (...) {
       g_print("connectrtsp mRtspUri check URI fail !");
       data->isRun = STATUS_DISCONNECT;
+      pthread_detach(pthread_self());
       g_print("pthread_exit rtsp_check_url exit\n");
       pthread_exit(0);
       return NULL;
@@ -630,7 +641,7 @@ static void* connectrtsp(void *arg) {
       } catch (...){
          data->isRun = STATUS_DISCONNECTING;
          rtsp_destroy(data);
-         //pthread_detach(pthread_self());
+         pthread_detach(pthread_self());
          g_print("pthread_exit rtsp_init exit\n");
          pthread_exit(0);
          return NULL;
@@ -639,7 +650,7 @@ static void* connectrtsp(void *arg) {
       {
          data->isRun = STATUS_DISCONNECTING;
          rtsp_destroy(data);
-         //pthread_detach(pthread_self());
+         pthread_detach(pthread_self());
          g_print("pthread_exit rtsp_init return fail exit\n");
          pthread_exit(0);
          return NULL;
@@ -650,7 +661,7 @@ static void* connectrtsp(void *arg) {
       g_print("init exit mId %d \n", data->m_Id);
       data->isRun = STATUS_DISCONNECTING;
       rtsp_destroy(data);
-      //pthread_detach(pthread_self());
+      pthread_detach(pthread_self());
       g_print("pthread_exit loop exit\n");
       pthread_exit(0);
       return NULL;
@@ -659,7 +670,7 @@ static void* connectrtsp(void *arg) {
 
   data->isRun = STATUS_DISCONNECTING;
   rtsp_destroy(data);
-  //pthread_detach(pthread_self());
+  pthread_detach(pthread_self());
   g_print("pthread_exit url check fail\n");
   pthread_exit(0);
   return NULL;
@@ -676,7 +687,7 @@ RtspClient::enable(int id, const char* url, int conn_mode) {
       //this.m_data = g_new0 (struct CustomData, 1);
       this->m_data.m_Id = id;
       this->m_data.conn_Mode = conn_mode;
-      size_t len = strlen(url)+1;
+      size_t len = strlen(url) + 1;
       char* cpurl = (char*)malloc(len);
       memset(cpurl, 0, len);
       memcpy(cpurl, url, len);
@@ -700,24 +711,38 @@ RtspClient::enable(int id, const char* url, int conn_mode) {
 // destroy instance
 void 
 RtspClient::disable() {
-    g_print("RtspClient ~disable start! mId %d \n",this->m_data.m_Id);
+    g_print("RtspClient ~disable start! mId %d status %d \n",this->m_data.m_Id, this->m_data.isRun);
     if ( this->m_data.isRun == STATUS_DISCONNECT) {
         //this->m_data->isRun = STATUS_DISCONNECTING;
         //rtsp_destroy(this->m_data);
         g_print("RtspCLient ~disable DISCONNECT \n");
     }else if( this->m_data.isRun == STATUS_CONNECTED){
-        this->m_data.isRun = STATUS_DISCONNECTING;
         try {
+            this->m_data.isRun = STATUS_DISCONNECTING;
             //if(this->m_data.loop != NULL) {
             g_main_loop_quit(this->m_data.loop);
+            //this->m_data.isRun = STATUS_DISCONNECTING;
             //}
         } catch (...)
         {
             g_print("RtspCLient ~disable destroy fail \n");
         }
+    } else if (this->m_data.isRun == STATUS_BUS_ERROR) {
+        try {
+            this->m_data.isRun = STATUS_DISCONNECTING;
+            g_main_loop_quit(this->m_data.loop);
+        } catch (...) {
+            g_print("RtspClient disable bus error fail \n");
+        }
+    } else {
+        try{
+            pthread_cancel(this->m_thread);
+        } catch (...) {
+            g_print("pthread_cancel error \n");
+        }
     }
-    pthread_cancel(this->m_thread);
     pthread_join(this->m_thread, NULL);
+    sleep(1);
     g_print("RtspClient ~disable! end mId %d \n", this->m_data.m_Id);
 }
 
@@ -742,6 +767,11 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
     data->isRun = STATUS_DISCONNECTING;
     data->size = 0;
     return data;
+  } else if (this->m_data.isRun == STATUS_BUS_ERROR)
+  {
+    data->isRun = STATUS_BUS_ERROR;
+    data->size = 0;
+    return data;
   }
  
   try { 
@@ -760,14 +790,14 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
     GST_DEBUG ("got no appsink sample");
     if (gst_app_sink_is_eos (GST_APP_SINK (this->m_data.appsink))){
       GST_DEBUG ("eos");
-      g_main_loop_quit(this->m_data.loop);
-      data->isRun = STATUS_DISCONNECTING;
+      //g_main_loop_quit(this->m_data.loop);
+      data->isRun = STATUS_BUS_ERROR;
       data->size = 0;
       return data;
     }else{
       GST_DEBUG ("gst_app_sink_try_pull_sample null");
-      g_main_loop_quit(this->m_data.loop);
-      data->isRun = STATUS_DISCONNECTING;
+      //g_main_loop_quit(this->m_data.loop);
+      data->isRun = STATUS_BUS_ERROR;
       data->size = 0;
       return data;
     }
@@ -794,6 +824,34 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
   int source_width = GST_VIDEO_INFO_WIDTH (&(this->m_data.info));
   int source_height = GST_VIDEO_INFO_HEIGHT (&(this->m_data.info));
 
+  if (this->m_data.last_time_width == 0 || this->m_data.last_time_hetight == 0) {
+    this->m_data.last_time_width = source_width;
+    this->m_data.last_time_hetight = source_height;
+  }
+
+  if (this->m_data.last_time_width != source_height && this->m_data.last_time_hetight != source_width) {
+      if (this->m_data.dst_buf != NULL){
+        free(this->m_data.dst_buf);
+        this->m_data.dst_buf = NULL;
+      }
+      if (this->m_data.dst_output_buf != NULL){
+        free(this->m_data.dst_output_buf);
+        this->m_data.dst_output_buf = NULL;
+      }
+      if (this->m_data.dst_resize_output_buf != NULL){
+        free(this->m_data.dst_resize_output_buf);
+        this->m_data.dst_resize_output_buf = NULL;
+      }
+      if (this->m_data.dst_resize_output_resize_buf != NULL){
+        free(this->m_data.dst_resize_output_resize_buf);
+        this->m_data.dst_resize_output_resize_buf = NULL;
+      }
+      if (this->m_data.dst_output_resize_buf != NULL){
+        free(this->m_data.dst_output_resize_buf);
+        this->m_data.dst_output_resize_buf = NULL;
+      }
+  }
+
   /* output some information at the beginning (= when the first frame is handled) */
   if (this->m_data.frame == 0) {
     printf ("===================================\n");
@@ -802,6 +860,7 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
     printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
     printf ("  video meta found: %s\n", yesno (meta != NULL));
     printf ("===================================\n");
+    printf ("mpp frame size : %d \n", map_info.size);
   }
   
   //g_print("mpp frame size : %d \n", map_info.size);

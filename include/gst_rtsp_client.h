@@ -66,6 +66,7 @@
 #define STATUS_DISCONNECT 2
 #define STATUS_CONNECTING 3
 #define STATUS_DISCONNECTING 4
+#define STATUS_BUS_ERROR 5
 
 #define DEFAULT_CONN_MODE 0
 #define TCP_CONN_MODE 1
@@ -83,48 +84,50 @@ struct MppFrameData {
 };
 
 struct FrameData {
-    char * data;
+    char * data = NULL;
     int size;
     int width;
     int height;
     int isRun = STATUS_INIT;
     // inference scale
     int size_resize;
-    char * data_resize;
+    char * data_resize = NULL;
 };
 
 // CustomData
 struct CustomData {
-    GMainLoop  *loop;
-    GstElement *pipeline;
-    GstElement *rtspsrc;
-    GstElement *decode;
-    GstElement *tee;
-    GstElement *queue_appsink;
-    GstElement *queue_displaysink;
-    GstElement *appsink;
-    GstElement *displaysink;
+    GMainLoop  *loop = NULL;
+    GstElement *pipeline = NULL;
+    GstElement *rtspsrc = NULL;
+    GstElement *decode = NULL;
+    GstElement *tee = NULL;
+    GstElement *queue_appsink = NULL;
+    GstElement *queue_displaysink = NULL;
+    GstElement *appsink = NULL;
+    GstElement *displaysink = NULL;
 
-    GstBus *bus;
+    GstBus *bus = NULL;
 
     gint format;
     GstVideoInfo info;
+    int last_time_width = 0;
+    int last_time_hetight = 0;
 
     unsigned frame;
 
-    char * m_RtspUri;
+    char * m_RtspUri = NULL;
     int m_Id = 0;
     int conn_Mode = DEFAULT_CONN_MODE; 
     int isRun = STATUS_INIT;
 
     // rga buf
-    char * dst_buf;
-    char * dst_output_buf;
-    char * dst_resize_output_buf;
+    char * dst_buf = NULL;
+    char * dst_output_buf = NULL;
+    char * dst_resize_output_buf = NULL;
 
     // inference resize 640
-    char * dst_resize_output_resize_buf;
-    char * dst_output_resize_buf;
+    char * dst_resize_output_resize_buf = NULL;
+    char * dst_output_resize_buf = NULL;
 };
 
 class RtspClient {
