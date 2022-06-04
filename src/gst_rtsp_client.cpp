@@ -473,7 +473,7 @@ rtsp_init(struct CustomData *data) {
     // gst_object_unref ( GST_OBJECT (bus));
 
     // start playing
-    g_print ("start playing \n");
+    printf ("start playing \n");
     gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_PLAYING);
 
     //g_main_loop_run (main_loop);
@@ -495,7 +495,7 @@ rtsp_destroy (struct CustomData *data)
         if (data->pipeline != NULL) {    
             gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_NULL);
         }
-        g_print ("start gst_object_unref element \n");
+        printf ("start gst_object_unref element \n");
         if (data->bus != NULL) 
         {
             gst_bus_remove_watch (data->bus);
@@ -506,27 +506,32 @@ rtsp_destroy (struct CustomData *data)
         try{
           gst_bin_remove_many(GST_BIN(data->pipeline), data->rtspsrc, data->decode, data->tee, NULL);
           gst_bin_remove_many(GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
+          data->rtspsrc = NULL;
+          data->decode = NULL;
+          data->tee = NULL;
+          data->queue_appsink = NULL;
+          data->appsink = NULL;
         } catch (...) 
         {
-          g_print("rtsp_destroy error for gst_bin_remove_many \n");
+          printf("rtsp_destroy error for gst_bin_remove_many \n");
         }
 
-        g_print("finish bus unref \n");
+        printf("finish bus unref \n");
         if (data->pipeline != NULL)
         {
             gst_object_unref (data->pipeline);
             data->pipeline = NULL;
         }
-        g_print("finish pipeline unref \n");
+        printf("finish pipeline unref \n");
         if (data->loop != NULL) {
             g_main_loop_unref (data->loop);
             data->loop = NULL;
         }
-        g_print("finish loop unref \n");
+        printf("finish loop unref \n");
         //pthread_join(m_thread,NULL);
     } catch (...) 
     {
-       g_print("rtsp_destroy error for gstreamer \n");
+       printf("rtsp_destroy error for gstreamer \n");
     }
 
     try {
@@ -536,10 +541,10 @@ rtsp_destroy (struct CustomData *data)
         }
     } catch (...) 
     {
-        g_print("mRtspUri free fail \n");
+        printf("mRtspUri free fail \n");
     }
     
-    g_print("finish free m_RtspUri \n");
+    printf("finish free m_RtspUri \n");
     
     try {
         if (data->dst_buf != NULL)
@@ -568,27 +573,24 @@ rtsp_destroy (struct CustomData *data)
            data->dst_resize_output_resize_buf = NULL;
 	}
     } catch (...) {
-        g_print("rtsp_destroy error for bufi \n");
+        printf("rtsp_destroy error for bufi \n");
     }
 
-    g_print("rtsp_destory data = null \n");
+    printf("rtsp_destory data = null \n");
     data->isRun = STATUS_DISCONNECT;
-
-    //free (data);
-    //data = NULL;
     
   } else {
-    g_print("rtspDestory data== NULL \n");
+    printf("rtspDestory data== NULL \n");
   }
 
 }
 
 RtspClient::RtspClient() {
-    g_print("rtsp rtspclient\n");
+    printf("rtsp rtspclient\n");
 }
 
 RtspClient::~RtspClient() {
-    g_print("rtsp ~rtspclient!\n");
+    printf("rtsp ~rtspclient!\n");
 }
 
 int rtsp_check_url(char const* url)
@@ -613,26 +615,26 @@ static void* connectrtsp(void *arg) {
   // int p = fork();
   struct CustomData *data = (struct CustomData *)arg;
 
-  g_print("connectrtsp m_RtspUri %s \n", data->m_RtspUri);
+  printf("connectrtsp m_RtspUri %s \n", data->m_RtspUri);
   
   int ret = -1;
   try {	
       ret = rtsp_check_url(data->m_RtspUri);
   } catch (...) {
-      g_print("connectrtsp mRtspUri check URI fail !");
+      printf("connectrtsp mRtspUri check URI fail !");
       data->isRun = STATUS_DISCONNECT;
       pthread_detach(pthread_self());
-      g_print("pthread_exit rtsp_check_url exit\n");
+      printf("pthread_exit rtsp_check_url exit\n");
       pthread_exit(0);
       return NULL;
   }
-  g_print("connectrtsp m_RtspUri check ret %d \n", ret);
+  printf("connectrtsp m_RtspUri check ret %d \n", ret);
   if (ret == 1) {
       // gst init
       gst_init (NULL, NULL);
       /** gst debug */
       // GST_DEBUG_CATEGORY_INIT (rk_appsink_debug, "rk_appsink", 2, "App sink");
-      g_print("mId %d mRtspUri %s \n", data->m_Id, data->m_RtspUri);
+      printf("mId %d mRtspUri %s \n", data->m_Id, data->m_RtspUri);
 
       //data->isRun = STATUS_CONNECTING;
       int ret = 1;
@@ -642,7 +644,7 @@ static void* connectrtsp(void *arg) {
          data->isRun = STATUS_DISCONNECTING;
          rtsp_destroy(data);
          pthread_detach(pthread_self());
-         g_print("pthread_exit rtsp_init exit\n");
+         printf("pthread_exit rtsp_init exit\n");
          pthread_exit(0);
          return NULL;
       }
@@ -651,18 +653,18 @@ static void* connectrtsp(void *arg) {
          data->isRun = STATUS_DISCONNECTING;
          rtsp_destroy(data);
          pthread_detach(pthread_self());
-         g_print("pthread_exit rtsp_init return fail exit\n");
+         printf("pthread_exit rtsp_init return fail exit\n");
          pthread_exit(0);
          return NULL;
       }
       data->loop = g_main_loop_new (NULL, FALSE);
       g_main_loop_run (data->loop);
 
-      g_print("init exit mId %d \n", data->m_Id);
+      printf("init exit mId %d \n", data->m_Id);
       data->isRun = STATUS_DISCONNECTING;
       rtsp_destroy(data);
       pthread_detach(pthread_self());
-      g_print("pthread_exit loop exit\n");
+      printf("pthread_exit loop exit\n");
       pthread_exit(0);
       return NULL;
     
@@ -671,7 +673,7 @@ static void* connectrtsp(void *arg) {
   data->isRun = STATUS_DISCONNECTING;
   rtsp_destroy(data);
   pthread_detach(pthread_self());
-  g_print("pthread_exit url check fail\n");
+  printf("pthread_exit url check fail\n");
   pthread_exit(0);
   return NULL;
 
@@ -681,41 +683,40 @@ static void* connectrtsp(void *arg) {
 bool
 RtspClient::enable(int id, const char* url, int conn_mode) {
 
-  g_print("RtspClient enable ! %d \n", id);
+  printf("RtspClient enable ! %d \n", id);
 
   if (this->m_data.isRun != STATUS_CONNECTING) {
       //this.m_data = g_new0 (struct CustomData, 1);
       this->m_data.m_Id = id;
       this->m_data.conn_Mode = conn_mode;
       size_t len = strlen(url) + 1;
-      char* cpurl = (char*)malloc(len);
-      memset(cpurl, 0, len);
-      memcpy(cpurl, url, len);
-      this->m_data.m_RtspUri = cpurl;
-      g_print("RtspClient mRtspUri %s \n",cpurl);
+      this->m_data.m_RtspUri = (char*)malloc(len);
+      memset(this->m_data.m_RtspUri, 0, len);
+      memcpy(this->m_data.m_RtspUri, url, len);
+      printf("RtspClient mRtspUri %s \n",this->m_data.m_RtspUri);
       this->m_data.isRun = STATUS_CONNECTING;
       int ret = pthread_create(&m_thread, NULL, connectrtsp, &this->m_data);
       if ( ret != 0) {
-          g_error("enable fail, rtsp thread create fail \n");
-          return FALSE;
+          printf("enable fail, rtsp thread create fail \n");
+          return false;
       }
   } else {
-      g_error("enable fail, rtsp thread running \n");
-      return FALSE;
+      printf("enable fail, rtsp thread running \n");
+      return false;
   } 
 
-  return TRUE;
+  return true;
 
 }
 
 // destroy instance
 void 
 RtspClient::disable() {
-    g_print("RtspClient ~disable start! mId %d status %d \n",this->m_data.m_Id, this->m_data.isRun);
+    printf("RtspClient ~disable start! mId %d status %d \n",this->m_data.m_Id, this->m_data.isRun);
     if ( this->m_data.isRun == STATUS_DISCONNECT) {
         //this->m_data->isRun = STATUS_DISCONNECTING;
         //rtsp_destroy(this->m_data);
-        g_print("RtspCLient ~disable DISCONNECT \n");
+        printf("RtspCLient ~disable DISCONNECT \n");
     }else if( this->m_data.isRun == STATUS_CONNECTED){
         try {
             this->m_data.isRun = STATUS_DISCONNECTING;
@@ -725,25 +726,25 @@ RtspClient::disable() {
             //}
         } catch (...)
         {
-            g_print("RtspCLient ~disable destroy fail \n");
+            printf("RtspCLient ~disable destroy fail \n");
         }
     } else if (this->m_data.isRun == STATUS_BUS_ERROR) {
         try {
             this->m_data.isRun = STATUS_DISCONNECTING;
             g_main_loop_quit(this->m_data.loop);
         } catch (...) {
-            g_print("RtspClient disable bus error fail \n");
+            printf("RtspClient disable bus error fail \n");
         }
     } else {
         try{
             pthread_cancel(this->m_thread);
         } catch (...) {
-            g_print("pthread_cancel error \n");
+            printf("pthread_cancel error \n");
         }
     }
     pthread_join(this->m_thread, NULL);
     sleep(1);
-    g_print("RtspClient ~disable! end mId %d \n", this->m_data.m_Id);
+    printf("RtspClient ~disable! end mId %d \n", this->m_data.m_Id);
 }
 
 // connect status

@@ -18,6 +18,9 @@ from ctypes import *
 
 def func_rtspdisplay(index,url, usr, pwd):
 
+    isConnected = 0
+    
+    reconnect_time = 2
 
     width = 1920
     height = 1080
@@ -25,15 +28,22 @@ def func_rtspdisplay(index,url, usr, pwd):
     resize_width = 0
     resize_height = 0
 
+    rtspclient.createRtspClient(index,url)
+
     while(1) :
         ret1 = rtspclient.isConnect(index)
-        # print("id %d ret = %d",index, ret1)
+        print("id %d ret = %d isconnected %b time = %d",index, ret1, isConnected, reconnect_time)
         # time.sleep(0.1)
         if (ret1 == 1):
+            print("id %d mread",index)
             status, img, img_resize = rtspclient.mread(index,width,height,resize_width,resize_height)
             if status == 1:
                 print("success %d, %d",index,ret1)
                 time.sleep(1)
+                if (isConnected != 1):
+                    isConnected = 1
+                if (reconnect_time != 2):
+                    reconnect_time = 2
                 pass
             #     # print(type(ret2.frame))
             #     # print(ret2.frame.shape)
@@ -47,13 +57,17 @@ def func_rtspdisplay(index,url, usr, pwd):
             #     # time.sleep(0.1)
             #     # cv2.imwrite('a' + str(index) +'.jpg',ret2.frame)
             #     # cv2.imwrite('a640' + str(index) +'.jpg',ret2.frame_resize)
-            elif status == 2:
-                print("python disconnect", index)
-                rtspclient.createRtspClient(index,url)
+            # elif status == 2:
+            #    time.sleep(reconnect_time)
+            #    reconnect_time = (reconnect_time - 1) + (reconnect_time -2)
+            #    print("python disconnect", index)
+            #    rtspclient.createRtspClient(index,url)
             del status, img, img_resize
-        elif (ret1 == 2):
-            print("status %d, %d",index,ret1)
-            print("*************** destoryRtspClient", index)
+        elif (isConnected == 1 and ret1 == 2):
+            print("timesleep")
+            time.sleep(reconnect_time)
+            reconnect_time = (reconnect_time - 1) + (reconnect_time -2)
+            print("python disconnect", index)
             rtspclient.createRtspClient(index,url)
         else:
             time.sleep(3)
@@ -73,23 +87,23 @@ if __name__ == '__main__':
     # idx4 = gl.add_view(640, 540, 640, 360)
     # idx5 = gl.add_view(1280, 540, 640, 360)
 
-    t0 = threading.Thread(target=func_rtspdisplay, args = (1,"rtsp://admin:shangqu2020@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0", "admin", "passwd"))
-    # t1 = threading.Thread(target=func_rtspdisplay, args = (2,"rtsp://admin:shangqu2020@192.168.2.27:554/cam/realmonitor?channel=1&subtype=0", "admin", "passwd"))
-    # t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:shangqu2020@192.168.2.141:554/Streaming/Channels/1", "admin", "passwd"))
-    t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:sq123456@192.168.2.141:554/Streaming/Channels/1', "admin", "admin"))
-    t4 = threading.Thread(target=func_rtspdisplay, args = (5,"rtsp://admin:shangqu2020@192.168.2.33:554/Streaming/Channels/1", "admin", "passwd"))
-    t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:shangqu2020@192.168.2.30/Streaming/Channels/1", "admin", "passwd"))
+    t0 = threading.Thread(target=func_rtspdisplay, args = (1,"rtsp://admin:pwd@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0", "admin", "passwd"))
+    t1 = threading.Thread(target=func_rtspdisplay, args = (2,"rtsp://admin:pwd@192.168.2.27:554/cam/realmonitor?channel=1&subtype=0", "admin", "passwd"))
+    t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:pwd@192.168.2.141:554/Streaming/Channels/1", "admin", "passwd"))
+    t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:pwd@192.168.2.141:554/Streaming/Channels/1', "admin", "admin"))
+    t4 = threading.Thread(target=func_rtspdisplay, args = (5,"rtsp://admin:pwd@192.168.2.33:554/Streaming/Channels/1", "admin", "passwd"))
+    t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:pwd@192.168.2.30/Streaming/Channels/1", "admin", "passwd"))
 
     t0.start()
-    #t1.start()
-    #t2.start()
+    t1.start()
+    t2.start()
     t3.start()
     t4.start()
     t5.start()
 
     t0.join()
-    #t1.join()
-    #t2.join()
+    t1.join()
+    t2.join()
     t3.join()
     t4.join()
     t5.join()
