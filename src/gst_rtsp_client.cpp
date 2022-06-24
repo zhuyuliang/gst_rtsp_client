@@ -864,7 +864,7 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
     printf ("mpp frame size : %d \n", map_info.size);
   }
   
-  //g_print("mpp frame size : %d \n", map_info.size);
+  g_print("mpp frame size : %d \n", map_info.size);
   //g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
 
   // rga
@@ -876,7 +876,7 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
   rga_buffer_t  dst_two_output;
 
   // h265 256bit 1920 * 1080  == 2304 * 1080
-  if (map_info.size == 3732480 || map_info.size == 4976640 ) {
+  if (map_info.size == 3732480 || map_info.size == 4976640 || map_info.size == 3760128 ) {
     src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, 1080, SRC_FORMAT);
     if (this->m_data.dst_buf == NULL){
       this->m_data.dst_buf = (char*)malloc(2304*1080*get_bpp_from_format(DST_FORMAT));
@@ -1011,7 +1011,8 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
   }
   else 
   // h265 h264
-  // supoort 1280*720 3840*2160
+  // supoort 1280*720 3840*2160 
+  // h264 h265 3840*2160 12441600 12441600
   {
       
       src = wrapbuffer_virtualaddr((char *) map_info.data, source_width, source_height, SRC_FORMAT);
