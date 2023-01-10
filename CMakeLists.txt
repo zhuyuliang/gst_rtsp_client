@@ -52,10 +52,13 @@ include_directories(
         /usr/local/lib/aarch64-linux-gnu
         ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/librga
+        # rk3588
+        /usr/local/include
+        /usr/local/lib/aarch64-linux-gnu
+        /usr/include/opencv4
 )
 
 link_libraries(
-        # ${SYS_USR_LIB}/libgtk3-nocsd.so.0
         ${SYS_USR_LIB}/libgstreamer-1.0.so.0
         ${SYS_USR_LIB}/libgobject-2.0.so.0
         ${SYS_USR_LIB}/libglib-2.0.so.0
@@ -63,20 +66,16 @@ link_libraries(
 	    ${SYS_USR_LIB}/libgstvideo-1.0.so.0
         ${SYS_USR_LIB}/libgstapp-1.0.so.0
         ${SYS_LIB}/libc.so.6
-	# /usr/lib/ld-linux-aarch64.so.1
         ${SYS_LIB}/libdl.so.2
         ${SYS_LIB}/libpthread.so.0
         ${SYS_USR_LIB}/libgmodule-2.0.so.0
         ${SYS_LIB}/libm.so.6
-        ${SYS_USR_LIB}/libffi.so.6
+        # rk3399prod
+        # ${SYS_USR_LIB}/libffi.so.6
         ${SYS_LIB}/libpcre.so.3
-	# ${SYS_USR_LIB}/librockchip_rga.so.0
-	# /usr/local/lib/libopencv_imgproc.so.3.4
-	# /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.3.2
-        # /usr/lib/aarch64-linux-gnu/librga.so
         ${CMAKE_CURRENT_SOURCE_DIR}/librga/librga.so
-        #/home/toybrick/EdgeComputing/sq_main_/rtsp/librga.so
-	#/home/firefly/linux-rga/build/librga.so
+        # rk3588
+        ${SYS_USR_LIB}/libffi.so
 )
 
 # debug

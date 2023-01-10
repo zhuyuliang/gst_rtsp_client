@@ -208,7 +208,8 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
     }
     case GST_MESSAGE_EOS:
       g_print("bus eos \n");
-      dec->isRun = STATUS_BUS_ERROR;
+      // g_main_loop_quit (dec->loop);
+      // dec->isRun = STATUS_DISCONNECT;
       break;
     case GST_MESSAGE_INFO:
     case GST_MESSAGE_WARNING:
@@ -245,9 +246,9 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
             GST_DEBUG_GRAPH_SHOW_ALL, "error");
       }
       // TODO: stop mainloop in case of an error
-      //g_main_loop_quit(dec->loop);
-      g_print("bus disconnect %d \n",dec->m_Id);
-      dec->isRun = STATUS_BUS_ERROR;
+      // g_main_loop_quit(dec->loop);
+      // g_print("bus disconnect %d \n",dec->m_Id);
+      // dec->isRun = STATUS_DISCONNECT;
 
       break;
     }
@@ -258,77 +259,77 @@ bus_watch_cb (GstBus * bus, GstMessage * msg, gpointer user_data)
   return TRUE;
 }
 
-static void
-buffer_to_file (struct CustomData *dec, GstBuffer * buf)
-{
-  int ret;
-  GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
-  guint nplanes = GST_VIDEO_INFO_N_PLANES (&(dec->info));
-  guint width, height;
-  GstMapInfo map_info;
-  gchar filename[128];
-  GstVideoFormat pixfmt;
-  const char *pixfmt_str;
+// static void
+// buffer_to_file (struct CustomData *dec, GstBuffer * buf)
+// {
+//   int ret;
+//   GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
+//   guint nplanes = GST_VIDEO_INFO_N_PLANES (&(dec->info));
+//   guint width, height;
+//   GstMapInfo map_info;
+//   gchar filename[128];
+//   GstVideoFormat pixfmt;
+//   const char *pixfmt_str;
 
-  pixfmt = GST_VIDEO_INFO_FORMAT (&(dec->info));
-  pixfmt_str = gst_video_format_to_string (pixfmt);
+//   pixfmt = GST_VIDEO_INFO_FORMAT (&(dec->info));
+//   pixfmt_str = gst_video_format_to_string (pixfmt);
 
-  /* TODO: use the DMABUF directly */
+//   /* TODO: use the DMABUF directly */
 
-  gst_buffer_map (buf, &map_info, GST_MAP_READ);
+//   gst_buffer_map (buf, &map_info, GST_MAP_READ);
 
-  width = GST_VIDEO_INFO_WIDTH (&(dec->info));
-  height = GST_VIDEO_INFO_HEIGHT (&(dec->info));
+//   width = GST_VIDEO_INFO_WIDTH (&(dec->info));
+//   height = GST_VIDEO_INFO_HEIGHT (&(dec->info));
 
-  /* output some information at the beginning (= when the first frame is handled) */
-  if (dec->frame == 0) {
-    printf ("===================================\n");
-    printf ("GStreamer video stream information:\n");
-    printf ("  size: %u x %u pixel\n", width, height);
-    printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
-    printf ("  video meta found: %s\n", yesno (meta != NULL));
-    printf ("===================================\n");
-  }
+//   /* output some information at the beginning (= when the first frame is handled) */
+//   if (dec->frame == 0) {
+//     printf ("===================================\n");
+//     printf ("GStreamer video stream information:\n");
+//     printf ("  size: %u x %u pixel\n", width, height);
+//     printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
+//     printf ("  video meta found: %s\n", yesno (meta != NULL));
+//     printf ("===================================\n");
+//   }
 
-  gst_buffer_unmap (buf, &map_info);
+//   gst_buffer_unmap (buf, &map_info);
 
-  return;
-}
+//   return;
+// }
 
-static void *
-video_frame_loop (void *arg)
-{
-  struct CustomData *dec = (struct CustomData *) arg;
+// static void *
+// video_frame_loop (void *arg)
+// {
+//   struct CustomData *dec = (struct CustomData *) arg;
 
-  // gst_app_sink_set_max_buffers (GST_APP_SINK(dec->appsink),1);
-  // gst_app_sink_set_buffer_list_support (GST_APP_SINK(dec->appsink),FALSE);
+//   // gst_app_sink_set_max_buffers (GST_APP_SINK(dec->appsink),1);
+//   // gst_app_sink_set_buffer_list_support (GST_APP_SINK(dec->appsink),FALSE);
 
-  do {
-    GstSample *samp;
-    GstBuffer *buf;
+//   do {
+//     GstSample *samp;
+//     GstBuffer *buf;
 
-    samp = gst_app_sink_pull_sample (GST_APP_SINK (dec->appsink));
-    // samp = gst_app_sink_try_pull_sample (GST_APP_SINK (dec->appsink),100000);
-    if (!samp) {
-      GST_DEBUG ("got no appsink sample");
-      if (gst_app_sink_is_eos (GST_APP_SINK (dec->appsink)))
-        GST_DEBUG ("eos");
-      return((void *)0);
-    }
+//     samp = gst_app_sink_pull_sample (GST_APP_SINK (dec->appsink));
+//     // samp = gst_app_sink_try_pull_sample (GST_APP_SINK (dec->appsink),100000);
+//     if (!samp) {
+//       GST_DEBUG ("got no appsink sample");
+//       if (gst_app_sink_is_eos (GST_APP_SINK (dec->appsink)))
+//         GST_DEBUG ("eos");
+//       return((void *)0);
+//     }
 
-    buf = gst_sample_get_buffer (samp);
-    buffer_to_file (dec, buf);
+//     buf = gst_sample_get_buffer (samp);
+//     buffer_to_file (dec, buf);
 
-    gst_sample_unref (samp);
-    dec->frame++;
+//     gst_sample_unref (samp);
+//     dec->frame++;
 
-    // sleep(2);
+//     // sleep(2);
 
-  } while (1);
+//   } while (1);
 
-  return((void *)0);
+//   return((void *)0);
 
-}
+// }
 
 // rtsp init
 static int
@@ -342,25 +343,12 @@ rtsp_init(struct CustomData *data) {
     //data->mppdec = gst_element_factory_make ( "mppvideodec", "mppvideodec0");
     data->tee    = gst_element_factory_make ( "tee", ("tee"+ std::to_string(data->m_Id)).c_str());
 
-    if (DISPLAY) {
-        data->queue_displaysink  = gst_element_factory_make ( "queue", ("queue_displaysink"+ std::to_string(data->m_Id)).c_str());
-        data->displaysink      = gst_element_factory_make ( "rkximagesink", ("display_sink"+ std::to_string(data->m_Id)).c_str());
-    }
     data->queue_appsink      = gst_element_factory_make ( "queue", ("queue_appsink"+ std::to_string(data->m_Id)).c_str());
     data->appsink            = gst_element_factory_make ( "appsink", ("app_sink"+ std::to_string(data->m_Id)).c_str());
 
-    if (!DISPLAY) {
-        if ( !data->pipeline || !data->rtspsrc | !data->decode || !data->tee || !data->queue_appsink || !data->appsink) {
-            g_printerr("One element could not be created.\n");
-        }
-    }else{
-        if ( !data->pipeline || !data->rtspsrc | !data->decode || !data->tee || !data->queue_appsink || !data->queue_displaysink  || !data->displaysink || !data->appsink) {
-            g_printerr("One element could not be created.\n");
-        }
-        // Configure rksink
-        g_object_set (G_OBJECT (data->displaysink), "sync", FALSE, NULL);
+    if ( !data->pipeline || !data->rtspsrc | !data->decode || !data->tee || !data->queue_appsink || !data->appsink) {
+        g_printerr("One element could not be created.\n");
     }
-
     // Config appsink
     g_object_set (G_OBJECT (data->appsink), "sync", FALSE, NULL);
     /* Implement the allocation query using a pad probe. This probe will
@@ -419,37 +407,17 @@ rtsp_init(struct CustomData *data) {
     gst_app_sink_set_max_buffers (GST_APP_SINK(data->appsink),1);
     gst_app_sink_set_buffer_list_support (GST_APP_SINK(data->appsink),FALSE);
 
-    if (DISPLAY) {
-        gst_bin_add_many(GST_BIN(data->pipeline), data->queue_displaysink, data->displaysink, NULL);
-        // queue -> rkximagesink
-        if (!gst_element_link_many (data->queue_displaysink, data->displaysink, NULL)) {
-            g_printerr ("Elements could not be linked.\n");
-            gst_object_unref (data->pipeline);
-            return -1;
-        }
-    }
     gst_bin_add_many(GST_BIN(data->pipeline), data->rtspsrc, data->decode, data->tee, NULL);
-    gst_bin_add_many(GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
+    // gst_bin_add_many(GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
     // gst_bin_add_many(GST_BIN(data->pipeline), data->queue_appsink, data->videoconvert, data->appsink, NULL);
-
-    // queue -> rkximagesink  ||  queue -> appsink
+    gst_bin_add(GST_BIN(data->pipeline), data->queue_appsink);
+    gst_bin_add(GST_BIN(data->pipeline), data->appsink);// queue -> rkximagesink  ||  queue -> appsink
     if (!gst_element_link_many (data->queue_appsink, data->appsink, NULL)) {
         g_printerr ("Elements could not be linked.\n");
         gst_object_unref (data->pipeline);
         return -1;
     }
 
-    if (DISPLAY) {
-        GstPad * queue1_video_pad = gst_element_get_static_pad ( data->queue_displaysink, "sink");
-        GstPad * tee1_video_pad = gst_element_get_request_pad ( data->tee, "src_%u");
-        if (gst_pad_link ( tee1_video_pad, queue1_video_pad) != GST_PAD_LINK_OK) {
-            g_printerr ("tee link queue error. \n");
-            gst_object_unref (data->pipeline);
-            return -1;
-        }
-        gst_object_unref (queue1_video_pad);
-        gst_object_unref (tee1_video_pad);
-    }
     //tee -> queue1 -> queue2
     GstPad * queue2_video_pad = gst_element_get_static_pad ( data->queue_appsink, "sink");
     GstPad * tee2_video_pad = gst_element_get_request_pad ( data->tee, "src_%u");
@@ -488,12 +456,13 @@ rtsp_destroy (struct CustomData *data)
 {
   if (data != NULL) {
     try{
-        //if (data->loop != NULL) {
-    	//    g_main_loop_quit (data->loop);
-        //}
+        if (data->loop != NULL) {
+    	   g_main_loop_quit (data->loop);
+        }
 
         if (data->pipeline != NULL) {    
-            gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_NULL);
+           gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_PAUSED);
+           gst_element_set_state (GST_ELEMENT(data->pipeline), GST_STATE_NULL);
         }
         printf ("start gst_object_unref element \n");
         if (data->bus != NULL) 
@@ -504,6 +473,7 @@ rtsp_destroy (struct CustomData *data)
         }
 
         try{
+          gst_element_unlink (data->appsink, data->queue_appsink);
           gst_bin_remove_many(GST_BIN(data->pipeline), data->rtspsrc, data->decode, data->tee, NULL);
           gst_bin_remove_many(GST_BIN(data->pipeline), data->queue_appsink, data->appsink, NULL);
           data->rtspsrc = NULL;
@@ -631,17 +601,17 @@ static void* connectrtsp(void *arg) {
   printf("connectrtsp m_RtspUri check ret %d \n", ret);
   if (ret == 1) {
       // gst init
-      gst_init (NULL, NULL);
+      // gst_init (NULL, NULL);
       /** gst debug */
       // GST_DEBUG_CATEGORY_INIT (rk_appsink_debug, "rk_appsink", 2, "App sink");
       printf("mId %d mRtspUri %s \n", data->m_Id, data->m_RtspUri);
 
-      //data->isRun = STATUS_CONNECTING;
+      data->isRun = STATUS_CONNECTING;
       int ret = 1;
       try {
          ret = rtsp_init (data);
       } catch (...){
-         data->isRun = STATUS_DISCONNECTING;
+         data->isRun = STATUS_DISCONNECT;
          rtsp_destroy(data);
          pthread_detach(pthread_self());
          printf("pthread_exit rtsp_init exit\n");
@@ -650,7 +620,7 @@ static void* connectrtsp(void *arg) {
       }
       if ( ret == -1)
       {
-         data->isRun = STATUS_DISCONNECTING;
+         data->isRun = STATUS_DISCONNECT;
          rtsp_destroy(data);
          pthread_detach(pthread_self());
          printf("pthread_exit rtsp_init return fail exit\n");
@@ -661,7 +631,7 @@ static void* connectrtsp(void *arg) {
       g_main_loop_run (data->loop);
 
       printf("init exit mId %d \n", data->m_Id);
-      data->isRun = STATUS_DISCONNECTING;
+      data->isRun = STATUS_DISCONNECT;
       rtsp_destroy(data);
       pthread_detach(pthread_self());
       printf("pthread_exit loop exit\n");
@@ -670,13 +640,78 @@ static void* connectrtsp(void *arg) {
     
   }
 
-  data->isRun = STATUS_DISCONNECTING;
+  data->isRun = STATUS_DISCONNECT;
   rtsp_destroy(data);
   pthread_detach(pthread_self());
   printf("pthread_exit url check fail\n");
   pthread_exit(0);
   return NULL;
 
+}
+
+bool
+RtspClient::changeURL(int id, const char* url, int conn_mode) {
+
+  // g_print("RtspClient enable ! %d \n", id);
+  if (this->m_data.isRun == STATUS_CONNECTED) {
+    printf("enable fail, rtsp thread running \n");
+    return FALSE;
+  }
+  if (this->m_data.m_RtspUri != NULL){
+    free(this->m_data.m_RtspUri);
+    this->m_data.m_RtspUri = NULL;
+  }
+  if (this->m_data.dst_buf != NULL){
+    free(this->m_data.dst_buf);
+    this->m_data.dst_buf = NULL;
+  }
+  if (this->m_data.dst_output_buf != NULL){
+    free(this->m_data.dst_output_buf);
+    this->m_data.dst_output_buf = NULL;
+  }
+  if (this->m_data.dst_resize_output_buf != NULL){
+    free(this->m_data.dst_resize_output_buf);
+    this->m_data.dst_resize_output_buf = NULL;
+  }
+  if (this->m_data.dst_resize_output_resize_buf != NULL){
+    free(this->m_data.dst_resize_output_resize_buf);
+    this->m_data.dst_resize_output_resize_buf = NULL;
+  }
+  if (this->m_data.dst_output_resize_buf != NULL){
+    free(this->m_data.dst_output_resize_buf);
+    this->m_data.dst_output_resize_buf = NULL;
+  }
+  this->m_data.conn_Mode = conn_mode;
+  size_t len = strlen(url) + 1;
+  this->m_data.m_RtspUri = (char*)malloc(len);
+  memset(this->m_data.m_RtspUri, 0, len);
+  memcpy(this->m_data.m_RtspUri, url, len);
+  printf("changeURL RtspClient mRtspUri %s \n",this->m_data.m_RtspUri);
+  g_object_set(GST_OBJECT(this->m_data.rtspsrc), "location", this->m_data.m_RtspUri, NULL);
+  g_object_set (GST_OBJECT (this->m_data.rtspsrc), "latency", 2000, NULL);
+  //this->m_data->isRun = STATUS_CONNECTING;
+  sleep(2);
+  gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PAUSED);
+  gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_READY);
+  gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PLAYING);
+  return TRUE;
+
+}
+
+bool
+RtspClient::reConnect(int id) {
+
+  // g_print("RtspClient enable ! %d \n", id);
+  if (this->m_data.isRun != STATUS_CONNECTED) {
+      sleep(2);
+      gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PAUSED);
+      gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_READY);
+      gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PLAYING);
+  } else {
+      printf("enable fail, reConnect rtsp thread running \n");
+      return FALSE;
+  } 
+  return TRUE;
 }
 
 // start create sync
@@ -712,35 +747,16 @@ RtspClient::enable(int id, const char* url, int conn_mode) {
 // destroy instance
 void 
 RtspClient::disable() {
-    printf("RtspClient ~disable start! mId %d status %d \n",this->m_data.m_Id, this->m_data.isRun);
-    if ( this->m_data.isRun == STATUS_DISCONNECT) {
-        //this->m_data->isRun = STATUS_DISCONNECTING;
-        //rtsp_destroy(this->m_data);
-        printf("RtspCLient ~disable DISCONNECT \n");
-    }else if( this->m_data.isRun == STATUS_CONNECTED){
-        try {
-            this->m_data.isRun = STATUS_DISCONNECTING;
-            //if(this->m_data.loop != NULL) {
-            g_main_loop_quit(this->m_data.loop);
-            //this->m_data.isRun = STATUS_DISCONNECTING;
-            //}
-        } catch (...)
-        {
-            printf("RtspCLient ~disable destroy fail \n");
-        }
-    } else if (this->m_data.isRun == STATUS_BUS_ERROR) {
-        try {
-            this->m_data.isRun = STATUS_DISCONNECTING;
-            g_main_loop_quit(this->m_data.loop);
-        } catch (...) {
-            printf("RtspClient disable bus error fail \n");
-        }
-    } else {
-        try{
-            pthread_cancel(this->m_thread);
-        } catch (...) {
-            printf("pthread_cancel error \n");
-        }
+    g_print("RtspClient start ~disable! mId %d \n",this->m_data.m_Id);
+    // g_main_loop_quit(this->m_data->loop);
+    if (this->m_data.isRun == STATUS_CONNECTED){
+      rtsp_destroy(&this->m_data);
+      this->m_data.isRun = STATUS_DISCONNECT;
+    }
+    try{
+        pthread_cancel(this->m_thread);
+    } catch (...) {
+        printf("pthread_cancel error \n");
     }
     pthread_join(this->m_thread, NULL);
     sleep(1);
@@ -755,7 +771,7 @@ int RtspClient::isConnect()
 
 // read frame
 struct FrameData *
-RtspClient::read(int width, int height, int resize_width, int resize_height) {
+RtspClient::read_Rga(int width, int height, int resize_width, int resize_height) {
 
   FrameData * data = new FrameData();
 
@@ -763,313 +779,508 @@ RtspClient::read(int width, int height, int resize_width, int resize_height) {
     data->isRun = STATUS_DISCONNECT;
     data->size = 0;
     return data;
-  } else if (this->m_data.isRun == STATUS_DISCONNECTING)
-  {
-    data->isRun = STATUS_DISCONNECTING;
-    data->size = 0;
-    return data;
-  } else if (this->m_data.isRun == STATUS_BUS_ERROR)
-  {
-    data->isRun = STATUS_BUS_ERROR;
-    data->size = 0;
-    return data;
   }
- 
+
   try { 
  
-  data->isRun = this->m_data.isRun;
-  data->size = 0;
-  data->width = this->m_data.info.width;
-  data->height = this->m_data.info.height;
+    data->isRun = this->m_data.isRun;
+    data->size = 0;
+    data->width = this->m_data.info.width;
+    data->height = this->m_data.info.height;
 
-  GstSample *samp;
-  GstBuffer *buf;
- 
-  // samp = gst_app_sink_pull_sample (GST_APP_SINK (this->m_data->appsink));
-  samp = gst_app_sink_try_pull_sample (GST_APP_SINK (this->m_data.appsink), GST_SECOND * 3); // 1000 * 5 100000
-  if (!samp) {
-    GST_DEBUG ("got no appsink sample");
-    if (gst_app_sink_is_eos (GST_APP_SINK (this->m_data.appsink))){
-      GST_DEBUG ("eos");
-      //g_main_loop_quit(this->m_data.loop);
-      data->isRun = STATUS_BUS_ERROR;
+    GstSample *samp;
+    GstBuffer *buf;
+  
+    // samp = gst_app_sink_pull_sample (GST_APP_SINK (this->m_data->appsink));
+    samp = gst_app_sink_try_pull_sample (GST_APP_SINK (this->m_data.appsink), GST_SECOND * 3); // 1000 * 5 100000
+    if (!samp) {
+      GST_DEBUG ("got no appsink sample");
+      if (gst_app_sink_is_eos (GST_APP_SINK (this->m_data.appsink))){
+        GST_DEBUG ("eos");
+        //g_main_loop_quit(this->m_data.loop);
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PAUSED);
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_READY);
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PLAYING);
+        sleep(2);
+        data->isRun = STATUS_DISCONNECT;
+        data->size = 0;
+        this->m_data.frame=0; 
+        return data;
+      }else{
+        GST_DEBUG ("gst_app_sink_try_pull_sample null");
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PAUSED);
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_READY);
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PLAYING);
+        sleep(2);
+        data->isRun = STATUS_DISCONNECT;
+        data->size = 0;
+        this->m_data.frame=0; 
+        return data;
+      }
+    }
+
+    buf = gst_sample_get_buffer (samp);
+    
+    // ** 
+    int ret;
+    GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
+    guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data.info));
+    // guint width, height;
+    GstMapInfo map_info;
+    gchar filename[128];
+    GstVideoFormat pixfmt;
+    const char *pixfmt_str;
+
+    pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data.info));
+    pixfmt_str = gst_video_format_to_string (pixfmt);
+
+    /* TODO: use the DMABUF directly */
+    // gst_buffer_map (buf, &map_info, GST_MAP_READ);
+    // gst_buffer_map (buf, &map_info, GST_MAP_READ);
+    if (!gst_buffer_map (buf, &map_info, (GstMapFlags)GST_MAP_READ))
+    {
+      g_print ("gst_buffer_map() error! \n");
+      data->isRun = STATUS_DISCONNECT;
       data->size = 0;
       return data;
-    }else{
-      GST_DEBUG ("gst_app_sink_try_pull_sample null");
-      //g_main_loop_quit(this->m_data.loop);
-      data->isRun = STATUS_BUS_ERROR;
-      data->size = 0;
-      return data;
-    }
-  }
-
-  buf = gst_sample_get_buffer (samp);
-  
-  // ** 
-  int ret;
-  GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
-  guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data.info));
-  // guint width, height;
-  GstMapInfo map_info;
-  gchar filename[128];
-  GstVideoFormat pixfmt;
-  const char *pixfmt_str;
-
-  pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data.info));
-  pixfmt_str = gst_video_format_to_string (pixfmt);
-
-  /* TODO: use the DMABUF directly */
-  gst_buffer_map (buf, &map_info, GST_MAP_READ);
-
-  int source_width = GST_VIDEO_INFO_WIDTH (&(this->m_data.info));
-  int source_height = GST_VIDEO_INFO_HEIGHT (&(this->m_data.info));
-
-  if (this->m_data.last_time_width == 0 || this->m_data.last_time_hetight == 0) {
-    this->m_data.last_time_width = source_width;
-    this->m_data.last_time_hetight = source_height;
-  }
-
-  if (this->m_data.last_time_width != source_height && this->m_data.last_time_hetight != source_width) {
-      if (this->m_data.dst_buf != NULL){
-        free(this->m_data.dst_buf);
-        this->m_data.dst_buf = NULL;
-      }
-      if (this->m_data.dst_output_buf != NULL){
-        free(this->m_data.dst_output_buf);
-        this->m_data.dst_output_buf = NULL;
-      }
-      if (this->m_data.dst_resize_output_buf != NULL){
-        free(this->m_data.dst_resize_output_buf);
-        this->m_data.dst_resize_output_buf = NULL;
-      }
-      if (this->m_data.dst_resize_output_resize_buf != NULL){
-        free(this->m_data.dst_resize_output_resize_buf);
-        this->m_data.dst_resize_output_resize_buf = NULL;
-      }
-      if (this->m_data.dst_output_resize_buf != NULL){
-        free(this->m_data.dst_output_resize_buf);
-        this->m_data.dst_output_resize_buf = NULL;
-      }
-  }
-
-  /* output some information at the beginning (= when the first frame is handled) */
-  if (this->m_data.frame == 0) {
-    printf ("===================================\n");
-    printf ("GStreamer video stream information:\n");
-    printf ("  size: %u x %u pixel\n", source_width, source_height);
-    printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
-    printf ("  video meta found: %s\n", yesno (meta != NULL));
-    printf ("===================================\n");
-    printf ("mpp frame size : %d \n", map_info.size);
-  }
-  
-  g_print("mpp frame size : %d \n", map_info.size);
-  //g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
-
-  // rga
-  rga_buffer_t 	src;
-  rga_buffer_t 	dst;
-  rga_buffer_t  dst_output;
-  rga_buffer_t  dst_resize_output;
-  rga_buffer_t  dst_two_resize_output;
-  rga_buffer_t  dst_two_output;
-
-  // h265 256bit 1920 * 1080  == 2304 * 1080
-  if (map_info.size == 3732480 || map_info.size == 4976640 || map_info.size == 3760128 ) {
-    src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, 1080, SRC_FORMAT);
-    if (this->m_data.dst_buf == NULL){
-      this->m_data.dst_buf = (char*)malloc(2304*1080*get_bpp_from_format(DST_FORMAT));
-    }
-    dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 2304, 1080, DST_FORMAT);
-    if (this->m_data.dst_output_buf == NULL){
-        this->m_data.dst_output_buf = (char*)malloc(1920*1080*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 1920, 1080, DST_FORMAT);
-    if (this->m_data.dst_resize_output_buf == NULL){
-        this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height,DST_FORMAT);
-    if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
-      printf("%s, %s\n", __FUNCTION__, imStrError());
-      // return data;
-    } else {
-      // g_print("1080 h265 imcvtcolor \n");
-      imcvtcolor(src, dst, src.format, dst.format);
-      im_rect src_rect = {0, 0, 1920, 1080};
-      //g_print("imcrop %d",src_rect.width);
-      imcrop(dst,dst_output,src_rect);
-
-      imresize(dst_output,dst_resize_output);
-
-      data->data = this->m_data.dst_resize_output_buf;
-      data->size = width*height*get_bpp_from_format(DST_FORMAT);
-   }
-
-  } else 
-  // h264 16bit 1920 * 1080 == 1920 * 1088
-  if (map_info.size == 3133440 || map_info.size == 4177920 ) {  
-    src = wrapbuffer_virtualaddr((char *) map_info.data, 1920, 1088, SRC_FORMAT);
-    if (this->m_data.dst_buf == NULL){
-        this->m_data.dst_buf = (char*)malloc(1920*1088*get_bpp_from_format(DST_FORMAT));
-    }
-    dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 1920, 1088, DST_FORMAT);
-    if (this->m_data.dst_output_buf == NULL){
-        this->m_data.dst_output_buf = (char*)malloc(1920*1080*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 1920, 1080, DST_FORMAT);
-    if (this->m_data.dst_resize_output_buf == NULL){
-        this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
-    if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
-      printf("%s, %s\n", __FUNCTION__, imStrError());
-      // return data;
-    } else {
-      // g_print("1080 h264 imcvtcolor \n");
-      imcvtcolor(src, dst, src.format, dst.format);
-      im_rect src_rect = {0, 0, 1920, 1080};
-      //g_print("imcrop %d",src_rect.width);
-      imcrop(dst,dst_output,src_rect);
-
-      imresize(dst_output,dst_resize_output);
-
-      data->width = width;
-      data->height = height;
-      data->data = this->m_data.dst_resize_output_buf;
-      data->size = width*height*get_bpp_from_format(DST_FORMAT);
     }
 
-  } else
-  // h265 2560 * 1440 256 2816 1584
-  if (map_info.size == 6082560 || map_info.size == 8110080) {
-    src = wrapbuffer_virtualaddr((char *) map_info.data, 2816, 1440, SRC_FORMAT);
-    if (this->m_data.dst_buf == NULL){
-        this->m_data.dst_buf = (char*)malloc(2816*1440*get_bpp_from_format(DST_FORMAT));
-    }
-    dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 2816, 1440, DST_FORMAT);
-    if (this->m_data.dst_output_buf == NULL){
-        this->m_data.dst_output_buf = (char*)malloc(2560*1440*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 2560, 1440, DST_FORMAT);
-    if (this->m_data.dst_resize_output_buf == NULL){
-        this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
-    if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
-      printf("%s, %s\n", __FUNCTION__, imStrError());
-      // return data;
-    } else {
-      // g_print("1080 h264 imcvtcolor \n");
-      imcvtcolor(src, dst, src.format, dst.format);
-      im_rect src_rect = {0, 0, 2560, 1440};
-      //g_print("imcrop %d",src_rect.width);
-      imcrop(dst,dst_output,src_rect);
+    int source_width = GST_VIDEO_INFO_WIDTH (&(this->m_data.info));
+    int source_height = GST_VIDEO_INFO_HEIGHT (&(this->m_data.info));
 
-      imresize(dst_output,dst_resize_output);
+    if (this->m_data.last_time_width == 0 || this->m_data.last_time_hetight == 0) {
+      this->m_data.last_time_width = source_width;
+      this->m_data.last_time_hetight = source_height;
+    }
 
-      data->width = width;
-      data->height = height;
-      data->data = this->m_data.dst_resize_output_buf;
-      data->size = width*height*get_bpp_from_format(DST_FORMAT);
+    if (this->m_data.last_time_width != source_height && this->m_data.last_time_hetight != source_width) {
+        if (this->m_data.dst_buf != NULL){
+          free(this->m_data.dst_buf);
+          this->m_data.dst_buf = NULL;
+        }
+        if (this->m_data.dst_output_buf != NULL){
+          free(this->m_data.dst_output_buf);
+          this->m_data.dst_output_buf = NULL;
+        }
+        if (this->m_data.dst_resize_output_buf != NULL){
+          free(this->m_data.dst_resize_output_buf);
+          this->m_data.dst_resize_output_buf = NULL;
+        }
+        if (this->m_data.dst_resize_output_resize_buf != NULL){
+          free(this->m_data.dst_resize_output_resize_buf);
+          this->m_data.dst_resize_output_resize_buf = NULL;
+        }
+        if (this->m_data.dst_output_resize_buf != NULL){
+          free(this->m_data.dst_output_resize_buf);
+          this->m_data.dst_output_resize_buf = NULL;
+        }
+    }
+
+    /* output some information at the beginning (= when the first frame is handled) */
+    if (this->m_data.frame == 0) {
+      printf ("===================================\n");
+      printf ("GStreamer video stream information:\n");
+      printf ("  size: %u x %u pixel\n", source_width, source_height);
+      printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
+      printf ("  video meta found: %s\n", yesno (meta != NULL));
+      printf ("===================================\n");
+      printf ("mpp frame size : %d \n", map_info.size);
     }
     
-  } else
-  //h265 640*480 768 * 480 
-  if (map_info.size == 552960) {
-    src = wrapbuffer_virtualaddr((char *) map_info.data, 768, 480, SRC_FORMAT);
-    if (this->m_data.dst_buf == NULL){
-        this->m_data.dst_buf = (char*)malloc(768*480*get_bpp_from_format(DST_FORMAT));
-    }
-    dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 768, 480, DST_FORMAT);
-    if (this->m_data.dst_output_buf == NULL){
-        this->m_data.dst_output_buf = (char*)malloc(640*480*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 640, 480, DST_FORMAT);
-    if (this->m_data.dst_resize_output_buf == NULL){
-        this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
-    if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
-      printf("%s, %s\n", __FUNCTION__, imStrError());
-      // return data;
-    } else {
-      // g_print("1080 h264 imcvtcolor \n");
-      imcvtcolor(src, dst, src.format, dst.format);
-      im_rect src_rect = {0, 0, 640, 480};
-      //g_print("imcrop %d",src_rect.width);
-      imcrop(dst,dst_output,src_rect);
+    // g_print("mpp frame size : %d \n", map_info.size);
+    //g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
 
-      imresize(dst_output,dst_resize_output);
+    // rga
+    rga_buffer_t 	src;
+    rga_buffer_t 	dst;
+    rga_buffer_t  dst_output;
+    rga_buffer_t  dst_resize_output;
+    rga_buffer_t  dst_two_resize_output;
+    rga_buffer_t  dst_two_output;
 
-      data->width = width;
-      data->height = height;
-      data->data = this->m_data.dst_resize_output_buf;
-      data->size = width*height*get_bpp_from_format(DST_FORMAT);
-    }
-
-  }
-  else 
-  // h265 h264
-  // supoort 1280*720 3840*2160 
-  // h264 h265 3840*2160 12441600 12441600
-  {
-      
-      src = wrapbuffer_virtualaddr((char *) map_info.data, source_width, source_height, SRC_FORMAT);
+    // h265 256bit 1920 * 1080  == 2304 * 1080
+    if (map_info.size == 3732480 || map_info.size == 4976640 || map_info.size == 3760128 ) {
+      src = wrapbuffer_virtualaddr((char *) map_info.data, 2304, 1080, SRC_FORMAT);
       if (this->m_data.dst_buf == NULL){
-          this->m_data.dst_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
+        this->m_data.dst_buf = (char*)malloc(2304*1080*get_bpp_from_format(DST_FORMAT));
       }
-      dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, source_width, source_height, DST_FORMAT);
+      dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 2304, 1080, DST_FORMAT);
       if (this->m_data.dst_output_buf == NULL){
-          this->m_data.dst_output_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
+          this->m_data.dst_output_buf = (char*)malloc(1920*1080*get_bpp_from_format(DST_FORMAT));
       }
-      dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, source_width, source_height, DST_FORMAT);
+      dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 1920, 1080, DST_FORMAT);
+      if (this->m_data.dst_resize_output_buf == NULL){
+          this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+      }
+      dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height,DST_FORMAT);
+      if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
+        printf("%s, %s\n", __FUNCTION__, imStrError());
+        // return data;
+      } else {
+        // g_print("1080 h265 imcvtcolor \n");
+        imcvtcolor(src, dst, src.format, dst.format);
+        im_rect src_rect = {0, 0, 1920, 1080};
+        //g_print("imcrop %d",src_rect.width);
+        imcrop(dst,dst_output,src_rect);
+
+        imresize(dst_output,dst_resize_output);
+
+        data->data = this->m_data.dst_resize_output_buf;
+        data->size = width*height*get_bpp_from_format(DST_FORMAT);
+    }
+
+    } else 
+    // h264 16bit 1920 * 1080 == 1920 * 1088
+    if (map_info.size == 3133440 || map_info.size == 4177920 ) {  
+      src = wrapbuffer_virtualaddr((char *) map_info.data, 1920, 1088, SRC_FORMAT);
+      if (this->m_data.dst_buf == NULL){
+          this->m_data.dst_buf = (char*)malloc(1920*1088*get_bpp_from_format(DST_FORMAT));
+      }
+      dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 1920, 1088, DST_FORMAT);
+      if (this->m_data.dst_output_buf == NULL){
+          this->m_data.dst_output_buf = (char*)malloc(1920*1080*get_bpp_from_format(DST_FORMAT));
+      }
+      dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 1920, 1080, DST_FORMAT);
       if (this->m_data.dst_resize_output_buf == NULL){
           this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
       }
       dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
-      if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
+      if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
         printf("%s, %s\n", __FUNCTION__, imStrError());
         // return data;
       } else {
-
+        // g_print("1080 h264 imcvtcolor \n");
         imcvtcolor(src, dst, src.format, dst.format);
-        imresize(dst,dst_resize_output);
+        im_rect src_rect = {0, 0, 1920, 1080};
+        //g_print("imcrop %d",src_rect.width);
+        imcrop(dst,dst_output,src_rect);
+
+        imresize(dst_output,dst_resize_output);
 
         data->width = width;
         data->height = height;
         data->data = this->m_data.dst_resize_output_buf;
         data->size = width*height*get_bpp_from_format(DST_FORMAT);
-
       }
 
+    } else
+    // h265 2560 * 1440 256 2816 1584
+    if (map_info.size == 6082560 || map_info.size == 8110080) {
+      src = wrapbuffer_virtualaddr((char *) map_info.data, 2816, 1440, SRC_FORMAT);
+      if (this->m_data.dst_buf == NULL){
+          this->m_data.dst_buf = (char*)malloc(2816*1440*get_bpp_from_format(DST_FORMAT));
+      }
+      dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 2816, 1440, DST_FORMAT);
+      if (this->m_data.dst_output_buf == NULL){
+          this->m_data.dst_output_buf = (char*)malloc(2560*1440*get_bpp_from_format(DST_FORMAT));
+      }
+      dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 2560, 1440, DST_FORMAT);
+      if (this->m_data.dst_resize_output_buf == NULL){
+          this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+      }
+      dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
+      if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
+        printf("%s, %s\n", __FUNCTION__, imStrError());
+        // return data;
+      } else {
+        // g_print("1080 h264 imcvtcolor \n");
+        imcvtcolor(src, dst, src.format, dst.format);
+        im_rect src_rect = {0, 0, 2560, 1440};
+        //g_print("imcrop %d",src_rect.width);
+        imcrop(dst,dst_output,src_rect);
+
+        imresize(dst_output,dst_resize_output);
+
+        data->width = width;
+        data->height = height;
+        data->data = this->m_data.dst_resize_output_buf;
+        data->size = width*height*get_bpp_from_format(DST_FORMAT);
+      }
+      
+    } else
+    //h265 640*480 768 * 480 
+    if (map_info.size == 552960) {
+      src = wrapbuffer_virtualaddr((char *) map_info.data, 768, 480, SRC_FORMAT);
+      if (this->m_data.dst_buf == NULL){
+          this->m_data.dst_buf = (char*)malloc(768*480*get_bpp_from_format(DST_FORMAT));
+      }
+      dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, 768, 480, DST_FORMAT);
+      if (this->m_data.dst_output_buf == NULL){
+          this->m_data.dst_output_buf = (char*)malloc(640*480*get_bpp_from_format(DST_FORMAT));
+      }
+      dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, 640, 480, DST_FORMAT);
+      if (this->m_data.dst_resize_output_buf == NULL){
+          this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+      }
+      dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
+      if(src.width == 0 || dst.width == 0 || dst_output.width == 0) {
+        printf("%s, %s\n", __FUNCTION__, imStrError());
+        // return data;
+      } else {
+        // g_print("1080 h264 imcvtcolor \n");
+        imcvtcolor(src, dst, src.format, dst.format);
+        im_rect src_rect = {0, 0, 640, 480};
+        //g_print("imcrop %d",src_rect.width);
+        imcrop(dst,dst_output,src_rect);
+
+        imresize(dst_output,dst_resize_output);
+
+        data->width = width;
+        data->height = height;
+        data->data = this->m_data.dst_resize_output_buf;
+        data->size = width*height*get_bpp_from_format(DST_FORMAT);
+      }
+
+    }
+    else 
+    // h265 h264
+    // supoort 1280*720 3840*2160 
+    // h264 h265 3840*2160 12441600 12441600
+    {
+        
+        src = wrapbuffer_virtualaddr((char *) map_info.data, source_width, source_height, SRC_FORMAT);
+        if (this->m_data.dst_buf == NULL){
+            this->m_data.dst_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
+        }
+        dst = wrapbuffer_virtualaddr(this->m_data.dst_buf, source_width, source_height, DST_FORMAT);
+        if (this->m_data.dst_output_buf == NULL){
+            this->m_data.dst_output_buf = (char*)malloc(source_width*source_height*get_bpp_from_format(DST_FORMAT));
+        }
+        dst_output = wrapbuffer_virtualaddr(this->m_data.dst_output_buf, source_width, source_height, DST_FORMAT);
+        if (this->m_data.dst_resize_output_buf == NULL){
+            this->m_data.dst_resize_output_buf = (char*)malloc(width*height*get_bpp_from_format(DST_FORMAT));
+        }
+        dst_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_buf, width, height, DST_FORMAT);
+        if(src.width == 0 || dst.width == 0 || dst_resize_output.width == 0) {
+          printf("%s, %s\n", __FUNCTION__, imStrError());
+          // return data;
+        } else {
+
+          imcvtcolor(src, dst, src.format, dst.format);
+          imresize(dst,dst_resize_output);
+
+          data->width = width;
+          data->height = height;
+          data->data = this->m_data.dst_resize_output_buf;
+          data->size = width*height*get_bpp_from_format(DST_FORMAT);
+
+        }
+
+    }
+
+    if (resize_width > 0 and resize_height > 0){
+      // scale 640 resize data
+      if (this->m_data.dst_resize_output_resize_buf == NULL){
+          this->m_data.dst_resize_output_resize_buf = (char*)malloc(resize_width*resize_height*get_bpp_from_format(DST_FORMAT));
+      }
+      if (this->m_data.dst_output_resize_buf == NULL){
+          this->m_data.dst_output_resize_buf = (char*)malloc(resize_width*resize_height*get_bpp_from_format(DST_FORMAT));
+      }
+      dst_two_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_resize_buf, resize_width, resize_height, DST_FORMAT);
+      dst_two_output = wrapbuffer_virtualaddr(this->m_data.dst_output_resize_buf, resize_width, resize_height, DST_FORMAT);
+      if(src.width == 0 || dst.width == 0 || dst_two_resize_output.width == 0) {
+        printf("%s, %s\n", __FUNCTION__, imStrError());
+      }else{
+        imresize(dst, dst_two_resize_output, (double(resize_width)/width), (double(resize_height)/width));
+        imtranslate(dst_two_resize_output, dst_two_output, 0, int((resize_height - (height * (double(resize_height)/width)))/2));
+        data->data_resize = this->m_data.dst_output_resize_buf;
+        data->size_resize = resize_width * resize_height * get_bpp_from_format(DST_FORMAT);
+      }
+    }
+
+    gst_buffer_unmap (buf, &map_info);
+    // ** 
+    gst_sample_unref (samp);
+
+    this->m_data.frame++; 
+
+  } catch (...) {
+    data->isRun = STATUS_DISCONNECT;
+    data->size = 0;
+    return data;
   }
 
-  if (resize_width > 0 and resize_height > 0){
-    // scale 640 resize data
-    if (this->m_data.dst_resize_output_resize_buf == NULL){
-        this->m_data.dst_resize_output_resize_buf = (char*)malloc(resize_width*resize_height*get_bpp_from_format(DST_FORMAT));
-    }
-    if (this->m_data.dst_output_resize_buf == NULL){
-        this->m_data.dst_output_resize_buf = (char*)malloc(resize_width*resize_height*get_bpp_from_format(DST_FORMAT));
-    }
-    dst_two_resize_output = wrapbuffer_virtualaddr(this->m_data.dst_resize_output_resize_buf, resize_width, resize_height, DST_FORMAT);
-    dst_two_output = wrapbuffer_virtualaddr(this->m_data.dst_output_resize_buf, resize_width, resize_height, DST_FORMAT);
-    if(src.width == 0 || dst.width == 0 || dst_two_resize_output.width == 0) {
-      printf("%s, %s\n", __FUNCTION__, imStrError());
-    }else{
-      imresize(dst, dst_two_resize_output, (double(resize_width)/width), (double(resize_height)/width));
-      imtranslate(dst_two_resize_output, dst_two_output, 0, int((resize_height - (height * (double(resize_height)/width)))/2));
-      data->data_resize = this->m_data.dst_output_resize_buf;
-      data->size_resize = resize_width * resize_height * get_bpp_from_format(DST_FORMAT);
-    }
+  return data;
+
+}
+
+// read frame
+struct FrameData *
+RtspClient::read_Opencv() {
+
+  FrameData * data = new FrameData();
+
+  if ( this->m_data.isRun == STATUS_DISCONNECT){
+    data->isRun = STATUS_DISCONNECT;
+    data->size = 0;
+    return data;
   }
 
-  gst_buffer_unmap (buf, &map_info);
-  // ** 
-  gst_sample_unref (samp);
+  try { 
+ 
+    data->isRun = this->m_data.isRun;
+    data->size = 0;
+    data->width = this->m_data.info.width;
+    data->height = this->m_data.info.height;
 
-  this->m_data.frame++; 
+    GstSample *samp;
+    GstBuffer *buf;
+  
+    // samp = gst_app_sink_pull_sample (GST_APP_SINK (this->m_data->appsink));
+    samp = gst_app_sink_try_pull_sample (GST_APP_SINK (this->m_data.appsink), GST_SECOND * 3); // 1000 * 5 100000
+    if (!samp) {
+      GST_DEBUG ("got no appsink sample");
+      if (gst_app_sink_is_eos (GST_APP_SINK (this->m_data.appsink))){
+        GST_DEBUG ("eos");
+        //g_main_loop_quit(this->m_data.loop);
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PAUSED);
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_READY);
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PLAYING);
+        sleep(2);
+        data->isRun = STATUS_DISCONNECT;
+        data->size = 0;
+        this->m_data.frame=0; 
+        return data;
+      }else{
+        GST_DEBUG ("gst_app_sink_try_pull_sample null");
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PAUSED);
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_READY);
+        gst_element_set_state (GST_ELEMENT(this->m_data.pipeline), GST_STATE_PLAYING);
+        sleep(2);
+        data->isRun = STATUS_DISCONNECT;
+        data->size = 0;
+        this->m_data.frame=0; 
+        return data;
+      }
+    }
+
+    buf = gst_sample_get_buffer (samp);
+    
+    // ** 
+    int ret;
+    GstVideoMeta *meta = gst_buffer_get_video_meta (buf);
+    guint nplanes = GST_VIDEO_INFO_N_PLANES (&(this->m_data.info));
+    // guint width, height;
+    GstMapInfo map_info;
+    gchar filename[128];
+    GstVideoFormat pixfmt;
+    const char *pixfmt_str;
+
+    pixfmt = GST_VIDEO_INFO_FORMAT (&(this->m_data.info));
+    pixfmt_str = gst_video_format_to_string (pixfmt);
+
+    /* TODO: use the DMABUF directly */
+    // gst_buffer_map (buf, &map_info, GST_MAP_READ);
+    // gst_buffer_map (buf, &map_info, GST_MAP_READ);
+    if (!gst_buffer_map (buf, &map_info, (GstMapFlags)GST_MAP_READ))
+    {
+      g_print ("gst_buffer_map() error! \n");
+      data->isRun = STATUS_DISCONNECT;
+      data->size = 0;
+      return data;
+    }
+
+    int source_width = GST_VIDEO_INFO_WIDTH (&(this->m_data.info));
+    int source_height = GST_VIDEO_INFO_HEIGHT (&(this->m_data.info));
+
+    if (this->m_data.last_time_width == 0 || this->m_data.last_time_hetight == 0) {
+      this->m_data.last_time_width = source_width;
+      this->m_data.last_time_hetight = source_height;
+    }
+
+    if (this->m_data.last_time_width != source_height && this->m_data.last_time_hetight != source_width) {
+        if (this->m_data.dst_buf != NULL){
+          free(this->m_data.dst_buf);
+          this->m_data.dst_buf = NULL;
+        }
+        if (this->m_data.dst_output_buf != NULL){
+          free(this->m_data.dst_output_buf);
+          this->m_data.dst_output_buf = NULL;
+        }
+        if (this->m_data.dst_resize_output_buf != NULL){
+          free(this->m_data.dst_resize_output_buf);
+          this->m_data.dst_resize_output_buf = NULL;
+        }
+        if (this->m_data.dst_resize_output_resize_buf != NULL){
+          free(this->m_data.dst_resize_output_resize_buf);
+          this->m_data.dst_resize_output_resize_buf = NULL;
+        }
+        if (this->m_data.dst_output_resize_buf != NULL){
+          free(this->m_data.dst_output_resize_buf);
+          this->m_data.dst_output_resize_buf = NULL;
+        }
+    }
+
+    /* output some information at the beginning (= when the first frame is handled) */
+    if (this->m_data.frame == 0) {
+      printf ("===================================\n");
+      printf ("GStreamer video stream information:\n");
+      printf ("  size: %u x %u pixel\n", source_width, source_height);
+      printf ("  pixel format: %s  number of planes: %u\n", pixfmt_str, nplanes);
+      printf ("  video meta found: %s\n", yesno (meta != NULL));
+      printf ("===================================\n");
+      printf ("mpp frame size : %d \n", map_info.size);
+    }
+    
+    // g_print("mpp frame size : %d \n", map_info.size);
+    //g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
+
+    // opencv
+    // NV12/NV21说明:
+    // NV12: YYYYYYYY UVUV     =>YUV420SP  -> RK_FORMAT_YCbCr_420_SP
+    // NV21: YYYYYYYY VUVU     =>YUV420SP    -> RK_FORMAT_YCrCb_420_SP
+      
+    if (this->m_data.dst_buf == NULL){
+          this->m_data.dst_buf = (char*)malloc(map_info.size);
+    }
+    memcpy(this->m_data.dst_buf, map_info.data, map_info.size);
+
+    // TODO mpp没问题
+    // h265 256bit 1920 * 1080  == 2304 * 1080
+    if (map_info.size == 3732480 || map_info.size == 4976640 ) {
+      data->width = 2304;
+      data->height = 1080;
+      data->data = this->m_data.dst_buf;
+      data->size = map_info.size;
+    }
+    else 
+    // // h264 16bit 1920 * 1080 == 1920 * 1088
+    if (map_info.size == 3133440 || map_info.size == 4177920 ) { 
+      data->width = 1920;
+      data->height = 1088;
+      data->data = this->m_data.dst_buf;
+      data->size = map_info.size;
+    }
+    else
+    // // h265 2560 * 1440 256 2816 1584
+    if (map_info.size == 6082560 || map_info.size == 8110080) {
+      data->width = 2816;
+      data->height = 1584;
+      data->data = this->m_data.dst_buf;
+      data->size = map_info.size;
+    }
+    else
+    // //h265 640*480 768 * 480 
+    if (map_info.size == 552960) {
+      data->width = 640;
+      data->height = 480;
+      data->data = this->m_data.dst_buf;
+      data->size = map_info.size;
+    } else 
+    // h265 h264
+    // supoort 1280*720 3840*2160
+    {
+      data->width = source_width;
+      data->height = source_height;
+      data->data = this->m_data.dst_buf;
+      data->size = map_info.size;
+    }
+
+    gst_buffer_unmap (buf, &map_info);
+    // ** 
+    gst_sample_unref (samp);
+
+    this->m_data.frame++; 
 
   } catch (...) {
     data->isRun = STATUS_DISCONNECT;

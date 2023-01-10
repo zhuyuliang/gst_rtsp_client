@@ -16,55 +16,35 @@ unordered_map<int,RtspClient*> mMap;
 unordered_map<int,RtspClient*> ::iterator it;
 
 mutex m_mutex;
+bool isInit = false;
 
+/* init gst_init */
+extern "C" void
+init(){
+  if (!isInit){
+    isInit = true;
+    gst_init (NULL, NULL);
+  }
+  
+}
+
+/* create Rtsp client */
 extern "C" int
-createRtspClient (int id, const char* url, int conn_mode)
+createRtspClient(int id, const char* url, int conn_mode)
 {
+    sleep(2);
+    init();
+    g_print("setup createRtspClient %d %s\n",id,url);
+    if ( mMap.find(id) != mMap.end() ) {
+      return SUCCESS;
+    }
     m_mutex.lock();
-    
-    //&& id != nullptr && url != nullptr
-    printf("*** c createRtspClient %d %s\n",id,url);
-    try{
-    if (mMap.find(id) != mMap.end()) {
-      if (mMap.find(id)->second != NULL){
-        mMap.find(id)->second->disable();
-        delete mMap.find(id)->second;
-        mMap.find(id)->second = NULL;
-      }
-      // mMap.erase(id);
-      malloc_trim(0);
-    }
-    } catch(...) 
-    {
-        printf("*** c createRtspClient disable fail !");
-        return FAIL;
-    }
-    if (mMap.find(id) == mMap.end()) {
-    // m_mutex.lock(); 
-        mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
-        if (mMap.find(id)->second->enable(id, url, conn_mode)){
-            m_mutex.unlock();
-            printf("*** c createRtspClient return SUCCESS");
-            return SUCCESS;
-        }else{
-            m_mutex.unlock();
-            printf("*** c createRtspClient return FAIL");
-            return FAIL;
-        }
-    } else 
-    {
-        mMap.find(id)->second = new RtspClient();
-        if (mMap.find(id)->second->enable(id, url, conn_mode)){
-            m_mutex.unlock();
-            printf("*** c createRtspClient return SUCCESS");
-            return SUCCESS;
-        }else{
-            m_mutex.unlock();
-            printf("*** c createRtspClient return FAIL");
-            return FAIL;
-        }
+    mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
+    if (mMap.find(id)->second->enable(id, url, conn_mode)){
         m_mutex.unlock();
-        printf("c createRtspClient create FAIL");
+        return SUCCESS;
+    }else{
+        m_mutex.unlock();
         return FAIL;
     }
 }
@@ -99,7 +79,6 @@ destoryRtspClient(int id)
     }
     // mMap.erase(id);
     malloc_trim(0);
-    // rtspclient = NULL;
   }
   m_mutex.unlock();
   return SUCCESS;
@@ -109,31 +88,53 @@ extern "C" int
 isConnect(int id)
 {
   if (mMap.find(id) != mMap.end()){
-    if (mMap.find(id)->second != NULL){
-      int ret = mMap.find(id)->second->isConnect();
-      if (ret == STATUS_BUS_ERROR) 
-      { 
-          return STATUS_DISCONNECT;
-      }
-      return ret;
-    } else {
-      return STATUS_DISCONNECT;
-    }
+      return mMap.find(id)->second->isConnect();
   }else{
-      printf ("isConnect STATUS_DISCONNECT \n");
       return STATUS_DISCONNECT;
   }
 }
 
+/* change url */
 extern "C" int
-mread(int id, int width, int height, int resize_width, int resize_height, unsigned char * buf, int len, unsigned char * buf_resize, int len_resize)
+changeURL(int id, const char* url, int conn_mode)
+{
+  if (mMap.find(id) != mMap.end()){
+      bool ret = mMap.find(id)->second->changeURL(id, url, conn_mode);
+      if(ret){
+        return SUCCESS;
+      }else{
+        return FAIL;
+      }
+  }else{
+      return FAIL;
+  }
+}
+
+/* change url */
+extern "C" int
+reConnect(int id)
+{
+  if (mMap.find(id) != mMap.end()){
+      bool ret = mMap.find(id)->second->reConnect(id);
+      if(ret){
+        return SUCCESS;
+      }else{
+        return FAIL;
+      }
+  }else{
+      return FAIL;
+  }
+}
+
+extern "C" int
+mRead_Rga(int id, int width, int height, int resize_width, int resize_height, unsigned char * buf, int len, unsigned char * buf_resize, int len_resize)
 {
   // m_mutex.lock();
   if (mMap.find(id) != mMap.end()){
     if (mMap.find(id)->second != NULL){
       if (mMap.find(id)->second->isConnect() == STATUS_CONNECTED)
       {
-        FrameData *framedata = mMap.find(id)->second->read(width, height, resize_width, resize_height);
+        FrameData *framedata = mMap.find(id)->second->read_Rga(width, height, resize_width, resize_height);
         if (framedata->size != 0) {
           memcpy( buf, framedata->data, framedata->size);
           if (resize_width > 0 and resize_height >0){
@@ -148,6 +149,52 @@ mread(int id, int width, int height, int resize_width, int resize_height, unsign
     }
   }
   // m_mutex.unlock();
+  return FAIL;
+
+}
+
+extern "C" int
+mRead_Opencv(int id, int& width, int& height, int& size, char*& data)
+{
+  if (mMap.find(id) != mMap.end()){
+    if (mMap.find(id)->second->isConnect() == STATUS_CONNECTED)
+    {
+      FrameData *framedata = mMap.find(id)->second->read_Opencv();
+      if (framedata->size != 0) {
+        data = framedata->data;
+        width = framedata->width;
+        height = framedata->height;
+        size = framedata->size;
+        free( framedata);
+        return SUCCESS;
+      }
+      free( framedata);
+    }
+  }
+  return FAIL;
+
+}
+
+//* opencv
+extern "C" int
+mRead_Python(int id, int& width, int& height,int& size, char* data)
+{
+  if (mMap.find(id) != mMap.end()){
+    if (mMap.find(id)->second->isConnect() == STATUS_CONNECTED)
+    {
+      FrameData *framedata = mMap.find(id)->second->read_Opencv();
+      if (framedata->size != 0) {
+        // data = framedata->data;
+        memcpy( data, framedata->data, framedata->size);
+        width = framedata->width;
+        height = framedata->height;
+        size = framedata->size;
+        free( framedata);
+        return SUCCESS;
+      }
+      free( framedata);
+    }
+  }
   return FAIL;
 
 }

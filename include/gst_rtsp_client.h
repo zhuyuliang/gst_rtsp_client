@@ -55,8 +55,6 @@
 //GST_DEBUG_CATEGORY_STATIC (rk_appsink_debug);
 //#define GST_CAT_DEFAULT rk_appsink_debug
 
-#define DISPLAY FALSE
-
 //rga
 #define SRC_FORMAT RK_FORMAT_YCrCb_420_SP
 #define DST_FORMAT RK_FORMAT_RGB_888
@@ -65,8 +63,6 @@
 #define STATUS_CONNECTED 1
 #define STATUS_DISCONNECT 2
 #define STATUS_CONNECTING 3
-#define STATUS_DISCONNECTING 4
-#define STATUS_BUS_ERROR 5
 
 #define DEFAULT_CONN_MODE 0
 #define TCP_CONN_MODE 1
@@ -102,9 +98,7 @@ struct CustomData {
     GstElement *decode = NULL;
     GstElement *tee = NULL;
     GstElement *queue_appsink = NULL;
-    GstElement *queue_displaysink = NULL;
     GstElement *appsink = NULL;
-    GstElement *displaysink = NULL;
 
     GstBus *bus = NULL;
 
@@ -139,8 +133,11 @@ public:
     bool enable(int id, const char * url, int conn_mode);
     void disable();
     int isConnect();
+    bool changeURL(int id, const char* url, int conn_mode);
+    bool reConnect(int id);
 
-    struct FrameData * read(int width, int height, int resize_width, int resize_height);
+    struct FrameData * read_Opencv();
+    struct FrameData * read_Rga(int width, int height, int resize_width, int resize_height);
 
 private:
     pthread_t m_thread;
