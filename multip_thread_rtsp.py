@@ -26,6 +26,8 @@ def func_rtspdisplay(index,url, usr, pwd):
 
     rtspclient.createRtspClient(index,url)
 
+    time.sleep(0.5)
+
     while(1) :
         ret1 = rtspclient.isConnect(index)
         print("id %d ret = %d",index, ret1)
@@ -66,14 +68,14 @@ if __name__ == '__main__':
     # idx4 = gl.add_view(640, 540, 640, 360)
     # idx5 = gl.add_view(1280, 540, 640, 360)
 
-    t0 = Process(target=func_rtspdisplay, args = (1,"rtsp://admin:shangqu2020@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
-    t1 = Process(target=func_rtspdisplay, args = (2,"rtsp://admin:shangqu2020@192.168.2.24:554/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
-    t2 = Process(target=func_rtspdisplay, args = (3,"rtsp://admin:shangqu2020@192.168.2.8:554/Streaming/Channels/101", "admin", "shangqu2020"))
-    t3 = Process(target=func_rtspdisplay, args = (4,'rtsp://admin:shangqu2020@192.168.2.27:554/cam/realmonitor?channel=1&subtype=0', "admin", "shangqu2020"))
-    t4 = Process(target=func_rtspdisplay, args = (5,"rtsp://admin:shangqu2020@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
-    t5 = Process(target=func_rtspdisplay, args = (6, "rtsp://admin:shangqu2020@192.168.2.8:554/Streaming/Channels/201", "admin", "shangqu2020"))
-    t6 = Process(target=func_rtspdisplay, args = (7, "rtsp://admin:shangqu2020@192.168.2.33:554/Streaming/Channels/1", "admin", "shangqu2020"))
-    t7 = Process(target=func_rtspdisplay, args = (8, "rtsp://admin:shangqu2020@192.168.2.39:554/Streaming/Channels/1", "admin", "shangqu2020"))
+    t0 = threading.Thread(target=func_rtspdisplay, args = (1,"rtsp://admin:shangqu2020@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
+    t1 = threading.Thread(target=func_rtspdisplay, args = (2,"rtsp://admin:shangqu2020@192.168.2.24:554/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
+    t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:shangqu2020@192.168.2.8:554/Streaming/Channels/101", "admin", "shangqu2020"))
+    t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:shangqu2020@192.168.2.27:554/cam/realmonitor?channel=1&subtype=0', "admin", "shangqu2020"))
+    t4 = threading.Thread(target=func_rtspdisplay, args = (5,"rtsp://admin:shangqu2020@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
+    t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:shangqu2020@192.168.2.8:554/Streaming/Channels/201", "admin", "shangqu2020"))
+    t6 = threading.Thread(target=func_rtspdisplay, args = (7, "rtsp://admin:shangqu2020@192.168.2.33:554/Streaming/Channels/1", "admin", "shangqu2020"))
+    t7 = threading.Thread(target=func_rtspdisplay, args = (8, "rtsp://admin:shangqu2020@192.168.2.39:554/Streaming/Channels/1", "admin", "shangqu2020"))
 
     t0.start()
     t1.start()

@@ -32,13 +32,13 @@ init(){
 extern "C" int
 createRtspClient(int id, const char* url, int conn_mode)
 {
+    m_mutex.lock();
     sleep(2);
     init();
     g_print("setup createRtspClient %d %s\n",id,url);
     if ( mMap.find(id) != mMap.end() ) {
       return SUCCESS;
     }
-    m_mutex.lock();
     mMap.insert(pair<int,RtspClient*>(id ,new RtspClient()));
     if (mMap.find(id)->second->enable(id, url, conn_mode)){
         m_mutex.unlock();
