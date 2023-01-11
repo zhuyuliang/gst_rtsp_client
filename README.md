@@ -16,7 +16,8 @@
 #### rockchip平台依赖环境
 * 1.[MPP](https://t.rock-chips.com/forum.php?mod=viewthread&tid=336&highlight=mpp)
 * 2.[RGA](https://t.rock-chips.com/forum.php?mod=viewthread&tid=333&highlight=rga)
-* 2.[MPP_GSTREAMER插件](https://github.com/rockchip-linux/gstreamer-rockchip)
+* 3.[MPP_GSTREAMER插件](https://github.com/zhuyuliang/gstreamer-rockchip-1)
+* 4.[MPP_GSTREAMER_EXTRA](https://github.com/zhuyuliang/gstreamer-rockchip-extra)
 
 ---
 ## 待处理
