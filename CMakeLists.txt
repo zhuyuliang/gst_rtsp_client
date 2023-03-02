@@ -26,7 +26,7 @@ if(${CMAKE_SYSTEM} MATCHES "Linux-4.9.140-tegra")
     add_definitions(-DPLATFORM_TEGRA)
     set(SYS_USR_LIB /usr/lib/aarch64-linux-gnu)
     set(SYS_LIB /lib/aarch64-linux-gnu)
-    set(DS_LIB /opt/nvidia/deepstream/deepstream-4.0/lib)
+    set(DS_LIB /opt/nvidia/deepstream/deepstream/lib)
 else()
     # message("On X86 PLATFORM.")
     # set(SYS_USR_LIB /usr/lib/x86_64-linux-gnu)
@@ -51,7 +51,6 @@ include_directories(
         /usr/local/include
         /usr/local/lib/aarch64-linux-gnu
         ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/librga
         # rk3588
         /usr/local/include
         /usr/local/lib/aarch64-linux-gnu
@@ -70,12 +69,7 @@ link_libraries(
         ${SYS_LIB}/libpthread.so.0
         ${SYS_USR_LIB}/libgmodule-2.0.so.0
         ${SYS_LIB}/libm.so.6
-        # rk3399prod
-        # ${SYS_USR_LIB}/libffi.so.6
         ${SYS_LIB}/libpcre.so.3
-        ${CMAKE_CURRENT_SOURCE_DIR}/librga/librga.so
-        # rk3588
-        ${SYS_USR_LIB}/libffi.so
 )
 
 # debug

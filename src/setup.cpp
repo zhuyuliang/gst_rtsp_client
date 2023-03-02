@@ -127,33 +127,6 @@ reConnect(int id)
 }
 
 extern "C" int
-mRead_Rga(int id, int width, int height, int resize_width, int resize_height, unsigned char * buf, int len, unsigned char * buf_resize, int len_resize)
-{
-  // m_mutex.lock();
-  if (mMap.find(id) != mMap.end()){
-    if (mMap.find(id)->second != NULL){
-      if (mMap.find(id)->second->isConnect() == STATUS_CONNECTED)
-      {
-        FrameData *framedata = mMap.find(id)->second->read_Rga(width, height, resize_width, resize_height);
-        if (framedata->size != 0) {
-          memcpy( buf, framedata->data, framedata->size);
-          if (resize_width > 0 and resize_height >0){
-            memcpy( buf_resize, framedata->data_resize, framedata->size_resize);
-          }
-          free( framedata);
-          // m_mutex.unlock();
-          return SUCCESS;
-        }
-        free( framedata);
-      }
-    }
-  }
-  // m_mutex.unlock();
-  return FAIL;
-
-}
-
-extern "C" int
 mRead_Opencv(int id, int& width, int& height, int& size, char*& data)
 {
   if (mMap.find(id) != mMap.end()){

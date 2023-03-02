@@ -39,12 +39,6 @@
 #include <gobject/gclosure.h>
 #include <gst/rtsp/gstrtspmessage.h>
 
-// rga
-#include <rga/rga.h>
-#include <rga/RgaUtils.h>
-#include <rga/RockchipRga.h>
-#include <rga/im2d.h>
-
 // opencv2
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
@@ -55,10 +49,6 @@
 //GST_DEBUG_CATEGORY_STATIC (rk_appsink_debug);
 //#define GST_CAT_DEFAULT rk_appsink_debug
 
-//rga
-#define SRC_FORMAT RK_FORMAT_YCrCb_420_SP
-#define DST_FORMAT RK_FORMAT_RGB_888
-
 #define STATUS_INIT 0
 #define STATUS_CONNECTED 1
 #define STATUS_DISCONNECT 2
@@ -67,6 +57,10 @@
 #define DEFAULT_CONN_MODE 0
 #define TCP_CONN_MODE 1
 #define UDP_CONN_MODE 2
+
+#define MUXER_OUTPUT_WIDTH 1920
+#define MUXER_OUTPUT_HEIGHT 1080
+#define MUXER_BATCH_TIMEOUT_USEC 4000000
 
 inline static const char *
 yesno (int yes)
@@ -94,10 +88,10 @@ struct FrameData {
 struct CustomData {
     GMainLoop  *loop = NULL;
     GstElement *pipeline = NULL;
-    GstElement *rtspsrc = NULL;
-    GstElement *decode = NULL;
-    GstElement *tee = NULL;
-    GstElement *queue_appsink = NULL;
+    GstElement *source_bin = NULL;
+    GstElement *uridecodebin = NULL;
+    GstElement *nvvideoconvert = NULL;
+    GstElement *capsfilter = NULL;
     GstElement *appsink = NULL;
 
     GstBus *bus = NULL;
@@ -107,7 +101,7 @@ struct CustomData {
     int last_time_width = 0;
     int last_time_hetight = 0;
 
-    unsigned frame;
+    unsigned frame = 0;
 
     char * m_RtspUri = NULL;
     int m_Id = 0;
@@ -137,7 +131,6 @@ public:
     bool reConnect(int id);
 
     struct FrameData * read_Opencv();
-    struct FrameData * read_Rga(int width, int height, int resize_width, int resize_height);
 
 private:
     pthread_t m_thread;
