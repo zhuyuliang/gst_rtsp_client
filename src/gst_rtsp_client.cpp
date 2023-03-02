@@ -1009,7 +1009,7 @@ RtspClient::read_Opencv() {
     //g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
 
 
-    size_t rgb_size = source_width*source_height*CV_8UC3;
+    size_t rgb_size = source_width*source_height*3;
     if (this->m_data.dst_buf == NULL){
           this->m_data.dst_buf = (char*)malloc(rgb_size);
     }
