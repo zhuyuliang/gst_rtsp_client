@@ -29,16 +29,16 @@ int main()
 {
 
         // multi rtsp
-    const char* urlerror = "rtsp://admin:shangqu20201@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0";
+    const char* urlerror = "rtsp://admin:admin@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0";
 
-    const char* url1 = "rtsp://admin:shangqu2020@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0";
-    // const char* url2 = "rtsp://admin:shangqu2020@192.168.2.24:554/cam/realmonitor?channel=1&subtype=0";
-    // const char* url3 = "rtsp://admin:shangqu2020@192.168.2.8:554/Streaming/Channels/101";
-    // const char* url4 = "rtsp://admin:shangqu2020@192.168.2.27:554/cam/realmonitor?channel=1&subtype=0";
-    // const char* url5 = "rtsp://admin:shangqu2020@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0";
-    // const char* url6 = "rtsp://admin:shangqu2020@192.168.2.8:554/Streaming/Channels/201";
-    // const char* url7 = "rtsp://admin:shangqu2020@192.168.2.33:554/Streaming/Channels/1";
-    // const char* url8 = "rtsp://admin:shangqu2020@192.168.2.39:554/Streaming/Channels/1";
+    const char* url1 = "rtsp://admin:passwd@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0";
+    // const char* url2 = "rtsp://admin:passwd@192.168.2.24:554/cam/realmonitor?channel=1&subtype=0";
+    // const char* url3 = "rtsp://admin:passwd@192.168.2.8:554/Streaming/Channels/101";
+    // const char* url4 = "rtsp://admin:passwd@192.168.2.27:554/cam/realmonitor?channel=1&subtype=0";
+    // const char* url5 = "rtsp://admin:passwd@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0";
+    // const char* url6 = "rtsp://admin:passwd@192.168.2.8:554/Streaming/Channels/201";
+    // const char* url7 = "rtsp://admin:passwd@192.168.2.33:554/Streaming/Channels/1";
+    // const char* url8 = "rtsp://admin:passwd@192.168.2.39:554/Streaming/Channels/1";
 
     init();
 
