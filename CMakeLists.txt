@@ -47,15 +47,15 @@ include_directories(
         ${SYS_USR_LIB}/glib-2.0/include
         /usr/include/orc-0.4
         /usr/include/rockchip
-        /usr/local/include/opencv2
+        /usr/local/include/opencv4/opencv2
         /usr/local/include
         /usr/local/lib/aarch64-linux-gnu
         ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/librga
+        # ${CMAKE_CURRENT_SOURCE_DIR}/rga/librga
         # rk3588
         /usr/local/include
         /usr/local/lib/aarch64-linux-gnu
-        /usr/include/opencv4
+        /usr/local/include/opencv4
 )
 
 link_libraries(
@@ -73,7 +73,8 @@ link_libraries(
         # rk3399prod
         # ${SYS_USR_LIB}/libffi.so.6
         ${SYS_LIB}/libpcre.so.3
-        ${CMAKE_CURRENT_SOURCE_DIR}/librga/librga.so
+        # ${CMAKE_CURRENT_SOURCE_DIR}/rga/librga/build/librga.so
+        /usr/lib/aarch64-linux-gnu/librga.so
         # rk3588
         ${SYS_USR_LIB}/libffi.so
 )
