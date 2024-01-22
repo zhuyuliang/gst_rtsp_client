@@ -839,7 +839,7 @@ RtspClient::read_Rga(int width, int height, int resize_width, int resize_height)
     // gst_buffer_map (buf, &map_info, GST_MAP_READ);
     if (!gst_buffer_map (buf, &map_info, (GstMapFlags)GST_MAP_READ))
     {
-      g_print ("gst_buffer_map() error! \n");
+      g_print ("gst_buffer_map() error! \n ");
       data->isRun = STATUS_DISCONNECT;
       data->size = 0;
       return data;
@@ -1223,7 +1223,7 @@ RtspClient::read_Opencv() {
     }
     
     // g_print("mpp frame size : %d \n", map_info.size);
-    //g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
+    // g_print("format %f \n",get_bpp_from_format(RK_FORMAT_YCrCb_420_SP));
 
     // opencv
     // NV12/NV21说明:
@@ -1237,9 +1237,14 @@ RtspClient::read_Opencv() {
 
     // TODO mpp没问题
     // h265 256bit 1920 * 1080  == 2304 * 1080
-    if (map_info.size == 3732480 || map_info.size == 4976640 ) {
+    if (map_info.size == 3732480 || map_info.size == 4976640) {
       data->width = 2304;
       data->height = 1080;
+      data->data = this->m_data.dst_buf;
+      data->size = map_info.size;
+    } else if (map_info.size == 3760128) {
+      data->width = 2304;
+      data->height = 1088;
       data->data = this->m_data.dst_buf;
       data->size = map_info.size;
     }

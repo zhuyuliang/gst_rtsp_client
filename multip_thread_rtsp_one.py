@@ -8,7 +8,7 @@ import numpy as np
 
 from multiprocessing import Lock, Process, Condition, Queue
 
-import gst_rtsp_client_api as rtspclient
+import pyapi.gst_rtsp_client_api as rtspclient
 
 # from ctypes import *
 
@@ -28,11 +28,11 @@ def func_rtspdisplay(index,url, usr, pwd):
         print("id %d ret = %d",index, ret1)
         time.sleep(0.1)
         if (ret1 == 1):
-            status, img, img_resize = rtspclient.mread(index,width,height,resize_width,resize_height)
+            status, img, img_resize = rtspclient.mread_rga(index,width,height,resize_width,resize_height)
+            # status, img, img_resize = rtspclient.mread_opencv(index)
             if status == 1:
-                # print(type(ret2.frame))
-                # print(ret2.frame.shape)
-                # print(type(img))
+                print(type(img))
+                print(img.shape)
                 # img = cv2.resize(img,(1920,1080,3))
                 # img = cv2.UMat(height,width,cv2.CV_8UC3,img)
                 # img = cv2.UMat(height,width,cv2.CV_8UC3,ret2.frame)
@@ -62,7 +62,7 @@ if __name__ == '__main__':
     # idx4 = gl.add_view(640, 540, 640, 360)
     # idx5 = gl.add_view(1280, 540, 640, 360)
 
-    t5 = Process(target=func_rtspdisplay, args = (6, "rtsp://admin:passwd@192.168.2.33/Streaming/Channels/1", "admin", "passwd"))
+    t5 = Process(target=func_rtspdisplay, args = (6, "rtsp://admin:qwer1234@192.168.2.52:554/Streaming/Channels/1", "admin", "qwer1234"))
 
     t5.start()
 
