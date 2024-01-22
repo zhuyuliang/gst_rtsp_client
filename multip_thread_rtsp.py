@@ -31,24 +31,28 @@ def func_rtspdisplay(index,url, usr, pwd):
     while(1) :
         ret1 = rtspclient.isConnect(index)
         print("id %d ret = %d",index, ret1)
-        time.sleep(0.5)
+        # time.sleep(0.1)
         if (ret1 == 1):
             # print("id %d mread",index)
             # status, img, img_resize = rtspclient.mread_rga(index,width,height,resize_width,resize_height)
-            # if status == 1:
-            #     # print("success %d, %d",index,ret1)
-            #     # time.sleep(1)
-            #     # cv2.imwrite('a' + str(index) +'.jpg',img)
-            #     pass
-            # else:
-            #     print("python mread_rga disconnect")
-            status, img, img_size = rtspclient.mread_opencv(index)
+            status, img, img_resize = rtspclient.mread_opencv(index)
             if status == 1:
-                img = cv2.UMat.get(img)
+                print(type(img))
+                # print(img.shape)
+                # print("success %d, %d",index,ret1)
+                # time.sleep(1)
                 # cv2.imwrite('a' + str(index) +'.jpg',img)
+                pass
             else:
-                print("python mread_opencv disconnect")
-            del status, img, img_size
+                print("python mread_rga disconnect")
+            del status, img, img_resize
+            # status, img, img_size = rtspclient.mread_opencv(index)
+            # if status == 1:
+            #     img = cv2.UMat.get(img)
+            #     # cv2.imwrite('a' + str(index) +'.jpg',img)
+            # else:
+            #     print("python mread_opencv disconnect")
+            # del status, img, img_size
         else:
             time.sleep(3)
             rtspclient.reConnect(index)
@@ -68,14 +72,14 @@ if __name__ == '__main__':
     # idx4 = gl.add_view(640, 540, 640, 360)
     # idx5 = gl.add_view(1280, 540, 640, 360)
 
-    t0 = threading.Thread(target=func_rtspdisplay, args = (1,"rtsp://admin:shangqu2020@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
-    t1 = threading.Thread(target=func_rtspdisplay, args = (2,"rtsp://admin:shangqu2020@192.168.2.24:554/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
-    t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:shangqu2020@192.168.2.8:554/Streaming/Channels/101", "admin", "shangqu2020"))
-    t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:shangqu2020@192.168.2.27:554/cam/realmonitor?channel=1&subtype=0', "admin", "shangqu2020"))
-    t4 = threading.Thread(target=func_rtspdisplay, args = (5,"rtsp://admin:shangqu2020@192.168.2.29:554/cam/realmonitor?channel=1&subtype=0", "admin", "shangqu2020"))
-    t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:shangqu2020@192.168.2.8:554/Streaming/Channels/201", "admin", "shangqu2020"))
-    t6 = threading.Thread(target=func_rtspdisplay, args = (7, "rtsp://admin:shangqu2020@192.168.2.33:554/Streaming/Channels/1", "admin", "shangqu2020"))
-    t7 = threading.Thread(target=func_rtspdisplay, args = (8, "rtsp://admin:shangqu2020@192.168.2.39:554/Streaming/Channels/1", "admin", "shangqu2020"))
+    t0 = threading.Thread(target=func_rtspdisplay, args = (1,"rtsp://admin:qwer1234@192.168.2.51:554/Streaming/Channels/1", "admin", "shangqu2020"))
+    t1 = threading.Thread(target=func_rtspdisplay, args = (2,"rtsp://admin:qwer1234@192.168.2.52:554/Streaming/Channels/1", "admin", "shangqu2020"))
+    t2 = threading.Thread(target=func_rtspdisplay, args = (3,"rtsp://admin:qwer1234@192.168.2.55:554/Streaming/Channels/1", "admin", "shangqu2020"))
+    t3 = threading.Thread(target=func_rtspdisplay, args = (4,'rtsp://admin:qwer1234@192.168.2.54:554/Streaming/Channels/1', "admin", "shangqu2020"))
+    t4 = threading.Thread(target=func_rtspdisplay, args = (5,"rtsp://admin:qwer1234@192.168.2.55:554/Streaming/Channels/1", "admin", "shangqu2020"))
+    t5 = threading.Thread(target=func_rtspdisplay, args = (6, "rtsp://admin:qwer1234@192.168.2.54:554/Streaming/Channels/1", "admin", "shangqu2020"))
+    t6 = threading.Thread(target=func_rtspdisplay, args = (7, "rtsp://admin:qwer1234@192.168.2.51:554/Streaming/Channels/1", "admin", "shangqu2020"))
+    t7 = threading.Thread(target=func_rtspdisplay, args = (8, "rtsp://admin:qwer1234@192.168.2.52:554/Streaming/Channels/1", "admin", "shangqu2020"))
 
     t0.start()
     t1.start()

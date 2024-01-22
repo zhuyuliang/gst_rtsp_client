@@ -52,6 +52,7 @@ include_directories(
         /usr/local/lib/aarch64-linux-gnu
         ${CMAKE_CURRENT_SOURCE_DIR}/include
         # ${CMAKE_CURRENT_SOURCE_DIR}/rga/librga
+        # /home/teamhd/librga-main/include
         # rk3588
         /usr/local/include
         /usr/local/lib/aarch64-linux-gnu
@@ -75,6 +76,7 @@ link_libraries(
         ${SYS_LIB}/libpcre.so.3
         # ${CMAKE_CURRENT_SOURCE_DIR}/rga/librga/build/librga.so
         /usr/lib/aarch64-linux-gnu/librga.so
+        #/home/teamhd/librga-main/libs/Linux/gcc-aarch64/librga.so
         # rk3588
         ${SYS_USR_LIB}/libffi.so
 )
